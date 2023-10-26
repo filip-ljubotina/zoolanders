@@ -1,0 +1,38 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      platform: postgres
+      mode: always
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/'  # dodati na kraj path-a postgreUsername
+    username: #postgreUsername
+    password: #postgrePassword
+
+  mail:
+    host:           #|
+    port:           #|--> konfiguracija za mail
+    username:       #|
+    password:       #|
+
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+
