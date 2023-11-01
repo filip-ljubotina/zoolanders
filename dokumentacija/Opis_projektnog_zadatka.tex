@@ -1,115 +1,131 @@
 \chapter{Opis projektnog zadatka}
 		
-		\textbf{\textit{dio 1. revizije}}\\
-		
-		\textit{Na osnovi projektnog zadatka detaljno opisati korisničke zahtjeve. Što jasnije opisati cilj projektnog zadatka, razraditi problematiku zadatka, dodati nove aspekte problema i potencijalnih rješenja. Očekuje se minimalno 3, a poželjno 4-5 stranica opisa.	Teme koje treba dodatno razraditi u ovom poglavlju su:}
-		\begin{packed_item}
-			\item \textit{potencijalna korist ovog projekta}
-			\item \textit{postojeća slična rješenja (istražiti i ukratko opisati razlike u odnosu na zadani zadatak). Dodajte slike koja predočavaju slična rješenja.}
-			\item \textit{skup korisnika koji bi mogao biti zainteresiran za ostvareno rješenje.}
-			\item \textit{mogućnost prilagodbe rješenja }
-			\item \textit{opseg projektnog zadatka}
-			\item \textit{moguće nadogradnje projektnog zadatka}
-		\end{packed_item}
-		
-		\textit{Za pomoć pogledati reference navedene u poglavlju „Popis literature“, a po potrebi konzultirati sadržaj na internetu koji nudi dobre smjernice u tom pogledu.}
-		\eject
-		
-		\section{Primjeri u \LaTeX u}
-		
-		\textit{Ovo potpoglavlje izbrisati}\\
+Cilj projekta jest razviti aplikaciju za olakšavanje koordinacije i praćenja životinja u divljini. Aplikacija omogućuje korisnicima da se prijavljuju i time sudjeluju u različitim akcijama. Aplikacija se dijeli na nekoliko ključnih dijelova:\\
 
-		U nastavku se nalaze različiti primjeri kako koristiti osnovne funkcionalnosti \LaTeX a koje su potrebne za izradu dokumentacije. Za dodatnu pomoć obratiti se asistentu na projektu ili potražiti upute na sljedećim web sjedištima:
-		\begin{itemize}
-			\item Upute za izradu diplomskog rada u \LaTeX u - \url{https://www.fer.unizg.hr/_download/repository/LaTeX-upute.pdf}
-			\item \LaTeX\ projekt - \url{https://www.latex-project.org/help/}
-			\item StackExchange za Tex - \url{https://tex.stackexchange.com/}\\
-		
-		\end{itemize} 	
+\begin{packed_item}
+\item[1)]Registracija. Ideja je da se neregistrirani korisnik može prijaviti te poslati zahtjev za registraciju sa željenom ulogom (istraživači, voditelji postaja, tragači) pružajući potrebne informacije:
 
-
-		
-		\noindent \underbar{podcrtani tekst}, \textbf{podebljani tekst}, 	\textit{nagnuti tekst}\\
-		\noindent \normalsize primjer \large primjer \Large primjer \LARGE {primjer} \huge {primjer} \Huge primjer \normalsize
-				
-		\begin{packed_item}
-			
-			\item  primjer
-			\item  primjer
-			\item  primjer
-			\item[] \begin{packed_enum}
-				\item primjer
-				\item[] \begin{packed_enum}
-					\item[1.a] primjer
-					\item[b] primjer
-				\end{packed_enum}
-				\item primjer
-			\end{packed_enum}
-			
-		\end{packed_item}
-		
-		\noindent primjer url-a: \url{https://www.fer.unizg.hr/predmet/proinz/projekt}
-		
-		\noindent posebni znakovi: \# \$ \% \& \{ \} \_ 
-		$|$ $<$ $>$ 
-		\^{} 
-		\~{} 
-		$\backslash$ 
-		
-		
-		\begin{longtblr}[
-			label=none,
-			entry=none
-			]{
-				width = \textwidth,
-				colspec={|X[8,l]|X[8, l]|X[16, l]|}, 
-				rowhead = 1,
-			} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-			\hline \SetCell[c=3]{c}{\textbf{naslov unutar tablice}}	 \\ \hline[3pt]
-			\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-			korisnickoIme	& VARCHAR &   	\\ \hline 
-			email & VARCHAR &   \\ \hline 
-			ime & VARCHAR	&  		\\ \hline 
-			\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
-		\end{longtblr}
-		
-
-		\begin{longtblr}[
-				caption = {Naslov s referencom izvan tablice},
-				entry = {Short Caption},
-			]{
-				width = \textwidth, 
-				colspec = {|X[8,l]|X[8,l]|X[16,l]|}, 
-				rowhead = 1,
-			}
-			\hline
-			\SetCell{LightGreen}IDKorisnik & INT	&  	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod  	\\ \hline
-			korisnickoIme	& VARCHAR &   	\\ \hline 
-			email & VARCHAR &   \\ \hline 
-			ime & VARCHAR	&  		\\ \hline 
-			\SetCell{LightBlue} primjer	& VARCHAR &   	\\ \hline 
-		\end{longtblr}
+\begin{packed_item}
+	\item[a)] Korisničko ime
+	\item[b)] Fotografija
+	\item[c)] Lozinka 
+	\item[d)] Postaja 
+	\item[e)] Ime 
+	\item[f)] Prezime 
+	\item[g)] Email adresa
 	
+\end{packed_item}
 
-
-		
-		
-		%unos slike
+%unos slike
 		\begin{figure}[H]
-			\includegraphics[scale=0.4]{slike/aktivnost.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\includegraphics[scale=0.4]{slike/login_screen.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 			\centering
-			\caption{Primjer slike s potpisom}
+			\caption{Primjer login screena (1)}
 			\label{fig:promjene}
 		\end{figure}
 		
+		%unos slike
 		\begin{figure}[H]
-			\includegraphics[width=\textwidth]{slike/aktivnost.PNG} %veličina u odnosu na širinu linije
-			\caption{Primjer slike s potpisom 2}
-			\label{fig:promjene2} %label mora biti drugaciji za svaku sliku
+			\includegraphics[scale=0.2]{slike/login_screen2.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Primjer login screena (2)}
+			\label{fig:promjene}
 		\end{figure}
 		
-		Referenciranje slike \ref{fig:promjene2} u tekstu.
-		
-		\eject
-		
+		%unos slike
+		\begin{figure}[H]
+			\includegraphics[scale=0.9]{slike/biranje_uloge.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Primjer biranja uloge}
+			\label{fig:promjene}
+		\end{figure}
+
+
+Registracija završava potvrdom preko maila.\\
+
+\item[2)] Administracija. \underline{Administrator} može vidjeti i upravljati podatcima korisnika. Ima mogućnost mijenjanja dodijeljenih prava i uloga te osobnih podataka. Nakon što se korisnik registrira, potrebna je dodatna potvrda od strane administratora za \underline{istraživače} i \underline{voditelje}.\\
+
+
+\item[3)] Definiranje postaja. \underline{Voditelj} definira svoje postaje (npr postaja Lonjsko Polje) te bira \underline{tragače} koji su dio njihove postaje i koji su osposobljeni za pretraživanje. \\
+
+\item[4)] Metode pretraživanja. Svaki \underline{tragač} treba imati sposobnost obavljanja pretrage:
+
+\begin{packed_item}
+	\item[a)] pješke
+	\item[b)] dronom
+	\item[c)] automobilom 
+	\item[d)] cross motorom 
+	\item[e)] brodom 
+	\item[f)] helikopterom 
 	
+\end{packed_item}
+
+Svaka metoda pruža različitu vidljivost i područje pokrivanja. Na primjer, zračno pretraživanje će obuhvatiti veće područje, ali neće pružiti toliko detalja kao što bi se dobilo pješačenjem.\\
+
+\item[5)] Praćenje životinja. Praćene životinje na sebi imaju GPS uređaj koja našoj aplikaciji odašilje njegovu lokaciju. Podatci praćenih životinja:
+
+\begin{packed_item}
+	\item[a)] zadnje mjesto lokacije
+	\item[b)] naziv vrste
+	\item[c)] slika 
+	\item[d)] opis 
+	
+\end{packed_item}
+
+se zapisuju i pamte. Tragač može i ostaviti dodatni komentar.\\
+
+\item[6)] Akcija pretraživanja. \underline{Istraživači} mogu započeti nove akcije pretraživanja i praćenja s detaljima određene vrste, jedinke ili staništa. Za svaku akciju imenuje se jedan istraživač koji surađuje s voditeljima postaja kako bi odabrao tragače s odgovarajućim kvalifikacijama za tu akciju. Na jednoj akciji mogu biti tragači različitih postaja. Istraživač uz pomoć karte zadaje tragačima zadatke. Zadatci mogu uključivati prelazak određene rute, stizanje do određene lokacije te postavljanje kamera ili uređaja za praćenje. Svaki zadatak može biti obogaćen dodatnim komentarom od strane istraživača. \underline{Tragač} se sam može maknuti iz akcije pri završetku zadanih zadataka. \\
+
+%unos slike
+		\begin{figure}[H]
+			\includegraphics[scale=0.5]{slike/pr_biranja_akcija.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Primjer stranice za prihvaćanja/odbijanja akcija (1)}
+			\label{fig:promjene}
+		\end{figure}
+
+%unos slike
+		\begin{figure}[H]
+			\includegraphics[scale=0.8]{slike/pr_biranja_akcija2.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Primjer stranice za prihvaćanja/odbijanja akcija (2)}
+			\label{fig:promjene}
+		\end{figure}
+
+\item[7)] Kartografski prikaz. Istraživaču će se informacije o pozicijama životinja, tragača i postaja pokazivati preko interaktivne karte. Istraživač ima opciju odabira između različitih opcija pri stvaranju karte:
+
+\begin{packed_item}
+	\item[a)] povijesne pozicije svih praćenih životinja, mogu se filtrirati po vrsti, ili pojedinačno
+	\item[b)] povijesne pozicije svih praćenih životinja, mogu se filtrirati po vrsti, ili pojedinačno
+	\item[c)] povijesne pozicije svih tragača na određenoj akciji te filtriranje prema vrsti prijevoza ili pojedinačno 
+	\item[d)] trenutne pozicije svih tragača u toj akciji 
+	
+\end{packed_item}
+
+Informacije u povijesnim podatcima se pokazuju u obliku toplinskih karata.
+\underline{Tragaču} se na karti prikazuju trenutna lokacija svih ostalih tragača koji sudjeluju u akciji te trenutnu lokaciju praćenih životinja.
+ Također, i tragači i istraživač mogu ostaviti komentare za ostale sudionike u akciji na karti.
+ 
+ %unos slike
+		\begin{figure}[H]
+			\includegraphics[scale=0.4]{slike/map_tracking.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Primjer kartografskog prikaza (1)}
+			\label{fig:promjene}
+		\end{figure}
+
+
+%unos slike
+		\begin{figure}[H]
+			\includegraphics[scale=0.1]{slike/map_tracking2.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Primjer kartografskog prikaza (2)}
+			\label{fig:promjene}
+		\end{figure}
+
+
+\end{packed_item}
+
+
+
+		
