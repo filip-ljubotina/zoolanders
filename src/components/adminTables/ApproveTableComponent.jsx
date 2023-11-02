@@ -43,6 +43,7 @@ const ApproveTableComponent = () => {
         <tr>
           <th>ID</th>
           <th>userName</th>
+          <th>image</th>
           <th>firstName</th>
           <th>lastName</th>
           <th>email</th>

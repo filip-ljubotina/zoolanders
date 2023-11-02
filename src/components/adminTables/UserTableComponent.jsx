@@ -34,7 +34,7 @@ const UserTableComponent = () => {
     );
     console.log(updatedData)
     updateData(updatedData)
-    setTableData(updatedTableData);
+    /*setTableData(updatedTableData); */
 
     console.log('Updated Row:', id, updatedData);
   };
@@ -45,6 +45,7 @@ const UserTableComponent = () => {
         <tr>
           <th>ID</th>
           <th>userName</th>
+          <th>image</th>
           <th>firstName</th>
           <th>lastName</th>
           <th>email</th>

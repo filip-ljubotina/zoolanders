@@ -15,8 +15,24 @@ const UserTableRow = ({ data, onUpdate }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setRowData((prevData) => ({ ...prevData, [name]: value }));
+    if (e.target.type === 'file') {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+  
+          reader.onload = () => {
+              const base64String = reader.result.split(',')[1]; // Extracting the Base64-encoded string
+  
+              setRowData((prevData) => ({ ...prevData, image: base64String }));
+          };
+  
+          reader.readAsDataURL(file);
+      }
+    } else {
+        setRowData((prevData) => ({ ...prevData, [name]: value }));
+    }
   };
+
 
   return (
     <tr>
@@ -26,6 +42,23 @@ const UserTableRow = ({ data, onUpdate }) => {
           <input type="text" name="userName" value={rowData.userName} onChange={handleChange} />
         ) : (
           rowData.userName
+        )}
+      </td>
+      <td>
+        {editing ? (
+          <div>
+            <input type="file" name="image" accept=".png" onChange={handleChange} />
+          </div>
+        ) : (
+          <div>
+            {rowData.image && (
+              <img
+                src={`data:image/png;base64,${rowData.image}`}
+                alt="User"
+                style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+            />
+            )}
+          </div>
         )}
       </td>
       <td>

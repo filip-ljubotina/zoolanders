@@ -12,6 +12,15 @@ const ApproveTableRow = ({ data, onApprove }) => {
       <td>
         {data.userName}
       </td>
+      <div>
+            {data.image && (
+              <img
+                src={`data:image/png;base64,${data.image}`}
+                alt="User"
+                style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+            />
+            )}
+          </div>
       <td>
         {data.firstName}
       </td>

@@ -9,22 +9,39 @@ const RegistrationComponent = () => {
         email: '',
         password: '',
         role: '',
+        image: null,
     });
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
 
     const handleChange = (e) => {
-        setUserData({
-            ...userData,
-            [e.target.name]: e.target.value,
-        });
+        if (e.target.type === 'file') {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+        
+                reader.onload = () => {
+                    const base64String = reader.result.split(',')[1]; // Extracting the Base64-encoded string
+        
+                    setUserData({...userData,
+                        image: base64String,});
+                };
+        
+                reader.readAsDataURL(file);
+            }
+        } else {
+            setUserData({
+                ...userData,
+                [e.target.name]: e.target.value,
+            });
+        }
         setError(null);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log(userData)
+            console.log(userData.image);
             const response = await ApiService.post('/registration', userData);
             setSuccess(true);
         } catch (error) {
@@ -44,6 +61,16 @@ const RegistrationComponent = () => {
                         type="text"
                         name="userName"
                         value={userData.username}
+                        onChange={handleChange}
+                    />
+                </label>
+                <br />
+                <label>
+                    User Photo:
+                    <input
+                        type="file"
+                        name="image"
+                        accept=".png"
                         onChange={handleChange}
                     />
                 </label>
