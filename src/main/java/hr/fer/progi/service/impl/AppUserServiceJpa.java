@@ -92,6 +92,7 @@ public class AppUserServiceJpa implements UserDetailsService, AppUserService {
 
         appUser.setEmail(adminTablePutRequestDto.getEmail());
         appUser.setUserName(adminTablePutRequestDto.getUserName());
+        appUser.setImage(adminTablePutRequestDto.getImage());
         appUser.setFirstName(adminTablePutRequestDto.getFirstName());
         appUser.setLastName(adminTablePutRequestDto.getLastName());
         appUser.setAppUserRole(AppUserRole.valueOf("ROLE_" + adminTablePutRequestDto.getRole()));

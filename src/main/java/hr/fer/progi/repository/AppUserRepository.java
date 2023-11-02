@@ -24,10 +24,10 @@ public interface AppUserRepository
             "SET a.enabled = TRUE WHERE a.email = ?1")
     int enableAppUser(String email);
 
-    @Query("SELECT new hr.fer.progi.dto.adminDto.AdminTableResponseDto(e.id, e.userName, e.firstName, e.lastName, e.email, e.appUserRole) FROM AppUser e")
+    @Query("SELECT new hr.fer.progi.dto.adminDto.AdminTableResponseDto(e.id, e.userName, e.firstName, e.lastName, e.email, e.appUserRole, e.image) FROM AppUser e")
     List<AdminTableResponseDto> findAllUserInfo();
 
-    @Query("SELECT new hr.fer.progi.dto.adminDto.AdminTableResponseDto(e.id, e.userName, e.firstName, e.lastName, e.email, e.appUserRole) " +
+    @Query("SELECT new hr.fer.progi.dto.adminDto.AdminTableResponseDto(e.id, e.userName, e.firstName, e.lastName, e.email, e.appUserRole, e.image) " +
             "FROM AppUser e WHERE e.locked = TRUE")
     List<AdminTableResponseDto> findAllUserInfoUnapproved();
 }

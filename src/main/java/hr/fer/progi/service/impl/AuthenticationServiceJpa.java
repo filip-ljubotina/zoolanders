@@ -67,6 +67,7 @@ public class AuthenticationServiceJpa implements AuthenticationService {
         String token = appUserServiceJpa.signUpUser(
                 new AppUser(
                         request.getUserName(),
+                        request.getImage(),
                         request.getFirstName(),
                         request.getLastName(),
                         request.getEmail(),
