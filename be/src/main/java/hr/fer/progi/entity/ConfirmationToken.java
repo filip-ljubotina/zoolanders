@@ -1,6 +1,5 @@
 package hr.fer.progi.entity;
 
-import hr.fer.progi.entity.AppUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

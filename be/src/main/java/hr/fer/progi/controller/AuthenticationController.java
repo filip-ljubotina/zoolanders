@@ -14,10 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 @CrossOrigin
 @RestController
 @RequestMapping
-@AllArgsConstructor
 public class AuthenticationController {
 
     private final AuthenticationServiceJpa authenticationServiceJpa;
+
+    public AuthenticationController(AuthenticationServiceJpa authenticationServiceJpa) {
+        this.authenticationServiceJpa = authenticationServiceJpa;
+    }
 
     @PostMapping("/registration")
     public ResponseEntity<String> register(@RequestBody RegistrationRequest request) {

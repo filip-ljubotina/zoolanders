@@ -14,15 +14,15 @@ spring:
       platform: postgres
       mode: always
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/'  # dodati na kraj path-a postgreUsername
-    username: #postgreUsername
-    password: #postgrePassword
+    url: 'jdbc:postgresql://localhost:5432/postgres'
+    username: postgres
+    password: matematika
 
   mail:
-    host:           #|
-    port:           #|--> konfiguracija za mail
-    username:       #|
-    password:       #|
+    host: smtp.devmail.email
+    port: 465
+    username: wildtrack
+    password: OJe7Msf37S3DPKYcCO28
 
     properties:
       mail:

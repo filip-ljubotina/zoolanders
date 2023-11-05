@@ -32,6 +32,8 @@ public class AppUser implements UserDetails {
     )
     private Long id;
     private String userName;
+    @Lob
+    private byte[] image;
     private String firstName;
     private String lastName;
     private String email;
@@ -42,6 +44,7 @@ public class AppUser implements UserDetails {
     private Boolean enabled = false;
 
     public AppUser(String userName,
+                   byte[] image,
                    String firstName,
                    String lastName,
                    String email,
@@ -53,6 +56,7 @@ public class AppUser implements UserDetails {
         this.email = email;
         this.password = password;
         this.appUserRole = appUserRole;
+        this.image = image;
     }
 
     @Override

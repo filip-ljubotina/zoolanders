@@ -6,10 +6,10 @@ import hr.fer.progi.dto.authenticationDto.RegistrationRequest;
 
 public interface AuthenticationService {
 
-    public LoginResponse performLogin(LoginRequest loginRequest);
+    LoginResponse performLogin(LoginRequest loginRequest);
 
     String register(RegistrationRequest request);
 
-    public String confirmToken(String token);
+    String confirmToken(String token);
 
 }
