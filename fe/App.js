@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import LoginComponent from './components/LoginComponent';
-import RegistrationComponent from './components/RegistrationComponent';
-import DashboardComponent from './components/DashboardComponent';
-import LogoutButton from './components/LogoutButton';
+import LoginComponent from './src/components/LoginComponent';
+import RegistrationComponent from './src/components/RegistrationComponent';
+import DashboardComponent from './src/components/DashboardComponent';
+import LogoutButton from './src/components/LogoutButton';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
