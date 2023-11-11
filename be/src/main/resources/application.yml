@@ -1,9 +1,13 @@
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
   datasource:
-    password: ${DB_PASS:password}
-    username: ${DB_USERNAME:username}
-    url: "jdbc:postgresql://zoolanders:EO0aLFJyva6jYEb2oUGsVDpkD0gxJToE@dpg-cl7s8aivokcc73aprek0-a.frankfurt-postgres.render.com/wildtrack_db"
+    password: ${DB_PASS:EO0aLFJyva6jYEb2oUGsVDpkD0gxJToE}
+    username: ${DB_USERNAME:zoolanders}
+    url: ${DB_URL:jdbc:postgresql://dpg-cl7s8aivokcc73aprek0-a:5432/wildtrack_db}
     driverClassName: ${DB_DRIVER:org.postgresql.Driver}
+
 
   mail:
     host: smtp.gmail.com

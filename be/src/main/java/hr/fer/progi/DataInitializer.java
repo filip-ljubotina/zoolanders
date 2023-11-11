@@ -23,15 +23,18 @@ public class DataInitializer {
 
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
-        AppUser appUser = new AppUser();
-        appUser.setUserName("admin");
-        appUser.setImage(null);
-        appUser.setFirstName("admin");
-        appUser.setLastName("admin");
-        appUser.setEmail("admin@wildtrack.com");
-        appUser.setPassword(bCryptPasswordEncoder.encode("admin123"));
-        appUser.setAppUserRole(AppUserRole.valueOf("ROLE_ADMIN"));
-        appUser.setEnabled(true);
-        appUserRepository.save(appUser);
+        if(appUserRepository.count() == 0){
+            AppUser appUser = new AppUser();
+            appUser.setUserName("admin");
+            appUser.setImage(null);
+            appUser.setFirstName("admin");
+            appUser.setLastName("admin");
+            appUser.setEmail("admin@wildtrack.com");
+            appUser.setPassword(bCryptPasswordEncoder.encode("admin123"));
+            appUser.setAppUserRole(AppUserRole.valueOf("ROLE_ADMIN"));
+            appUser.setEnabled(true);
+            appUserRepository.save(appUser);
+        }
+
     }
 }
