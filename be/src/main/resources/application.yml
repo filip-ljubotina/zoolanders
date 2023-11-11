@@ -1,38 +1,22 @@
-server:
-  error:
-    include-message: always
-    include-binding-errors: always
-
 spring:
-  jpa:
-    hibernate:
-      ddl-auto: create-drop
-    show-sql: true
-    defer-datasource-initialization: true
-  sql:
-    init:
-      platform: postgres
-      mode: always
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/postgres'
-    username: postgres
-    password: matematika
+    password: ${DB_PASS:password}
+    username: ${DB_USERNAME:username}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/db}
+    driverClassName: ${DB_DRIVER:org.postgresql.Driver}
 
   mail:
-    host: smtp.devmail.email
-    port: 465
-    username: wildtrack
-    password: OJe7Msf37S3DPKYcCO28
-
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
     properties:
       mail:
         smtp:
-          ssl:
-            trust: "*"
           auth: true
           starttls:
             enable: true
-          connectiontimeout: 5000
-          timeout: 3000
-          writetimeout: 5000
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
 
