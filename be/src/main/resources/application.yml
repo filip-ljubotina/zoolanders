@@ -1,3 +1,6 @@
+custom:
+  serverPath: ${SERVER_PATH:http://localhost:8080}
+
 spring:
   jpa:
     hibernate:

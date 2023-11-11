@@ -11,6 +11,8 @@ import hr.fer.progi.mapper.LoginResponseMapper;
 import hr.fer.progi.security.JwtTokenProvider;
 import hr.fer.progi.service.AuthenticationService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -32,6 +34,9 @@ public class AuthenticationServiceJpa implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
     private final LoginResponseMapper loginResponseMapper;
+
+    @Autowired
+    private Environment env;
 
     @Override
     public LoginResponse performLogin(LoginRequest loginRequest){
@@ -76,7 +81,7 @@ public class AuthenticationServiceJpa implements AuthenticationService {
                 )
         );
 
-        String link = "http://localhost:8080/registration/confirm?token=" + token;
+        String link = env.getProperty("custom.serverPath") + "/registration/confirm?token=" + token;
         emailSender.send(
                 request.getEmail(),
                 buildEmail(request.getFirstName(), link));
