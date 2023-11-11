@@ -123,7 +123,7 @@ const RegistrationComponent = () => {
                         onChange={handleChange}
                     >
                         <option value="">Select a role</option>
-                        <option value="ADMIN">Admin</option>
+                        {/* <option value="ADMIN">Admin</option> */}
                         <option value="RESEARCHER">Researcher</option>
                         <option value="STATION_MANAGER">Station Manager</option>
                         <option value="SEARCHER_IN_THE_FIELD">Searcher in the Field</option>
