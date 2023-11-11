@@ -6,8 +6,8 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    password: ${DB_PASS:EO0aLFJyva6jYEb2oUGsVDpkD0gxJToE}
-    username: ${DB_USERNAME:zoolanders}
+    password: ${DB_PASS:password}
+    username: ${DB_USERNAME:username}
     url: ${DB_URL:jdbc:postgresql://dpg-cl7s8aivokcc73aprek0-a:5432/wildtrack_db}
     driverClassName: ${DB_DRIVER:org.postgresql.Driver}
 
