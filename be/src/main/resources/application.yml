@@ -2,7 +2,7 @@ spring:
   datasource:
     password: ${DB_PASS:password}
     username: ${DB_USERNAME:username}
-    url: "jdbc:postgres://zoolanders:EO0aLFJyva6jYEb2oUGsVDpkD0gxJToE@dpg-cl7s8aivokcc73aprek0-a.frankfurt-postgres.render.com/wildtrack_db"
+    url: "jdbc:postgresql://zoolanders:EO0aLFJyva6jYEb2oUGsVDpkD0gxJToE@dpg-cl7s8aivokcc73aprek0-a.frankfurt-postgres.render.com/wildtrack_db"
     driverClassName: ${DB_DRIVER:org.postgresql.Driver}
 
   mail:
