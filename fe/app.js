@@ -3,6 +3,7 @@ const express = require("express");
 const { PORT } = process.env;
 const { HOST } = process.env;
 
+const app = express();
 
 app.use(express.static(path.join(__dirname, 'build')))
 
