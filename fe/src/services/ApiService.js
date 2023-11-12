@@ -26,8 +26,6 @@ export const ApiService = {
 
     post: async (url, data) => {
         addTokenToHeaders()
-        console.log(url)
-        console.log(API_BASE_URL)
         return await api.post(url, data);
     },
 
