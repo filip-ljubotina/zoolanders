@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ApproveTableRow from './ApproveTableRow';
-import ApiService from '../../../app';
+import ApiService from '../../App';
 
 const ApproveTableComponent = () => {
   const [tableData, setTableData] = useState([]);
@@ -21,7 +21,6 @@ const ApproveTableComponent = () => {
       console.error('Error fetching table data:', error);
     }
   };
-
   useEffect(() => {
     fetchData();
   }, []);

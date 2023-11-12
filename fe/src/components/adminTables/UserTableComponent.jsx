@@ -1,7 +1,7 @@
 // TableComponent.jsx
 import React, { useState, useEffect } from 'react';
 import TableRow from './UserTableRow';
-import ApiService from '../../../app';
+import ApiService from '../../App';
 
 const UserTableComponent = () => {
   const [tableData, setTableData] = useState([]);
