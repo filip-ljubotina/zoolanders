@@ -1,68 +1,44 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import LoginComponent from './src/components/LoginComponent';
-import RegistrationComponent from './src/components/RegistrationComponent';
-import DashboardComponent from './src/components/DashboardComponent';
-import LogoutButton from './src/components/LogoutButton';
+import axios from 'axios';
 
-const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const { API_BASE_URL } = process.env;
 
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
-  };
+const api = axios.create({
+    baseURL: API_BASE_URL,
+    credentials: 'include',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-  };
-
-  return (
-    <Router>
-      <div className="app">
-        <h1>WildTrack Application</h1>
-        {isLoggedIn && <LogoutButton onLogout={handleLogout} />}
-        <Routes>
-          <Route
-            path="/login"
-            element={
-              isLoggedIn ? (
-                <Navigate to="/dashboard" />
-              ) : (
-                <div>
-                  <LoginComponent onLoginSuccess={handleLoginSuccess} />
-                  <p onClick={() => window.location.href = '/register'} className="toggle-link">
-                    Don't have an account? Register here.
-                  </p>
-                </div>
-              )
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              isLoggedIn ? (
-                <Navigate to="/dashboard" />
-              ) : (
-                <div>
-                  <RegistrationComponent />
-                  <p onClick={() => window.location.href = '/login'} className="toggle-link">
-                    Have an account? Login here.
-                  </p>
-                </div>
-              )
-            }
-          />
-          <Route
-            path="/dashboard/*"
-            element={
-              isLoggedIn ? <DashboardComponent /> : <Navigate to="/login" />
-            }
-          />
-          <Route path="/" element={<Navigate to="/login" />} />
-        </Routes>
-      </div>
-    </Router>
-  );
+const addTokenToHeaders = () => {
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    } else {
+        delete api.defaults.headers.common['Authorization'];
+    }
 };
 
-export default App;
+export const ApiService = {
+    get: async (url) => {
+        addTokenToHeaders()
+        return await api.get(url);
+    },
+
+    post: async (url, data) => {
+        addTokenToHeaders()
+        return await api.post(url, data);
+    },
+
+    put: async (url, data) => {
+        addTokenToHeaders();
+        return await api.put(url, data);
+    },
+
+    delete: async (url) => {
+        addTokenToHeaders();
+        return await api.delete(url);
+    },
+};
+
+export default ApiService;

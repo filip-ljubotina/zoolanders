@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ApproveTableRow from './ApproveTableRow';
-import ApiService from '../../services/ApiService';
+import ApiService from '../../../app';
 
 const ApproveTableComponent = () => {
   const [tableData, setTableData] = useState([]);

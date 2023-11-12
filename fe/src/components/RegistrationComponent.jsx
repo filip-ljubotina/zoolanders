@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ApiService from '../services/ApiService';
+import ApiService from '../../app';
 
 const RegistrationComponent = () => {
     const [userData, setUserData] = useState({
