@@ -5,7 +5,7 @@ import User from 'remixicon-react/UserLineIcon'
 import Email from 'remixicon-react/MailFillIcon'
 import Password from 'remixicon-react/Lock2FillIcon'
 import Placeholder from '../Assets/profile-placeholder.png'
-import ApiService from '../../Services/ApiService';
+import ApiService from '../../services/ApiService';
 
 const Register = () => {
   const [userData, setUserData] = React.useState({
