@@ -2,8 +2,8 @@ import React from 'react'
 import { Link } from "react-router-dom"
 import './Login.css'
 import ApiService from '../../services/ApiService';
-import TokenService from '../../Services/TokenService';
-import RoleService from '../../Services/RoleService';
+import TokenService from '../../services/TokenService';
+import RoleService from '../../services/RoleService';
 import background_photo from '../Assets/login-bg.png'
 import Email from 'remixicon-react/MailFillIcon'
 import Password from 'remixicon-react/Lock2FillIcon'
