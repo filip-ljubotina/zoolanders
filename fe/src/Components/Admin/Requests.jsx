@@ -1,7 +1,7 @@
 import React from 'react'
 import Sidebar from './Sidebar'
 import './Users.css'
-import ApiService from '../../Services/ApiService';
+import ApiService from '../../services/ApiService';
 import { Box } from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
