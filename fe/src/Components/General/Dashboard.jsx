@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom"
-import RoleService from '../../Services/RoleService'
+import RoleService from '../../services/RoleService'
 import SearcherDashboard from '../Searcher/SearcherDashboard'
 import ResearcherDashboard from '../Researcher/ResearcherDashboard'
 import ManagerDashboard from '../Manager/ManagerDashboard'
