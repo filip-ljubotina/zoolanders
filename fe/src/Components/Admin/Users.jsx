@@ -6,7 +6,6 @@ import { DataGrid } from '@mui/x-data-grid';
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import ApiService from '../../services/ApiService';
 import Topbar from './Topbar';
-import Delete from './Delete';
 import Edit from './Edit'
 import PropTypes from "prop-types"
 
