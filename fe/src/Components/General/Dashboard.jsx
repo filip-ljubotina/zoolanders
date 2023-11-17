@@ -1,13 +1,15 @@
-import React from 'react'
-import { Routes, Route, Navigate, Router  } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 import RoleService from '../../Services/RoleService'
 import SearcherDashboard from '../Searcher/SearcherDashboard'
 import ResearcherDashboard from '../Researcher/ResearcherDashboard'
 import ManagerDashboard from '../Manager/ManagerDashboard'
 import AdminDashboard from '../Admin/AdminDashboard'
-import NoAccess from './NoAccess'
+import PropTypes from "prop-types"
 
 const Dashboard = ({onLogout}) => {
+    Dashboard.propTypes = {
+        onLogout: PropTypes.func
+      }
     const userRole = RoleService.getRole();
     // const isSearcher = false
     // const isManager = false

@@ -1,4 +1,5 @@
 .users{
+    width: 100vw;
     display: flex;
     background-color: #677030;
     color: black;

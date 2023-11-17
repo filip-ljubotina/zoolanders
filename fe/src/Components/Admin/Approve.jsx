@@ -9,6 +9,11 @@ import ApiService from '../../Services/ApiService';
 import PropTypes from 'prop-types';
 
 export default function Approve({row, onApprove}) {
+  Approve.propTypes = {
+    row: PropTypes.object.isRequired,
+    onApprove: PropTypes.func.isRequired,
+  };
+  
   const [open, setOpen] = React.useState(false);
 
   const updateData = async ({row}) => {
@@ -65,7 +70,3 @@ export default function Approve({row, onApprove}) {
   );
 }
 
-Approve.propTypes = {
-  row: PropTypes.object.isRequired,
-  onApprove: PropTypes.func.isRequired,
-};

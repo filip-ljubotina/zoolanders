@@ -1,11 +1,15 @@
-import React from 'react'
 import { Routes, Route } from "react-router-dom";
 import './AdminDashboard.css'
 import Sidebar from './Sidebar'
 import Users from './Users'
 import Requests from './Requests'
+import PropTypes from "prop-types"
+
 
 const AdminDashboard = ({onLogout}) => {
+  AdminDashboard.propTypes = {
+    onLogout: PropTypes.func
+  }
   return (
     <div>
       <Routes>

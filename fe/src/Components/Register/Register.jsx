@@ -5,11 +5,11 @@ import User from 'remixicon-react/UserLineIcon'
 import Email from 'remixicon-react/MailFillIcon'
 import Password from 'remixicon-react/Lock2FillIcon'
 import Placeholder from '../Assets/profile-placeholder.png'
-import ApiService from '../../services/ApiService';
+import ApiService from '../../Services/ApiService';
 
 const Register = () => {
   const [userData, setUserData] = React.useState({
-    username: '',
+    userName: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -86,7 +86,7 @@ const Register = () => {
                 <div className='img-wrap img-upload' >
                   <img htmlFor='photo-upload' src={userData.image}/>
                 </div>
-                <input id='photo-upload' type='file' onChange={handleChange}/> 
+                <input id='photo-upload' type='file' required onChange={handleChange}/> 
               </label>
             </div>
           </div>
@@ -94,7 +94,7 @@ const Register = () => {
             <User className='register-icon'/>
             <div className='register-input'>
             <input type='text' required className='register-textfield' id='register-username' 
-                   name='username' value={userData.username} onChange={handleChange} placeholder=''/>
+                   name='userName' value={userData.userName} onChange={handleChange} placeholder=''/>
               <label htmlFor='register-username' className='register-label'>Korisničko ime</label>
             </div>
           </div>

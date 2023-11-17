@@ -7,8 +7,14 @@ import RoleService from '../../Services/RoleService';
 import background_photo from '../Assets/login-bg.png'
 import Email from 'remixicon-react/MailFillIcon'
 import Password from 'remixicon-react/Lock2FillIcon'
+import PropTypes from "prop-types"
 
-const Login = (props) => {
+
+const Login = ({onLoginSuccess}) => {
+  Login.propTypes = {
+    onLoginSuccess: PropTypes.func
+  }
+  
   const [loginData, setLoginData] = React.useState({ email: '', password: '' });
   const [error, setError] = React.useState(null);
 
@@ -26,7 +32,7 @@ const Login = (props) => {
         const response = await ApiService.post('/logIn', loginData);
         TokenService.setToken(response.data.token);
         RoleService.setRole(response.data.role)
-        props.onLoginSuccess();
+        onLoginSuccess();
     } catch (error) {
         setError(error.response.data.message);
     }
@@ -60,7 +66,7 @@ const Login = (props) => {
 
         </div>
         
-        <div className="login-error">{error}</div>
+        {error && <div className="login-error">Greška pri prijavi.</div>}
         
         <button type='submit' className='login-button'>Prijavi se</button>
 

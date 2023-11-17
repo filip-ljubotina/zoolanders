@@ -7,12 +7,22 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import Placeholder from '../Assets/profile-placeholder.png'
 import background_photo from '../Assets/login-bg.png'
+import PropTypes from "prop-types"
 
-const Sidebar = (props) => {
+const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = React.useState(false)
     const [selected, setSelected] = React.useState("Home")
 
+    
+
     const DisplayCategory = ({ title, to, icon, selected, setSelected }) => {
+        DisplayCategory.propTypes = {
+            title: PropTypes.string,
+            to: PropTypes.string,
+            icon: PropTypes.object,
+            selected: PropTypes.string,
+            setSelected: PropTypes.func
+        }
         return (
             <Link to={`/dashboard/admin${to}`}>
                 <MenuItem component="div" 

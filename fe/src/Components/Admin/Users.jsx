@@ -4,7 +4,7 @@ import './Users.css'
 import { Box } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import ApiService from '../../Services/ApiService';
+import ApiService from '../../services/ApiService';
 import Topbar from './Topbar';
 import Delete from './Delete';
 import Edit from './Edit'
@@ -19,10 +19,17 @@ const Users = ({onLogout}) => {
   const fetchData = async () => {
     try {
       const response = await ApiService.get('/wildTrack/admin/getUserTable');
-      console.log(response.data)
       setData(response.data);
     } catch (error) {
       console.error('Error fetching table data:', error);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      fetchData();
+    } catch (error) {
+      console.error('Error approving row:', error);
     }
   };
 
@@ -38,27 +45,12 @@ const Users = ({onLogout}) => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Edit data={params.row} onUpdate={fetchData}/>
+            <Edit data={params.row} onSave={handleSave}/>
           </div>
         );
       },
     },
   ]; 
-    
-    const deleteColumn = [
-      {
-        field: "delete",
-        headerName: "Delete user",
-        width: 100,
-        renderCell: (params) => {
-          return (
-            <div className="cellAction">
-              {!(params.row.role === "admin") && <Delete />}
-            </div>
-          );
-        },
-      },
-    ]
     
   return (
     <div className='users'>
@@ -68,7 +60,7 @@ const Users = ({onLogout}) => {
             <Box m="20px">
                 <Box m="40px 0 0 0" height="75vh" sx={{"& .MuiDataGrid-root": { border: "none", },
                                                        "& .MuiDataGrid-cell": { borderBottom: "none", },}} >
-                    <DataGrid rows={data} columns={columns.concat(editColumn).concat(deleteColumn)} />
+                    <DataGrid rows={data} columns={columns.concat(editColumn)} />
                 </Box>
             </Box>
         </div>

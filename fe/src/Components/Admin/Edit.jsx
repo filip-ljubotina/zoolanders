@@ -7,13 +7,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Select, MenuItem as SelectOption } from '@mui/material';
-import ApiService from '../../Services/ApiService';
+import ApiService from '../../services/ApiService';
 import PropTypes from "prop-types"
 
 
-export default function Edit({data, onUpdate}) {
+export default function Edit({data, onSave}) {
   Edit.propTypes = {
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
+    onSave: PropTypes.func.isRequired
   }
   const [open, setOpen] = React.useState(false);
   const [change, setChange] = React.useState("userName");
@@ -27,13 +28,13 @@ export default function Edit({data, onUpdate}) {
     email: data.email,
     image: data.image,
     role: data.role
-  });onUpdate
+  });
 
   const updateData = async () => {
     try {
-      setRowData((rowData) => ({ ...rowData, [change]: newValue }));
+      console.log(rowData)
       await ApiService.put('/wildTrack/admin/putUserTable', rowData);
-      onUpdate();
+      onSave()
     } catch (error) {
       console.error('Error fetching table data:', error);
     }
@@ -48,6 +49,16 @@ export default function Edit({data, onUpdate}) {
   };
 
   const handleChange = (e) => {
+    if(change == 'firstName') {
+      setRowData((rowData) => ({...rowData, [change]: data.firstName}))
+    } else if(change == 'lastName') {
+      setRowData((rowData) => ({...rowData, [change]: data.lastName}))
+    } else if(change == 'role') {
+      setRowData((rowData) => ({...rowData, [change]: data.role}))
+    } else if(change == 'userName') {
+      setRowData((rowData) => ({...rowData, [change]: data.userName}))
+    }
+    
     setChange(e.target.value)
   }
 
@@ -55,12 +66,15 @@ export default function Edit({data, onUpdate}) {
     setNewValue(e.target.value)
   }
 
+  React.useEffect(() => {
+    setRowData((rowData) => ({ ...rowData, [change]: newValue }));
+  }, [newValue])
+
   const handleSubmit = () => {
     if(newValue == "Tragač" && change !== "role") {
       setError(true)
     } else {
-      console.log(change)
-      updateData()
+      updateData();
       setOpen(false);
     }
   }
@@ -109,8 +123,3 @@ export default function Edit({data, onUpdate}) {
     </React.Fragment>
   );
 }
-
-Edit.propTypes = {
-  data: PropTypes.object.isRequired,
-  onUpdate: PropTypes.func.isRequired,
-};

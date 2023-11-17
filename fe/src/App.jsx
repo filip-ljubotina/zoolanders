@@ -1,5 +1,5 @@
 import './App.css'
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './Components/Login/Login'
 import Register from './Components/Register/Register'
@@ -7,7 +7,7 @@ import Dashboard from './Components/General/Dashboard'
 
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);

@@ -10,6 +10,9 @@ import Approve from './Approve';
 import PropTypes from 'prop-types';
 
 const Requests = ({onLogout}) => {
+  Requests.propTypes = {
+   onLogout: PropTypes.object.isRequired,
+  };
     const [data, setData] = React.useState([]);
 
     const fetchData = async () => {
@@ -105,7 +108,3 @@ const Requests = ({onLogout}) => {
 }
 
 export default Requests
-
-Requests.propTypes = {
-  onLogout: PropTypes.func.isRequired,
-};
