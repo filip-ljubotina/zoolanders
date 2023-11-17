@@ -49,10 +49,10 @@ const Register = () => {
     e.preventDefault();
     try {
       console.log(userData.image);
-      const response = await ApiService.post('/registration', userData);
+      await ApiService.post('/registration', userData);
       setSuccess(true);
     } catch (error) {
-      setError(error.response.data.message);
+      setError(error);
     }
   };
 
