@@ -12,4 +12,5 @@ import lombok.ToString;
 public class LoginResponse {
     private String token;
     private String role;
+    private String stationName;
 }

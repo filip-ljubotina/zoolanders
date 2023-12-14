@@ -1,6 +1,6 @@
 package hr.fer.progi.dto.adminDto;
 
-import hr.fer.progi.entity.AppUserRole;
+import hr.fer.progi.entity.enums.AppUserRole;
 
 public class AdminTableResponseDto {
     private Long id;

@@ -3,8 +3,12 @@ package hr.fer.progi.service.impl;
 import hr.fer.progi.dto.authenticationDto.LoginRequest;
 import hr.fer.progi.dto.authenticationDto.LoginResponse;
 import hr.fer.progi.entity.AppUser;
-import hr.fer.progi.entity.AppUserRole;
+import hr.fer.progi.entity.SearcherInTheField;
+import hr.fer.progi.entity.Station;
+import hr.fer.progi.entity.enums.AppUserRole;
 import hr.fer.progi.dto.authenticationDto.RegistrationRequest;
+import hr.fer.progi.repository.SearcherInTheFieldRepository;
+import hr.fer.progi.repository.StationManagerRepository;
 import hr.fer.progi.service.EmailSender;
 import hr.fer.progi.entity.ConfirmationToken;
 import hr.fer.progi.mapper.LoginResponseMapper;
@@ -34,9 +38,14 @@ public class AuthenticationServiceJpa implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
     private final LoginResponseMapper loginResponseMapper;
+    private final StationManagerJpa stationManagerJpa;
+    private final SearcherInTheFieldJpa searcherInTheFieldJpa;
+    private final SearcherInTheFieldRepository searcherInTheFieldRepository;
+    private final StationManagerRepository stationManagerRepository;
 
     @Autowired
     private Environment env;
+
 
     @Override
     public LoginResponse performLogin(LoginRequest loginRequest){
@@ -55,7 +64,20 @@ public class AuthenticationServiceJpa implements AuthenticationService {
                 .map(GrantedAuthority::getAuthority)
                 .toArray(String[]::new);
 
-        LoginResponse loginResponse = loginResponseMapper.mapper(token, authoritiesArray);
+        String stationName = null;
+        //TODO: ne moze ostati ovako
+        if(authoritiesArray[0].equals("ROLE_STATION_MANAGER")){
+            stationName = stationManagerRepository.findByAppUser((AppUser) userDetails).getStation().getStationName();
+        }
+
+        if(authoritiesArray[0].equals("ROLE_SEARCHER_IN_THE_FIELD")){
+            Station station = searcherInTheFieldRepository.findByAppUser((AppUser) userDetails).getStation();
+            if (station != null){
+                stationName = station.getStationName();
+            }
+        }
+
+        LoginResponse loginResponse = loginResponseMapper.mapper(token, authoritiesArray, stationName);
 
         return loginResponse;
     }
@@ -69,17 +91,25 @@ public class AuthenticationServiceJpa implements AuthenticationService {
             throw new IllegalStateException("email not valid");
         }
 
-        String token = appUserServiceJpa.signUpUser(
-                new AppUser(
-                        request.getUserName(),
-                        request.getImage(),
-                        request.getFirstName(),
-                        request.getLastName(),
-                        request.getEmail(),
-                        request.getPassword(),
-                        AppUserRole.valueOf("ROLE_" + request.getRole())
-                )
+        AppUser appUser = new AppUser(
+                request.getUserName(),
+                request.getImage(),
+                request.getFirstName(),
+                request.getLastName(),
+                request.getEmail(),
+                request.getPassword(),
+                AppUserRole.valueOf("ROLE_" + request.getRole())
         );
+
+        String token = appUserServiceJpa.signUpUser(appUser);
+
+        if(request.getRole().equals("STATION_MANAGER")){
+            stationManagerJpa.createStationManager(appUser, request.getStation());
+        }
+
+        if(request.getRole().equals("SEARCHER_IN_THE_FIELD")){
+            searcherInTheFieldJpa.createSearcherInTheField(appUser);
+        }
 
         String link = env.getProperty("custom.serverPath") + "/registration/confirm?token=" + token;
         emailSender.send(

@@ -1,4 +1,4 @@
-package hr.fer.progi.entity;
+package hr.fer.progi.entity.enums;
 
 public enum AppUserRole {
     ROLE_ADMIN,

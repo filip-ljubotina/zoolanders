@@ -4,6 +4,7 @@ import './Login.css'
 import ApiService from '../../services/ApiService';
 import TokenService from '../../services/TokenService';
 import RoleService from '../../services/RoleService';
+import StationService from '../../services/StationService';
 import background_photo from '../Assets/login-bg.png'
 import Email from 'remixicon-react/MailFillIcon'
 import Password from 'remixicon-react/Lock2FillIcon'
@@ -32,6 +33,7 @@ const Login = ({onLoginSuccess}) => {
         const response = await ApiService.post('/logIn', loginData);
         TokenService.setToken(response.data.token);
         RoleService.setRole(response.data.role)
+        StationService.setStation(response.data.stationName)
         onLoginSuccess();
     } catch (error) {
         setError(error.response.data.message);

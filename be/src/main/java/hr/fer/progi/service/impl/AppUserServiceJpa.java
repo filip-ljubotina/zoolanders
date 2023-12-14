@@ -3,7 +3,7 @@ package hr.fer.progi.service.impl;
 import hr.fer.progi.dto.adminDto.AdminTableResponseDto;
 import hr.fer.progi.dto.adminDto.AdminTablePutRequestDto;
 import hr.fer.progi.entity.AppUser;
-import hr.fer.progi.entity.AppUserRole;
+import hr.fer.progi.entity.enums.AppUserRole;
 import hr.fer.progi.repository.AppUserRepository;
 import hr.fer.progi.entity.ConfirmationToken;
 import hr.fer.progi.service.AppUserService;

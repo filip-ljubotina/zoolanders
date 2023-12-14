@@ -17,4 +17,5 @@ public class RegistrationRequest {
     private final String password;
     private final String role;
     private final byte[] image;
+    private final String station;
 }

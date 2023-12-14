@@ -14,8 +14,9 @@ const Register = () => {
     lastName: '',
     email: '',
     password: '',
-    role: 'SEARCHER_IN_THE_FIELD',
+    role: '',
     image: Placeholder,
+    station: '',
   });
 
   const [error, setError] = React.useState(null);
@@ -43,12 +44,12 @@ const Register = () => {
         });
     }
     setError(null);
+    console.log(userData)
 };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(userData.image);
       await ApiService.post('/registration', userData);
       setSuccess(true);
     } catch (error) {
@@ -132,6 +133,22 @@ const Register = () => {
               <label htmlFor='register-researcher' className='register-button-label'>Istraživač</label>
             </div>
           </div>
+
+
+          {userData.role === 'STATION_MANAGER' && (
+            <div className='register-input-container'>
+              <select
+                id='station-dropdown'
+                name='station'
+                onChange={handleChange}
+                className='register-textfield'
+              >
+              <option value=''>Odaberite postaju</option>
+              <option value='biokovo'>Biokovo</option>
+              <option value='lonjsko_polje'>Lonjsko polje</option>  
+              </select>
+            </div>
+          )}
 
         </div>
 

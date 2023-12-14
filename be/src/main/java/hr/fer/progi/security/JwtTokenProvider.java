@@ -1,5 +1,6 @@
 package hr.fer.progi.security;
 
+import hr.fer.progi.entity.AppUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -32,6 +33,7 @@ public class JwtTokenProvider {
                 .collect(Collectors.toList());
         claims.put("roles", roles);
         claims.put("password", userDetails.getPassword());
+        claims.put("appUserId", ((AppUser) userDetails).getId());
         return createToken(claims, userDetails.getUsername());
     }
 
@@ -94,5 +96,13 @@ public class JwtTokenProvider {
                         .collect(Collectors.toList());
 
         return new UsernamePasswordAuthenticationToken(claims.getSubject(), "", authorities);
+    }
+
+    public Long extractAppUserId(String token) {
+        return extractClaim(extractToken(token), claims -> claims.get("appUserId", Long.class));
+    }
+
+    private String extractToken(String authorizationHeader) {
+        return authorizationHeader.substring(7);
     }
 }

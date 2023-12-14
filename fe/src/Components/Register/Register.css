@@ -114,7 +114,11 @@
     width: 35px;
     height: 16px;
 }
-  
+
+.register-textfield option {
+    color: black;
+}
+
 .register-label {
     position: absolute;
     left: 0;
