@@ -24,7 +24,7 @@ const Sidebar = () => {
             setSelected: PropTypes.func
         }
         return (
-            <Link to={`/dashboard/manager${to}`}>
+            <Link to={`/dashboard/researcher${to}`}>
                 <MenuItem component="div" 
                         active={selected === title} 
                         style={{color: "#72601b",}}
@@ -47,7 +47,7 @@ const Sidebar = () => {
                             <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                                 <MenuOutlinedIcon />
                             </IconButton>
-                            <h1>Voditelj Postaje</h1>
+                            <h2>Istraživač</h2>
                         </Box>)}
                     </MenuItem>
                     {!isCollapsed && (
@@ -62,12 +62,10 @@ const Sidebar = () => {
                         
                         {!isCollapsed && <h3 style={{textAlign: "center", color: "#393070"}}>Manage users</h3>}
 
-                        <DisplayCategory    
-                        title={<>Dodavanje <span style={{ display: 'block' }}>Tragača</span></>} 
-                        to="/addUsers" icon={<PeopleOutlinedIcon />} 
-                        selected={selected} setSelected={setSelected} />
+                        <DisplayCategory title="Akcije" to="/actions" icon={<PeopleOutlinedIcon />} 
+                                         selected={selected} setSelected={setSelected} />
                         
-                        <DisplayCategory title={<>Zahtjevi <span style={{ display: 'block' }}>Istraživača</span></>} to="/requests" icon={<PeopleOutlinedIcon />} 
+                        <DisplayCategory title="Zahtjevi" to="/requests" icon={<PeopleOutlinedIcon />} 
                                          selected={selected} setSelected={setSelected} />
                     </Box>
                     

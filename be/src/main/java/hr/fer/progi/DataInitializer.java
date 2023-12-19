@@ -3,7 +3,7 @@ package hr.fer.progi;
 import hr.fer.progi.entity.AppUser;
 import hr.fer.progi.entity.Station;
 import hr.fer.progi.entity.enums.AppUserRole;
-import hr.fer.progi.mapper.CoordinateJsonToClass;
+import hr.fer.progi.mapper.JsonToClass;
 import hr.fer.progi.repository.AppUserRepository;
 import hr.fer.progi.repository.StationRepository;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -19,16 +19,16 @@ public class DataInitializer {
     private final AppUserRepository appUserRepository;
     private final StationRepository stationRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final CoordinateJsonToClass coordinateJsonToClass;
+    private final JsonToClass jsonToClass;
 
     public DataInitializer(AppUserRepository appUserRepository,
                            StationRepository stationRepository,
                            BCryptPasswordEncoder bCryptPasswordEncoder,
-                           CoordinateJsonToClass coordinateJsonToClass) {
+                           JsonToClass jsonToClass) {
         this.appUserRepository = appUserRepository;
         this.stationRepository = stationRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.coordinateJsonToClass = coordinateJsonToClass;
+        this.jsonToClass = jsonToClass;
     }
 
     @EventListener
@@ -49,7 +49,7 @@ public class DataInitializer {
         if (stationRepository.count() == 0){
             try {
                 String jsonString = readJsonFromFile("coordinates/coordinatesBiokovo.json");
-                Station station = new Station("biokovo", coordinateJsonToClass.mapper(jsonString));
+                Station station = new Station("biokovo", jsonToClass.mapper(jsonString));
                 stationRepository.save(station);
                 // TODO: Add Lonjsko Polje station
                 // station = new Station("lonjsko_polje");

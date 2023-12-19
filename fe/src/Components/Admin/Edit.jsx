@@ -32,7 +32,6 @@ export default function Edit({data, onSave}) {
 
   const updateData = async () => {
     try {
-      console.log(rowData)
       await ApiService.put('/wildTrack/admin/putUserTable', rowData);
       onSave()
     } catch (error) {

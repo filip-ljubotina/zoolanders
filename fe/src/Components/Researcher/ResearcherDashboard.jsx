@@ -1,8 +1,23 @@
+import { Routes, Route } from "react-router-dom";
+import './ResearcherDashboard.css'
+import Sidebar from './Sidebar'
+import Actions from './Actions'
+import PropTypes from "prop-types"
+import ActionDetails from './ActionDetails'
 
-const ResearcherDashboard = () => {
+
+const ResearcherDashboard = ({onLogout}) => {
+  ResearcherDashboard.propTypes = {
+    onLogout: PropTypes.func
+  }
   return (
-    <h1 style={{ color: "black"}}> ISTRAŽITELJ: WORK IN PROGRESS, HVALA NA STRPLJENJU! </h1>
-  )
+    <div>
+      <Routes>
+        <Route path = "/" element={<Sidebar onLogout={onLogout} />} />
+        <Route path = "/actions" element={<Actions onLogout={onLogout} />} />
+        <Route path="/action-details/:id" element={<ActionDetails onLogout={onLogout}/>} />
+      </Routes>
+    </div>  )
 }
 
 export default ResearcherDashboard

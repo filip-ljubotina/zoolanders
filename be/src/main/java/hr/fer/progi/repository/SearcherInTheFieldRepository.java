@@ -3,8 +3,11 @@ package hr.fer.progi.repository;
 import hr.fer.progi.dto.stationManagerDto.AvailableSearcherDto;
 import hr.fer.progi.entity.AppUser;
 import hr.fer.progi.entity.SearcherInTheField;
+import hr.fer.progi.entity.Station;
+import hr.fer.progi.entity.enums.Qualification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import javax.naming.directory.SearchControls;
 import java.util.List;
@@ -16,4 +19,12 @@ public interface SearcherInTheFieldRepository extends JpaRepository<SearcherInTh
     List<AvailableSearcherDto> findAllAvailableSearchers();
 
     SearcherInTheField findByAppUser(AppUser appUser);
+
+    @Query("SELECT DISTINCT s.qualification FROM SearcherInTheField s WHERE s.action IS NULL AND s.station = :station")
+    List<Qualification> findDistinctQualificationsByStation(@Param("station") Station station);
+
+    @Query("SELECT new hr.fer.progi.dto.stationManagerDto.AvailableSearcherDto(s.searcherInTheFieldId, s.appUser.firstName, s.appUser.lastName, s.qualification)" +
+            " FROM SearcherInTheField s " +
+            "WHERE s.action IS NULL AND s.station = :station AND s.qualification IN :qualifications")
+    List<AvailableSearcherDto> findAllAvailableSearchersForAction(@Param("station") Station station, @Param("qualifications") List<Qualification> qualifications);
 }

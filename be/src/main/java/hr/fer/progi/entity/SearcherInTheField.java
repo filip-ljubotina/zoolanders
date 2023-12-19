@@ -28,4 +28,7 @@ public class SearcherInTheField {
     @ManyToOne
     @JoinColumn(name = "station_id")
     private Station station;
+
+    @ManyToOne
+    private Action action;
 }

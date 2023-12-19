@@ -113,4 +113,8 @@ public class AppUserServiceJpa implements UserDetailsService, AppUserService {
         appUser.setLocked(false);
         appUserRepository.save(appUser);
     }
+
+    public AppUser findById(Long appUserId) {
+        return appUserRepository.findById(appUserId).get();
+    }
 }
