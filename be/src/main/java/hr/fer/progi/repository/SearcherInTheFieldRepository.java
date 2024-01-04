@@ -1,6 +1,7 @@
 package hr.fer.progi.repository;
 
 import hr.fer.progi.dto.stationManagerDto.AvailableSearcherDto;
+import hr.fer.progi.entity.Action;
 import hr.fer.progi.entity.AppUser;
 import hr.fer.progi.entity.SearcherInTheField;
 import hr.fer.progi.entity.Station;
@@ -27,4 +28,9 @@ public interface SearcherInTheFieldRepository extends JpaRepository<SearcherInTh
             " FROM SearcherInTheField s " +
             "WHERE s.action IS NULL AND s.station = :station AND s.qualification IN :qualifications")
     List<AvailableSearcherDto> findAllAvailableSearchersForAction(@Param("station") Station station, @Param("qualifications") List<Qualification> qualifications);
+
+    @Query("SELECT new hr.fer.progi.dto.stationManagerDto.AvailableSearcherDto(s.searcherInTheFieldId, s.appUser.firstName, s.appUser.lastName, s.qualification, s.currentPosition)" +
+            " FROM SearcherInTheField s " +
+            "WHERE s.action = :action")
+    List<AvailableSearcherDto> findAllSearchersOnActionByAction(@Param("action") Action action);
 }

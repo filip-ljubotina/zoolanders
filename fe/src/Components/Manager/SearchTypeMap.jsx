@@ -13,7 +13,7 @@ const SearchTypeMap = ({ coordinates, searchType }) => {
 
   const polygon = coordinates[searchType] || coordinates["FOOT"];
   const opacity = polygonOpacity[searchType] || polygonOpacity["FOOT"]
-
+  
   return (
     <MapContainer center={coordinates["center"]} zoom={10} style={{ height: '300px', width: '100%' }}>
       <TileLayer

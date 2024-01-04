@@ -20,8 +20,14 @@ const AddSearchers = ({onLogout}) => {
     try {
       const responseData = await ApiService.get('/wildTrack/manager/getAvailableSearchers');
       const responseJson = await ApiService.get('/wildTrack/manager/getCoordinatesJson');
-      console.log(responseData.data)
-      setData(responseData.data);
+      const data = responseData.data.map((searcher) => ({ //porapviti na be
+        id: searcher.searcherId, 
+        firstName: searcher.firstName,
+        lastName: searcher.lastName,
+        qualification: searcher.qualification,
+        currentPosition: searcher.currentPosition,
+      }));
+      setData(data);
       setCoordinates(responseJson.data)
     } catch (error) {
       console.error('Error fetching table data:', error);

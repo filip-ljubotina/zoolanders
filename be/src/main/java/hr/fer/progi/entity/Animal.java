@@ -1,7 +1,6 @@
 package hr.fer.progi.entity;
 
 import com.vladmihalcea.hibernate.type.json.JsonType;
-import hr.fer.progi.entity.enums.Qualification;
 import hr.fer.progi.jsonentities.PositionCoordinates;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,26 +18,33 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @TypeDef(name = "json", typeClass = JsonType.class)
-public class SearcherInTheField {
-
+public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long searcherInTheFieldId;
-    @Enumerated(EnumType.STRING)
-    private Qualification qualification;
+    private Long animalId;
+
+    private String name;
+
+    private String breed;
+
+    private String description;
 
     @Type(type = "json")
     @Column(columnDefinition = "json")
     private PositionCoordinates currentPosition;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private AppUser appUser;
-
     @ManyToOne
-    @JoinColumn(name = "station_id")
     private Station station;
 
-    @ManyToOne
-    private Action action;
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PastLocations> pastLocations;
+
+    public Animal(String name, String breed, String description,
+                  PositionCoordinates currentPosition, Station station) {
+        this.name = name;
+        this.breed = breed;
+        this.description = description;
+        this.currentPosition = currentPosition;
+        this.station = station;
+    }
 }

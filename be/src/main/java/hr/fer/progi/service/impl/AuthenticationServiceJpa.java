@@ -48,6 +48,7 @@ public class AuthenticationServiceJpa implements AuthenticationService {
 
 
     @Override
+    @Transactional
     public LoginResponse performLogin(LoginRequest loginRequest){
 
         Authentication authentication = authenticationManager.authenticate(
@@ -71,7 +72,8 @@ public class AuthenticationServiceJpa implements AuthenticationService {
         }
 
         if(authoritiesArray[0].equals("ROLE_SEARCHER_IN_THE_FIELD")){
-            Station station = searcherInTheFieldRepository.findByAppUser((AppUser) userDetails).getStation();
+            SearcherInTheField searcherInTheField = searcherInTheFieldRepository.findByAppUser((AppUser) userDetails);
+            Station station = searcherInTheField.getStation();
             if (station != null){
                 stationName = station.getStationName();
             }

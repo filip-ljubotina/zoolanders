@@ -17,9 +17,8 @@ function ChooseSearcher({card, onSave}) {
 
     const fetchData = async () => {
         try {
-            console.log(card)
             const responseData = await ApiService.get(`/wildTrack/manager/getAllAvailableSearchersForAction?actionId=${card.actionId}`);
-            setData(responseData.data);
+            setData(responseData.data.map((row) => ({ ...row, id: row.searcherId })));
         } catch (error) {
           console.error('Error fetching table data:', error);
         }
