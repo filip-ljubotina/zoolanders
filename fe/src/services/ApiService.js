@@ -1,8 +1,7 @@
 import axios from 'axios';
-//"https://wildtrack-be-m117.onrender.com"
 
 const api = axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: "https://wildtrack-be-m117.onrender.com",
     credentials: 'include',
     headers: {
         'Content-Type': 'application/json',
