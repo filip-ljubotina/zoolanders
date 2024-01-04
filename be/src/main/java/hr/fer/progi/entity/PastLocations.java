@@ -1,8 +1,8 @@
 package hr.fer.progi.entity;
 
 import com.vladmihalcea.hibernate.type.json.JsonType;
-import hr.fer.progi.entity.enums.Qualification;
 import hr.fer.progi.jsonentities.PositionCoordinates;
+import hr.fer.progi.jsonentities.RouteWaypoints;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,6 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter
@@ -19,26 +18,22 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @TypeDef(name = "json", typeClass = JsonType.class)
-public class SearcherInTheField {
-
+public class PastLocations {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long searcherInTheFieldId;
-    @Enumerated(EnumType.STRING)
-    private Qualification qualification;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long pastRoutesId;
 
     @Type(type = "json")
     @Column(columnDefinition = "json")
-    private PositionCoordinates currentPosition;
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private AppUser appUser;
+    private PositionCoordinates positionCoordinates;
 
     @ManyToOne
-    @JoinColumn(name = "station_id")
-    private Station station;
+    @JoinColumn(name = "animal_id")
+    private Animal animal;
 
     @ManyToOne
     private Action action;
+
+    @ManyToOne
+    private SearcherInTheField searcherInTheField;
 }

@@ -22,7 +22,7 @@ function SearcherRequest({card}) {
         stationName: "biokovo",
         qualifications: []
       });
-      const [requestFlag, setRequestFlag] = useState(false);
+    const [requestFlag, setRequestFlag] = useState(false);
 
 
     const allQualifications = ["Pješke", "Dron", "Automobil", "Cross Motor", "Brod", "Helikopter"];

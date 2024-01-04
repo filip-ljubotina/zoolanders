@@ -1,7 +1,6 @@
 package hr.fer.progi.jsonentities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import hr.fer.progi.entity.enums.Qualification;
 
 import java.util.List;
 

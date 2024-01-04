@@ -50,7 +50,6 @@ function AddAction({onAddCard}) {
         if(e.target.name === "locationName"){
             setChangeLocation(e.target.value)    
         }
-        console.log(newCard)
     }   
 
     const handleSubmit = () => {
@@ -83,15 +82,15 @@ function AddAction({onAddCard}) {
                 <SelectOption key="praćenje" value="praćenje">Praćenje</SelectOption>
             </Select>
             <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            name="actionName"
-            label="Unesite naziv akcije"
-            type="text"
-            fullWidth
-            variant="standard"
-            onChange={handleChange} required/>
+                autoFocus
+                margin="dense"
+                id="name"
+                name="actionName"
+                label="Unesite naziv akcije"
+                type="text"
+                fullWidth
+                variant="standard"
+                onChange={handleChange} required/>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Odbaci</Button>

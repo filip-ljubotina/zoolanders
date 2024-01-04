@@ -1,13 +1,13 @@
 package hr.fer.progi.service.impl;
 
-import hr.fer.progi.dto.researcherDto.ActionDto;
-import hr.fer.progi.dto.researcherDto.AvailableQualificationsDto;
-import hr.fer.progi.dto.researcherDto.RequestDto;
+import hr.fer.progi.dto.researcherDto.*;
+import hr.fer.progi.dto.stationManagerDto.AvailableSearcherDto;
 import hr.fer.progi.entity.Action;
 import hr.fer.progi.entity.AppUser;
 import hr.fer.progi.entity.SearchersRequest;
 import hr.fer.progi.entity.Station;
 import hr.fer.progi.mapper.ActionDtoMapper;
+import hr.fer.progi.mapper.JsonToClass;
 import hr.fer.progi.mapper.ReqDtoToSearchersReqMapper;
 import hr.fer.progi.repository.ActionRepository;
 import hr.fer.progi.repository.StationRepository;
@@ -27,6 +27,9 @@ public class ResearcherServiceJpa {
     private final StationRepository stationRepository;
     private final SearcherInTheFieldJpa searcherInTheFieldJpa;
     private final ReqDtoToSearchersReqMapper reqDtoToSearchersReqMapper;
+    private final JsonToClass jsonToClass;
+    private final TaskServiceJpa taskServiceJpa;
+
     public void postNewAction(ActionDto actionDto, Long appUserId) {
         AppUser appUser = appUserServiceJpa.findById(appUserId);
         Action newAction = actionDtoMapper.dtoToClass(actionDto, appUser);
@@ -55,5 +58,27 @@ public class ResearcherServiceJpa {
         SearchersRequest searchersRequest = reqDtoToSearchersReqMapper.mapper(station, requestDto.getQualifications());
         action.setSearchersRequest(searchersRequest);
         actionRepository.save(action);
+    }
+
+    public List<AvailableSearcherDto> getAllSearchersOnAction(Long actionId) {
+        Action action = actionRepository.findById(actionId).get();
+        List<AvailableSearcherDto> availableSearcherDtos = searcherInTheFieldJpa.getAllSearchersOnAction(action);
+        return  availableSearcherDtos;
+    }
+
+    public void putMapViewCriteria(Long actionId, MapViewCriteriaDto mapViewCriteriaDto) {
+        Action action = actionRepository.findById(actionId).get();
+        action.setMapViewCriteria(jsonToClass.jsonToMapViewCriteria(mapViewCriteriaDto));
+        actionRepository.save(action);
+    }
+
+    public MapViewCriteriaDto getMapViewCriteria(Long actionId) {
+        Action action = actionRepository.findById(actionId).get();
+        return jsonToClass.mapViewCriteriaToDto(action.getMapViewCriteria());
+    }
+
+    public void postNewTask(TaskDto taskDto, Long actionId) {
+        Action action = actionRepository.findById(actionId).get();
+        taskServiceJpa.postNewTask(taskDto, action, searcherInTheFieldJpa.findById(taskDto.getSearcherId()));
     }
 }
