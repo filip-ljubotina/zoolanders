@@ -6,17 +6,17 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    password: matematika #${DB_PASS:EO0aLFJyva6jYEb2oUGsVDpkD0gxJToE}
-    username: postgres #${DB_USERNAME:zoolanders}
-    url: jdbc:postgresql://localhost:5432/postgres #${DB_URL:jdbc:postgresql://dpg-cl7s8aivokcc73aprek0-a:5432/wildtrack_db}
-    #driverClassName: ${DB_DRIVER:org.postgresql.Driver}
+    password: ${DB_PASS:EO0aLFJyva6jYEb2oUGsVDpkD0gxJToE}
+    username:${DB_USERNAME:zoolanders}
+    url: ${DB_URL:jdbc:postgresql://dpg-cl7s8aivokcc73aprek0-a:5432/wildtrack_db}
+    driverClassName: ${DB_DRIVER:org.postgresql.Driver}
 
 
   mail:
     host: smtp.gmail.com
     port: 587
-    username: wildtrackzoolanders@gmail.com #${EMAIL_USERNAME}
-    password: mmuv duey nukm dcmn #${EMAIL_PASSWORD}
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
     properties:
       mail:
         smtp:
