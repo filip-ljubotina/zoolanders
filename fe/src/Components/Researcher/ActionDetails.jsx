@@ -5,7 +5,6 @@ import Topbar from './Topbar';
 import PropTypes from 'prop-types';
 import './Actions.css';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import MarkerClusterGroup from '@changey/react-leaflet-markercluster';
 import L from 'leaflet';
 import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
@@ -100,7 +99,7 @@ const ActionDetails = ({ onLogout }) => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
-          <MarkerClusterGroup>
+          
             {stationCoordinates.length > 0  && (<Marker key="station-location" position={stationCoordinates} icon={homeIcon}>
             </Marker>)}
 
@@ -124,7 +123,7 @@ const ActionDetails = ({ onLogout }) => {
                 </Popup>
               </Marker>
             ))}
-          </MarkerClusterGroup>;
+          
         </MapContainer>
         <ChooseSubjectView cardData={cardData} onSubmit={handleSubjectMapView}/>
       </div>
