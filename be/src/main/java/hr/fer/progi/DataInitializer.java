@@ -61,54 +61,7 @@ public class DataInitializer {
             appUserRepository.save(appUser);
         }
 
-        if(stationRepository.count() != 0){
-            animalRepository.deleteAll();
-            Station station = stationRepository.findByStationName("lonjsko_polje");
-            List<Double> coordinates = new ArrayList<>();
-            coordinates.add(45.36276);
-            coordinates.add(16.812344);
-            PositionCoordinates positionCoordinates = new PositionCoordinates(coordinates);
-            Animal animal = new Animal("roda1", "roda", "bijela roda", positionCoordinates, station);
-            animalRepository.save(animal);
-
-            coordinates = new ArrayList<>();
-            coordinates.add(45.401343);
-            coordinates.add(16.76239);
-            positionCoordinates = new PositionCoordinates(coordinates);
-            animal = new Animal("roda2", "roda", "crna roda", positionCoordinates, station);
-            animalRepository.save(animal);
-
-            station = stationRepository.findByStationName("biokovo");
-
-            coordinates = new ArrayList<>();
-            coordinates.add(43.326926);
-            coordinates.add(17.056618);
-            positionCoordinates = new PositionCoordinates(coordinates);
-            animal = new Animal("vuk1", "vuk", "bijeli vuk", positionCoordinates, station);
-            animalRepository.save(animal);
-
-            coordinates = new ArrayList<>();
-            coordinates.add(43.316935);
-            coordinates.add(17.09507);
-            positionCoordinates = new PositionCoordinates(coordinates);
-            animal = new Animal("vuk2", "vuk", "crni vuk", positionCoordinates, station);
-            animalRepository.save(animal);
-        }
-
-        if(actionRepository.count() != 0){
-            List<Action> actions = actionRepository.findAll();
-            for (Action action : actions){
-                List<Object> checkedItems = new ArrayList<>();
-                if(action.getLocationName().equals("biokovo")){
-                    checkedItems.add("vuk");
-                }else{
-                    checkedItems.add("roda");
-                }
-                action.setMapViewCriteria(new MapViewCriteria("breed", checkedItems));
-                actionRepository.save(action);
-            }
-        }
-
+        
         if (stationRepository.count() == 0){
             try {
                 String jsonString = readJsonFromFile("coordinates/coordinatesBiokovo.json");
