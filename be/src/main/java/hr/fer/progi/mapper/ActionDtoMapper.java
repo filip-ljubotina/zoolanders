@@ -3,10 +3,13 @@ package hr.fer.progi.mapper;
 import hr.fer.progi.dto.researcherDto.ActionDto;
 import hr.fer.progi.entity.Action;
 import hr.fer.progi.entity.AppUser;
+import hr.fer.progi.jsonentities.MapViewCriteria;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Component
 public class ActionDtoMapper {
