@@ -1,11 +1,14 @@
 package hr.fer.progi;
 
+import hr.fer.progi.entity.Action;
 import hr.fer.progi.entity.Animal;
 import hr.fer.progi.entity.AppUser;
 import hr.fer.progi.entity.Station;
 import hr.fer.progi.entity.enums.AppUserRole;
+import hr.fer.progi.jsonentities.MapViewCriteria;
 import hr.fer.progi.jsonentities.PositionCoordinates;
 import hr.fer.progi.mapper.JsonToClass;
+import hr.fer.progi.repository.ActionRepository;
 import hr.fer.progi.repository.AnimalRepository;
 import hr.fer.progi.repository.AppUserRepository;
 import hr.fer.progi.repository.StationRepository;
@@ -13,6 +16,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
