@@ -7,7 +7,7 @@ import Topbar from './Topbar';
 import ApiService from '../../services/ApiService';
 import SeeMore from './SeeMore'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import MarkerClusterGroup from '@changey/react-leaflet-markercluster';
+import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
 import Button from '@mui/material/Button';
 import searcher_icon_png from '../Assets/searcher.png'
