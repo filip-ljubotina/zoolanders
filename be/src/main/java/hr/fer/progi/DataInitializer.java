@@ -26,17 +26,20 @@ public class DataInitializer {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JsonToClass jsonToClass;
     private final AnimalRepository animalRepository;
+    private final ActionRepository actionRepository;
 
     public DataInitializer(AppUserRepository appUserRepository,
                            StationRepository stationRepository,
                            BCryptPasswordEncoder bCryptPasswordEncoder,
                            JsonToClass jsonToClass,
-                           AnimalRepository animalRepository) {
+                           AnimalRepository animalRepository,
+                           ActionRepository actionRepository) {
         this.appUserRepository = appUserRepository;
         this.stationRepository = stationRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.jsonToClass = jsonToClass;
         this.animalRepository = animalRepository;
+        this.actionRepository = actionRepository;
     }
 
     @EventListener
