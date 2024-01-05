@@ -17,6 +17,8 @@ public class ActionDtoMapper {
         action.setLocationName(actionDto.getLocationName());
         action.setActionName(actionDto.getActionName());
         action.setAppUser(appUser);
+        List<Object> checkedItems = new ArrayList<>();
+        action.setMapViewCriteria(new MapViewCriteria("breed", checkedItems));
         return action;
     }
 
