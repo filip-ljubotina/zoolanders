@@ -19,7 +19,7 @@ export default function Approve({row, onApprove}) {
   const updateData = async ({row}) => {
     try {
       await ApiService.put('/wildTrack/admin/putApprovalTable', row);
-      onApprove()
+      onApprove();
     } catch (error) {
       console.error('Error fetching table data:', error);
     }

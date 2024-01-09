@@ -13,8 +13,6 @@ const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = React.useState(false)
     const [selected, setSelected] = React.useState("Home")
 
-    
-
     const DisplayCategory = ({ title, to, icon, selected, setSelected }) => {
         DisplayCategory.propTypes = {
             title: PropTypes.string,
@@ -34,20 +32,29 @@ const Sidebar = () => {
                 </MenuItem>
             </Link>          
         );
-      };
+    };
+
+    const handleCollapse = () => {
+        setIsCollapsed(!isCollapsed);
+        if(isCollapsed) {
+            document.documentElement.style.setProperty('--content-width', '250px');
+        } else {
+            document.documentElement.style.setProperty('--content-width', '80px');
+        }
+    }
 
     return (
         <Box>
-            <ProSidebar style={{ height: "100vh"}} image={background_photo} collapsed={ isCollapsed }>
+            <ProSidebar style={{ minHeight: "100vh", height: "100%"}} image={background_photo} collapsed={ isCollapsed }>
                 <Menu>
-                    <MenuItem onClick={() => setIsCollapsed(!isCollapsed)} icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
+                    <MenuItem onClick={handleCollapse} icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
                             style={{margin: "10px 0 20px 0", color: "#72601b"}}>
                         {!isCollapsed && (
                         <Box display="flex" justifyContent="space-between" alignItems="center" ml="15px">
-                            <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
+                            <IconButton onClick={handleCollapse}>
                                 <MenuOutlinedIcon />
                             </IconButton>
-                            <h2>ADMIN</h2>
+                            <h2>Admin</h2>
                         </Box>)}
                     </MenuItem>
                     {!isCollapsed && (
@@ -76,4 +83,4 @@ const Sidebar = () => {
     )
 }
 
-export default Sidebar
+export default Sidebar;

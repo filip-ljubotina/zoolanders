@@ -68,4 +68,4 @@ const Requests = ({onLogout}) => {
   )
 }
 
-export default Requests
+export default Requests;

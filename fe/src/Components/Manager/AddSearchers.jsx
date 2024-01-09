@@ -49,7 +49,7 @@ const AddSearchers = ({onLogout}) => {
   const addColumn = [
     {
       field: "add",
-      headerName: "Add user",
+      headerName: "Dodaj tragača",
       width: 100,
       renderCell: (params) => {
         return (
@@ -78,18 +78,21 @@ const AddSearchers = ({onLogout}) => {
 }
 
 const columns = [
-  { field: "id", headerName: "ID" , width: 100},
-  {
-      field: "firstName",
-      headerName: "Ime",
-      width: 150,
+  { field: "id", 
+    headerName: "ID", 
+    width: 100
   },
   {
-      field: "lastName",
-      headerName: "Prezime",
-      width: 150,
+    field: "firstName",
+    headerName: "Ime",
+    width: 150,
+  },
+  {
+    field: "lastName",
+    headerName: "Prezime",
+    width: 150,
   },
 ];
 
 
-export default AddSearchers
+export default AddSearchers;

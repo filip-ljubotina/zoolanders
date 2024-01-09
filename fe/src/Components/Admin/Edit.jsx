@@ -83,7 +83,7 @@ export default function Edit({data, onSave}) {
       <Button variant="outlined" onClick={handleClickOpen}
         sx={{ borderColor: 'darkblue',
           color: 'darkblue'}}>
-        Edit
+        Uredi
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Uredite podatke korisnika</DialogTitle>

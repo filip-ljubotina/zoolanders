@@ -100,14 +100,14 @@ function SeeMore({searcher, task, onSubmit}) {
             setOpen(false);  
             onSubmit(); 
         }
-    }
+    };
 
     const handleSave = () => {
         if(isStored === false){
             setIsStored(true);
             postNewAnimal();
         }
-    } 
+    }; 
 
     const mapToQualification = (label) => {
         switch (label) {
@@ -124,23 +124,23 @@ function SeeMore({searcher, task, onSubmit}) {
 
     const renderMarkers = () => {
         return waypointsRef.current.map((marker, index) => {
-          let iconUrl;
+            let iconUrl;
       
-          if (index === 0) {
-            iconUrl = compass_icon;
-          } else if (index === waypointsRef.current.length - 1) {
-            iconUrl = flag_icon;
-          } else {
-            iconUrl = circle_icon;
-          }
+            if (index === 0) {
+                iconUrl = compass_icon;
+            } else if (index === waypointsRef.current.length - 1) {
+                iconUrl = flag_icon;
+            } else {
+                iconUrl = circle_icon;
+            }
       
-          return <Marker key={index} position={marker} icon={L.icon({
-            iconUrl: iconUrl,
-            iconSize: [32, 32],
-            iconAnchor: [16, 32],
-          })} />;
+            return <Marker key={index} position={marker} icon={L.icon({
+                iconUrl: iconUrl,
+                iconSize: [32, 32],
+                iconAnchor: [16, 32],
+            })} />
         });
-      }
+    }
 
     const handleChange = (e) => {
         setNewAnimal({
@@ -229,7 +229,7 @@ function SeeMore({searcher, task, onSubmit}) {
                             Pohrani
                         </Button>
                     </>
-                    )}
+                )}
                     
             </DialogContent>
             <DialogActions>

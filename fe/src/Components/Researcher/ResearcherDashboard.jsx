@@ -17,7 +17,8 @@ const ResearcherDashboard = ({onLogout}) => {
         <Route path = "/actions" element={<Actions onLogout={onLogout} />} />
         <Route path="/action-details/:id" element={<ActionDetails onLogout={onLogout}/>} />
       </Routes>
-    </div>  )
+    </div>
+  )
 }
 
-export default ResearcherDashboard
+export default ResearcherDashboard;

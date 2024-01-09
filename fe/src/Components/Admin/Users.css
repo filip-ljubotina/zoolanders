@@ -1,12 +1,14 @@
-.users{
+.users {
     width: 100vw;
+    min-height: 100vh;
+    height: 100%;
     display: flex;
     background-color: #677030;
     color: black;
 }
 
-.usersContainer{
-    flex: 6;
+.usersContainer {
+    width: calc(100% - var(--content-width));
 }
 
 .cellAction{

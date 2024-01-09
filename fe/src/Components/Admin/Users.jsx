@@ -53,16 +53,16 @@ const Users = ({onLogout}) => {
     
   return (
     <div className='users'>
-        <Sidebar />
-        <div className='usersContainer'>
-            <Topbar title="Pregled korisnika" onLogout={onLogout} />
-            <Box m="20px">
-                <Box m="40px 0 0 0" height="75vh" sx={{"& .MuiDataGrid-root": { border: "none", },
-                                                       "& .MuiDataGrid-cell": { borderBottom: "none", },}} >
-                    <DataGrid rows={data} columns={columns.concat(editColumn)} />
-                </Box>
+      <Sidebar />
+      <div className='usersContainer'>
+          <Topbar title="Pregled korisnika" onLogout={onLogout} />
+          <Box m="20px">
+            <Box m="40px 0 0 0" height="75vh" sx={{"& .MuiDataGrid-root": { border: "none", },
+                                                   "& .MuiDataGrid-cell": { borderBottom: "none", },}} >
+              <DataGrid rows={data} columns={columns.concat(editColumn)} />
             </Box>
-        </div>
+          </Box>
+      </div>
     </div>
   )
 }
@@ -110,5 +110,4 @@ const columns = [
   },
 ];
 
-
-export default Users
+export default Users;

@@ -10,6 +10,7 @@ const ManagerDashboard = ({onLogout}) => {
   ManagerDashboard.propTypes = {
     onLogout: PropTypes.func
   }
+
   return (
     <div>
       <Routes>
@@ -17,8 +18,7 @@ const ManagerDashboard = ({onLogout}) => {
         <Route path = "/addUsers" element={<AddSearchers onLogout={onLogout} />} />
         <Route path = "/requests" element={<Requests onLogout={onLogout} />} />
       </Routes>
-    </div>
-    
+    </div>  
   )
 }
 

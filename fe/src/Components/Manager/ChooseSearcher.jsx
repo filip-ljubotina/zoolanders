@@ -20,7 +20,7 @@ function ChooseSearcher({card, onSave}) {
             const responseData = await ApiService.get(`/wildTrack/manager/getAllAvailableSearchersForAction?actionId=${card.actionId}`);
             setData(responseData.data.map((row) => ({ ...row, id: row.searcherId })));
         } catch (error) {
-          console.error('Error fetching table data:', error);
+            console.error('Error fetching table data:', error);
         }
       };
     
@@ -29,7 +29,7 @@ function ChooseSearcher({card, onSave}) {
             await ApiService.put(`/wildTrack/manager/putActionSearcherRequestToNull?actionId=${card.actionId}`, null);
             onSave();
         } catch (error) {
-        console.error('Error fetching table data:', error);
+            console.error('Error fetching table data:', error);
         }
     };
 
@@ -45,7 +45,7 @@ function ChooseSearcher({card, onSave}) {
     const handleSubmit = () => {
         updateData();
         setOpen(false);
-    }
+    };
 
     const handleChoose = async () => {
         try {
@@ -53,7 +53,7 @@ function ChooseSearcher({card, onSave}) {
         } catch (error) {
           console.error('Error approving row:', error);
         }
-      };
+    };
 
 
     const columns = [
@@ -87,7 +87,7 @@ function ChooseSearcher({card, onSave}) {
             );
             },
         }
-        ];
+    ];
 
     const chooseColumn = [
     {
@@ -97,7 +97,7 @@ function ChooseSearcher({card, onSave}) {
         renderCell: (params) => {
         return (
             <div className="cellAction">
-            <Choose cardInfo={card} data={params.row} onChoose={handleChoose}/>
+                <Choose cardInfo={card} data={params.row} onChoose={handleChoose}/>
             </div>
         );
         },
