@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface PastLocationsRepository extends JpaRepository<PastLocations, Long> {
 
-    @Query("SELECT new hr.fer.progi.dto.researcherDto.PastSearcherLocationDto(p.pastRoutesId, p.searcherInTheField.searcherInTheFieldId, p.searcherInTheField.appUser.userName, p.positionCoordinates)" +
+    @Query("SELECT new hr.fer.progi.dto.researcherDto.PastSearcherLocationDto(p.pastRoutesId, p.searcherInTheField.searcherInTheFieldId, p.searcherInTheField.appUser.userName, p.searcherInTheField.qualification,p.positionCoordinates)" +
             " FROM PastLocations p WHERE p.action = :action AND p.searcherInTheField IS NOT NULL")
     List<PastSearcherLocationDto> findPastSearchersLocationsByAction(@Param("action") Action action);
 
