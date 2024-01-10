@@ -1,6 +1,8 @@
 package hr.fer.progi.jsonentities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 

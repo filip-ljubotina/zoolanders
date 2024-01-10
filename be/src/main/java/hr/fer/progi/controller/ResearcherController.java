@@ -77,8 +77,25 @@ public class ResearcherController {
 
     @PostMapping("/researcher/postNewTask/{actionId}")
     public HttpStatus postNewTask(@RequestBody TaskDto taskDto, @PathVariable Long actionId) {
-
         researcherServiceJpa.postNewTask(taskDto, actionId);
         return HttpStatus.CREATED;
+    }
+
+    @GetMapping("/researcher/getPastSearcherRoutes/{actionId}/{searcherInTheFieldId}")
+    public ResponseEntity<List<PastSearcherRoutesDto>> getPastSearcherRoutes(@PathVariable Long actionId, @PathVariable Long searcherInTheFieldId) {
+        List<PastSearcherRoutesDto> pastSearcherRoutesDtos = researcherServiceJpa.getPastSearcherRoutes(actionId, searcherInTheFieldId);
+        return new ResponseEntity<>(pastSearcherRoutesDtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/researcher/getPastSearchersLocations/{actionId}")
+    public ResponseEntity<List<PastSearcherLocationDto>> getPastSearchersLocations(@PathVariable Long actionId) {
+        List<PastSearcherLocationDto> pastSearcherLocationDtos = researcherServiceJpa.getPastSearchersLocations(actionId);
+        return new ResponseEntity<>(pastSearcherLocationDtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/researcher/getPastAnimalsLocations/{actionId}")
+    public ResponseEntity<List<PastAnimalLocationsDto>> getPastAnimalsLocations(@PathVariable Long actionId) {
+        List<PastAnimalLocationsDto> pastAnimalLocationsDtos = researcherServiceJpa.getPastAnimalsLocations(actionId);
+        return new ResponseEntity<>(pastAnimalLocationsDtos, HttpStatus.OK);
     }
 }

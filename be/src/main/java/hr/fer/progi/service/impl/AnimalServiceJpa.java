@@ -1,6 +1,8 @@
 package hr.fer.progi.service.impl;
 
+import hr.fer.progi.dto.gpsDto.NewAnimalLocationDto;
 import hr.fer.progi.dto.researcherDto.AnimalDto;
+import hr.fer.progi.entity.Animal;
 import hr.fer.progi.entity.Station;
 import hr.fer.progi.jsonentities.MapViewCriteria;
 import hr.fer.progi.mapper.AnimalDtoMapper;
@@ -18,6 +20,7 @@ public class AnimalServiceJpa {
     private final AnimalRepository animalRepository;
     private final StationRepository stationRepository;
     private final AnimalDtoMapper animalDtoMapper;
+    private final PastDataServiceJpa pastDataServiceJpa;
 
     public List<String> findAllBreedsByStation(String stationName){
         Station station = stationRepository.findByStationName(stationName);
@@ -56,5 +59,12 @@ public class AnimalServiceJpa {
 
     public void postNewAnimal(AnimalDto animalDto, Station station){
         animalRepository.save(animalDtoMapper.AnimalDtoToClass(animalDto, station));
+    }
+
+    public void putNewAnimalLocation(NewAnimalLocationDto newAnimalLocationDto) {
+        Animal animal = animalRepository.findById(newAnimalLocationDto.getAnimalId()).get();
+        pastDataServiceJpa.animalPostitionSave(animal);
+        animal.getCurrentPosition().setCoordinates(newAnimalLocationDto.getNewLocation());
+        animalRepository.save(animal);
     }
 }

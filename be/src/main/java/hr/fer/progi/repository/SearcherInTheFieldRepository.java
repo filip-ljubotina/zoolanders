@@ -9,10 +9,11 @@ import hr.fer.progi.entity.enums.Qualification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-import javax.naming.directory.SearchControls;
 import java.util.List;
 
+@Repository
 public interface SearcherInTheFieldRepository extends JpaRepository<SearcherInTheField, Long> {
 
     @Query("SELECT new hr.fer.progi.dto.stationManagerDto.AvailableSearcherDto(s.searcherInTheFieldId, s.appUser.firstName, s.appUser.lastName) " +
