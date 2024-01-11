@@ -2,7 +2,6 @@ package hr.fer.progi.mapper;
 
 import hr.fer.progi.entity.SearchersRequest;
 import hr.fer.progi.entity.Station;
-import hr.fer.progi.entity.enums.Qualification;
 import hr.fer.progi.jsonentities.QualificationsJson;
 import org.springframework.stereotype.Component;
 

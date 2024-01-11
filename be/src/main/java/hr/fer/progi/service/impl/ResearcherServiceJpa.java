@@ -2,10 +2,7 @@ package hr.fer.progi.service.impl;
 
 import hr.fer.progi.dto.researcherDto.*;
 import hr.fer.progi.dto.stationManagerDto.AvailableSearcherDto;
-import hr.fer.progi.entity.Action;
-import hr.fer.progi.entity.AppUser;
-import hr.fer.progi.entity.SearchersRequest;
-import hr.fer.progi.entity.Station;
+import hr.fer.progi.entity.*;
 import hr.fer.progi.mapper.ActionDtoMapper;
 import hr.fer.progi.mapper.JsonToClass;
 import hr.fer.progi.mapper.ReqDtoToSearchersReqMapper;
@@ -29,6 +26,7 @@ public class ResearcherServiceJpa {
     private final ReqDtoToSearchersReqMapper reqDtoToSearchersReqMapper;
     private final JsonToClass jsonToClass;
     private final TaskServiceJpa taskServiceJpa;
+    private final PastDataServiceJpa pastDataServiceJpa;
 
     public void postNewAction(ActionDto actionDto, Long appUserId) {
         AppUser appUser = appUserServiceJpa.findById(appUserId);
@@ -80,5 +78,21 @@ public class ResearcherServiceJpa {
     public void postNewTask(TaskDto taskDto, Long actionId) {
         Action action = actionRepository.findById(actionId).get();
         taskServiceJpa.postNewTask(taskDto, action, searcherInTheFieldJpa.findById(taskDto.getSearcherId()));
+    }
+
+    public List<PastSearcherRoutesDto> getPastSearcherRoutes (Long actionId, Long searcherInTheFieldId){
+        Action action = actionRepository.findById(actionId).get();
+        SearcherInTheField searcherInTheField = searcherInTheFieldJpa.findById(searcherInTheFieldId);
+        return pastDataServiceJpa.getPastSearcherRoutes(searcherInTheField, action);
+    }
+
+    public List<PastSearcherLocationDto> getPastSearchersLocations (Long actionId){
+        Action action = actionRepository.findById(actionId).get();
+        return pastDataServiceJpa.getPastSearchersLocations(action);
+    }
+
+    public List<PastAnimalLocationsDto> getPastAnimalsLocations (Long actionId){
+        Action action = actionRepository.findById(actionId).get();
+        return pastDataServiceJpa.getPastAnimalsLocations(action);
     }
 }
