@@ -1,11 +1,13 @@
 package hr.fer.progi.controller;
 
+import hr.fer.progi.dto.AnimalCommentDto;
 import hr.fer.progi.dto.researcherDto.ActionDto;
 import hr.fer.progi.dto.researcherDto.AnimalDto;
 import hr.fer.progi.dto.researcherDto.MapViewCriteriaDto;
 import hr.fer.progi.dto.researcherDto.TaskDto;
 import hr.fer.progi.dto.stationManagerDto.AvailableSearcherDto;
 import hr.fer.progi.security.JwtTokenProvider;
+import hr.fer.progi.service.impl.AnimalServiceJpa;
 import hr.fer.progi.service.impl.SearcherInTheFieldJpa;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ public class SearcherInTheFieldController {
 
     private final SearcherInTheFieldJpa searcherInTheFieldJpa;
     private final JwtTokenProvider jwtTokenProvider;
+    private final AnimalServiceJpa animalServiceJpa;
 
     @GetMapping("/searcherInTheField/getCheckUserOnAction")
     public ResponseEntity<Boolean> getCheckUserOnAction(@RequestHeader("Authorization") String authorizationHeader) {
@@ -75,5 +78,11 @@ public class SearcherInTheFieldController {
     public HttpStatus putRemoveFromAction(@RequestHeader("Authorization") String authorizationHeader) {
         searcherInTheFieldJpa.putRemoveFromAction(jwtTokenProvider.extractAppUserId(authorizationHeader));
         return HttpStatus.OK;
+    }
+
+    @PostMapping("/searcherInTheField/postAnimalComment/{actionId}/{animalId}")
+    public HttpStatus postAnimalComment(@RequestBody AnimalCommentDto animalCommentDto, @PathVariable Long actionId, @PathVariable Long animalId, @RequestHeader("Authorization") String authorizationHeader) {
+        animalServiceJpa.postAnimalComment(animalCommentDto, actionId, animalId, jwtTokenProvider.extractAppUserId(authorizationHeader));
+        return HttpStatus.CREATED;
     }
 }
