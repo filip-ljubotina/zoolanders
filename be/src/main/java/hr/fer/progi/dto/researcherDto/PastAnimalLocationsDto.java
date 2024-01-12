@@ -27,7 +27,7 @@ public class PastAnimalLocationsDto {
         this.animalName = animalName;
         this.breed = breed;
         Random random = new Random();
-        this.intensity = random.nextDouble(2);
+        this.intensity = random.nextDouble();
         PositionCoordinates positionCoordinates = (PositionCoordinates) pastLocationObject;
         this.pastLocation = positionCoordinates.getCoordinates();
     }
