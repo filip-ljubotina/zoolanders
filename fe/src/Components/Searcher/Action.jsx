@@ -9,12 +9,15 @@ import SeeMore from './SeeMore'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
-import Button from '@mui/material/Button';
 import searcher_icon_png from '../Assets/searcher.png'
 import pawprint_icon from '../Assets/pawprint.png'
 import compass_icon from '../Assets/compass.png'
 import clipboard_icon from '../Assets/clipboard.png'
-
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const Action = ({ onLogout }) => {
     Action.propTypes = {
@@ -27,7 +30,8 @@ const Action = ({ onLogout }) => {
   const [allSearchers, setAllSearchers] = useState([]);
   const [allAnimals, setAllAnimals] = useState([]);
   const [allTasks, setAllTasks] = useState([]);
-  
+  const [open, setOpen] = useState(false);
+    const [commentText, setCommentText] = useState('');
   const checkAction = async () => {
     try {
       const response = await ApiService.get(`/wildTrack/searcherInTheField/getCheckUserOnAction`);
@@ -76,6 +80,21 @@ const Action = ({ onLogout }) => {
     removeFromAction();
     fetchData();
   };
+
+  const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    const handleSubmit = () => {
+      // kod za slanje komentara na backend tu negdje idk
+      //onCommentAdd(animal.animalId, commentText);
+      setCommentText('');
+      setOpen(false);
+    };
 
   const searcherIcon = new L.Icon({
     iconUrl: searcher_icon_png,
@@ -147,6 +166,26 @@ const Action = ({ onLogout }) => {
                   {`Name: ${animal.animalName} Breed: ${animal.breed}`}
                   <br />
                   {`Description: ${animal.description}`}
+                <br />
+                 <div>
+                       <Button variant="outlined" onClick={handleClickOpen}>
+                         Dodaj komentar
+                       </Button>
+                       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+                         <DialogTitle>Unesite komentar</DialogTitle>
+                         <DialogContent>
+                           <textarea
+                             value={commentText}
+                             onChange={(e) => setCommentText(e.target.value)}
+                             style={{ width: '100%', height: '100px' }}
+                           />
+                         </DialogContent>
+                         <DialogActions>
+                           <Button onClick={handleClose}>Odbaci</Button>
+                           <Button onClick={handleSubmit}>Spremi</Button>
+                         </DialogActions>
+                       </Dialog>
+                     </div>
                 </Popup>
               </Marker>
             ))}
@@ -169,10 +208,10 @@ const Action = ({ onLogout }) => {
         <React.Fragment>
           {allTasks.length === 0 && checkActionFlag !== false && (
             <React.Fragment>
-              <div>Nemate više zadataka, možete se maknuti s akcije</div>
+              <h3 style={{ color: '#e8e8ec' }}>Nemate više zadataka, možete se maknuti s akcije</h3>
               <Button variant="outlined" onClick={handleDone}
-                      sx={{ borderColor: 'darkblue',
-                      color: 'darkblue'}}>
+                      sx={{ borderColor:'#bfbfbc' ,
+                      color: '#e8e8ec'}}>
                 Done
               </Button>
             </React.Fragment>

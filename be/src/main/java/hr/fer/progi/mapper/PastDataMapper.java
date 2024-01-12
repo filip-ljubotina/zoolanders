@@ -1,5 +1,6 @@
 package hr.fer.progi.mapper;
 
+import hr.fer.progi.entity.Animal;
 import hr.fer.progi.entity.PastLocations;
 import hr.fer.progi.entity.PastRoutes;
 import hr.fer.progi.entity.SearcherInTheField;
@@ -14,6 +15,13 @@ public class PastDataMapper {
         pastLocations.setPositionCoordinates(pastCurrentPosition);
         pastLocations.setAction(searcherInTheField.getAction());
         pastLocations.setSearcherInTheField(searcherInTheField);
+        return pastLocations;
+    }
+
+    public PastLocations animalDataToNewPastLocations(Animal animal, PositionCoordinates pastCurrentPosition){
+        PastLocations pastLocations = new PastLocations();
+        pastLocations.setPositionCoordinates(pastCurrentPosition);
+        pastLocations.setAnimal(animal);
         return pastLocations;
     }
 
