@@ -16,5 +16,5 @@ public interface AnimalCommentRepository extends JpaRepository<AnimalComment, Lo
     @Query("SELECT new hr.fer.progi.dto.AnimalCommentDto(a.animalCommentId, a.comment, a.userName)" +
             " FROM AnimalComment a " +
             "WHERE a.action = :action AND a.animal = :animal")
-    List<AnimalCommentDto> findCommentsByActionAndAnimal(@Param("action") Action action, @Param("action")Animal animal);
+    List<AnimalCommentDto> findCommentsByActionAndAnimal(@Param("action") Action action, @Param("animal")Animal animal);
 }
