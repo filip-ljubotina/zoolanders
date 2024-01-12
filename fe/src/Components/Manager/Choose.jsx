@@ -3,8 +3,6 @@ import Button from '@mui/material/Button';
 import ApiService from '../../services/ApiService';
 import PropTypes from "prop-types"
 
-
-
 export default function Choose({cardInfo, data, onChoose}) {
     Choose.propTypes = {
         data: PropTypes.object.isRequired,
@@ -14,10 +12,10 @@ export default function Choose({cardInfo, data, onChoose}) {
 
     const updateData = async () => {
         try {
-        await ApiService.put(`/wildTrack/manager/putChosenSearcherForAction?actionId=${cardInfo.actionId}`, data);
-        onChoose()
+            await ApiService.put(`/wildTrack/manager/putChosenSearcherForAction?actionId=${cardInfo.actionId}`, data);
+            onChoose();
         } catch (error) {
-        console.error('Error fetching table data:', error);
+            console.error('Error fetching table data:', error);
         }
     };
 
@@ -27,11 +25,11 @@ export default function Choose({cardInfo, data, onChoose}) {
 
     return (
         <React.Fragment>
-        <Button variant="outlined" onClick={handleClick}
-            sx={{ borderColor: 'darkblue',
-            color: 'darkblue'}}>
-            Choose
-        </Button>
+            <Button variant="outlined" onClick={handleClick}
+                sx={{ borderColor: 'darkblue',
+                color: 'darkblue'}}>
+                Choose
+            </Button>
         </React.Fragment>
     );
 }

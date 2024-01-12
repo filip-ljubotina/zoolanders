@@ -10,6 +10,7 @@ const AdminDashboard = ({onLogout}) => {
   AdminDashboard.propTypes = {
     onLogout: PropTypes.func
   }
+  
   return (
     <div>
       <Routes>
@@ -17,8 +18,7 @@ const AdminDashboard = ({onLogout}) => {
         <Route path = "/users" element={<Users onLogout={onLogout} />} />
         <Route path = "/requests" element={<Requests onLogout={onLogout} />} />
       </Routes>
-    </div>
-    
+    </div>  
   )
 }
 

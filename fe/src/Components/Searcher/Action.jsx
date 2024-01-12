@@ -167,17 +167,17 @@ const Action = ({ onLogout }) => {
         )}
         {checkActionFlag === false && <div>NE PRIPADATE NITI JEDNOJ AKCIJI</div>}
         <React.Fragment>
-        {allTasks.length === 0 && checkActionFlag !== false && (
-          <React.Fragment>
-            <div>Nemate više zadataka, možete se maknuti s akcije</div>
-            <Button variant="outlined" onClick={handleDone}
-                sx={{ borderColor: 'darkblue',
-                color: 'darkblue'}}>
+          {allTasks.length === 0 && checkActionFlag !== false && (
+            <React.Fragment>
+              <div>Nemate više zadataka, možete se maknuti s akcije</div>
+              <Button variant="outlined" onClick={handleDone}
+                      sx={{ borderColor: 'darkblue',
+                      color: 'darkblue'}}>
                 Done
-            </Button>
-          </React.Fragment>
+              </Button>
+            </React.Fragment>
           )}
-          </React.Fragment>
+        </React.Fragment>
       </div>
     </div>
   );

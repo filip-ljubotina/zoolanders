@@ -40,43 +40,32 @@ const Actions = ({onLogout}) => {
 
   return (
     <div className='users'>
-        <Sidebar />
-        <div className='usersContainer'>
-            <Topbar title="Pregled korisnika" onLogout={onLogout} />
-            <AddAction onAddCard={handleAddCard}></AddAction>
-        <div className='cardsGrid'>
+      <Sidebar />
+      <div className='usersContainer'>
+        <Topbar title="Pregled aktivnih akcija" onLogout={onLogout}/>
+        <AddAction onAddCard={handleAddCard} />
+        <div className='researcher-cardsGrid'>
           {cards.map((card) => (
-            <Card key={card.id} sx={{ minWidth: 275, margin: 2 }}>
+            <Card key={card.id} sx={{height: 'fit-content' }}>
               <CardContent>
-              <Typography variant="h5" component="div">
-                {card.actionName}
-              </Typography>
-              <Typography sx={{mb: 1}} color="text.secondary">
-                {card.locationName.replace(/_/g, ' ')}
-              </Typography>
-              <Typography variant="body2">
-                {card.actionType}
-              </Typography>
+                <Typography variant="h5" component="div"> {card.actionName} </Typography>
+                <Typography sx={{mb: 1}} color="text.secondary">{card.locationName.replace(/_/g, ' ').replace(/./, c => c.toUpperCase())} </Typography>
+                <Typography variant="body2"> {card.actionType.replace(/./, c => c.toUpperCase())} </Typography>
               </CardContent>
-              <CardActions>
+              <CardActions sx={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 1}}>
                 <SearcherRequest card={card}></SearcherRequest>
                 <Link to={`/dashboard/researcher/action-details/${card.actionId}`} state={{ cardData: card }} style={{ textDecoration: 'none' }}>
-                  <Button variant="outlined"
-                    sx={{
-                      borderColor: 'darkblue',
-                      color: 'darkblue'
-                    }}>
-                    See More
+                  <Button variant="outlined" sx={{ borderColor: 'darkblue', color: 'darkblue'}}>
+                    Više detalja
                   </Button>
                 </Link>
               </CardActions>
             </Card>
           ))}    
         </div>
-        
-        </div>
+      </div>
     </div>
   )
 }
 
-export default Actions
+export default Actions;

@@ -9,8 +9,6 @@ import ApiService from '../../services/ApiService';
 import PropTypes from "prop-types"
 import SearchTypeMap from './SearchTypeMap';
 
-
-
 export default function Add({data, coordinates, onSave}) {
   Add.propTypes = {
     data: PropTypes.object.isRequired,
@@ -27,7 +25,7 @@ export default function Add({data, coordinates, onSave}) {
   const updateData = async () => {
     try {
       await ApiService.put('/wildTrack/manager/putChosenSearcher', rowData);
-      onSave()
+      onSave();
     } catch (error) {
       console.error('Error fetching table data:', error);
     }
@@ -54,10 +52,8 @@ export default function Add({data, coordinates, onSave}) {
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}
-        sx={{ borderColor: 'darkblue',
-          color: 'darkblue'}}>
-        Add
+      <Button variant="outlined" onClick={handleClickOpen} sx={{ borderColor: 'darkblue', color: 'darkblue'}}>
+        Dodaj
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle>Odredite osposobljenost tragača</DialogTitle>
@@ -70,7 +66,6 @@ export default function Add({data, coordinates, onSave}) {
             <SelectOption value="BOAT">Brod</SelectOption>
             <SelectOption value="HELICOPTER">Helikopter</SelectOption>
           </Select>
-
           <div style={{ marginTop: '20px', width: '100%'}}>
             <SearchTypeMap coordinates={coordinates} searchType={change}/>
           </div>

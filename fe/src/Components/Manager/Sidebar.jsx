@@ -13,8 +13,6 @@ const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = React.useState(false)
     const [selected, setSelected] = React.useState("Home")
 
-    
-
     const DisplayCategory = ({ title, to, icon, selected, setSelected }) => {
         DisplayCategory.propTypes = {
             title: PropTypes.string,
@@ -34,20 +32,29 @@ const Sidebar = () => {
                 </MenuItem>
             </Link>          
         );
-      };
+    };
+
+    const handleCollapse = () => {
+        setIsCollapsed(!isCollapsed);
+        if(isCollapsed) {
+            document.documentElement.style.setProperty('--content-width', '250px');
+        } else {
+            document.documentElement.style.setProperty('--content-width', '80px');
+        }
+    }
 
     return (
         <Box>
-            <ProSidebar style={{ height: "100vh"}} image={background_photo} collapsed={ isCollapsed }>
+            <ProSidebar style={{ minHeight: "100vh", height: "100%"}} image={background_photo} collapsed={ isCollapsed }>
                 <Menu>
-                    <MenuItem onClick={() => setIsCollapsed(!isCollapsed)} icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
+                    <MenuItem onClick={handleCollapse} icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
                             style={{margin: "10px 0 20px 0", color: "#72601b"}}>
                         {!isCollapsed && (
                         <Box display="flex" justifyContent="space-between" alignItems="center" ml="15px">
-                            <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
+                            <IconButton onClick={handleCollapse}>
                                 <MenuOutlinedIcon />
                             </IconButton>
-                            <h1>Voditelj Postaje</h1>
+                            <h1>Voditelj postaje</h1>
                         </Box>)}
                     </MenuItem>
                     {!isCollapsed && (
@@ -63,16 +70,14 @@ const Sidebar = () => {
                         {!isCollapsed && <h3 style={{textAlign: "center", color: "#393070"}}>Manage users</h3>}
 
                         <DisplayCategory    
-                        title={<>Dodavanje <span style={{ display: 'block' }}>Tragača</span></>} 
+                        title={<>Dodavanje <span style={{ display: 'block' }}>tragača</span></>} 
                         to="/addUsers" icon={<PeopleOutlinedIcon />} 
                         selected={selected} setSelected={setSelected} />
                         
-                        <DisplayCategory title={<>Zahtjevi <span style={{ display: 'block' }}>Istraživača</span></>} to="/requests" icon={<PeopleOutlinedIcon />} 
+                        <DisplayCategory title={<>Zahtjevi <span style={{ display: 'block' }}>istraživača</span></>} to="/requests" icon={<PeopleOutlinedIcon />} 
                                          selected={selected} setSelected={setSelected} />
                     </Box>
-                    
                 </Menu>
-                
             </ProSidebar>
         </Box>    
     )

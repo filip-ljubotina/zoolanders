@@ -110,28 +110,16 @@ function SearcherRequest({card}) {
 
     return (
         <div>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Zahtjev Za Tragačima
-            </Button>
+            <Button variant="outlined" onClick={handleClickOpen}> Zahtjev za tragačima </Button>
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-                <DialogTitle>Izradite Novi Zahtjev</DialogTitle>
+                <DialogTitle> Izradite novi zahtjev </DialogTitle>
                 <DialogContent>
-                    <DialogContentText>Odabir Postaje:</DialogContentText>
-                    <Select
-                        id="locationName"
-                        name="locationName"
-                        value={changeLocation}
-                        onChange={handleChange}
-                        required
-                    >
-                        <SelectOption key="biokovo" value="biokovo">
-                            Biokovo
-                        </SelectOption>
-                        <SelectOption key="lonjsko_polje" value="lonjsko_polje">
-                            Lonjsko polje
-                        </SelectOption>
+                    <DialogContentText>Odabir postaje:</DialogContentText>
+                    <Select id="locationName" name="locationName" value={changeLocation} onChange={handleChange} required>
+                        <SelectOption key="biokovo" value="biokovo"> Biokovo </SelectOption>
+                        <SelectOption key="lonjsko_polje" value="lonjsko_polje"> Lonjsko polje </SelectOption>
                     </Select>
-                    <DialogContentText>Dostupna Osposobljenja:</DialogContentText>
+                    <DialogContentText> Dostupna osposobljenja: </DialogContentText>
                     <FormGroup>
                         {allQualifications.map((qualification) => (
                             <FormControlLabel
@@ -149,8 +137,8 @@ function SearcherRequest({card}) {
                     </FormGroup>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleSubmit}>Spremi</Button>
+                    <Button onClick={handleClose}> Odbaci </Button>
+                    <Button onClick={handleSubmit}> Spremi </Button>
                 </DialogActions>
             </Dialog>
         </div>

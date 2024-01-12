@@ -7,8 +7,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import sky_photo from '../Assets/sky.png'
 import PropTypes from "prop-types"
 
-
-
 const Topbar = ({title, onLogout}) => {
   Topbar.propTypes = {
     title: PropTypes.string,
@@ -35,4 +33,4 @@ const Topbar = ({title, onLogout}) => {
   )
 }
 
-export default Topbar
+export default Topbar;

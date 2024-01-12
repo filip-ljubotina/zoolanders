@@ -11,6 +11,7 @@
   --normal-font-size: 1rem;
   --small-font-size: .813rem;
   --font-medium: 500;
+  --content-width: 250px;
 }
 
 * {
