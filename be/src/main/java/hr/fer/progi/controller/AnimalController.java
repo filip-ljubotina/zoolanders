@@ -1,5 +1,6 @@
 package hr.fer.progi.controller;
 
+import hr.fer.progi.dto.AnimalCommentDto;
 import hr.fer.progi.dto.researcherDto.ActionDto;
 import hr.fer.progi.dto.researcherDto.AnimalDto;
 import hr.fer.progi.service.impl.AnimalServiceJpa;
@@ -30,5 +31,11 @@ public class AnimalController {
     public ResponseEntity<List<AnimalDto>> findAllAnimalsByStation(@PathVariable String stationName) {
         List<AnimalDto> allAnimals = animalServiceJpa.findAllAnimalsByStation(stationName);
         return new ResponseEntity<>(allAnimals, HttpStatus.OK);
+    }
+
+    @GetMapping("/animal/getAllAnimalComments/{actionId}/{animalId}")
+    public ResponseEntity<List<AnimalCommentDto>> getAllAnimalComments(@PathVariable Long actionId, @PathVariable Long animalId) {
+        List<AnimalCommentDto> allAnimalComments = animalServiceJpa.getAllAnimalComments(actionId, animalId);
+        return new ResponseEntity<>(allAnimalComments, HttpStatus.OK);
     }
 }
