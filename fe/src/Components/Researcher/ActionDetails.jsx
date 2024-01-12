@@ -11,16 +11,13 @@ import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import ApiService from '../../services/ApiService';
 import AddTask from './AddTask'
+import AddAnimalComment from './AddAnimalComment'
+import ViewAnimalComments from './ViewAnimalComments'
 import ChooseSubjectView from './ChooseSubjectView'
 import home_icon_png from '../Assets/home.png'
 import searcher_icon_png from '../Assets/searcher.png'
 import pawprint_icon from '../Assets/pawprint.png'
-//import Modal from 'react-modal';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
+
 
 const ActionDetails = ({ onLogout }) => {
   ActionDetails.propTypes = {
@@ -34,8 +31,6 @@ const ActionDetails = ({ onLogout }) => {
   const [allAnimals, setAllAnimals] = useState([]);
   const [filteredAnimals, setFilteredAnimals] = useState([]);
   const [filterCriteria, setfilterCriteria] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [commentText, setCommentText] = useState('');
 
 
   const fetchData = async () => {
@@ -67,25 +62,6 @@ const ActionDetails = ({ onLogout }) => {
       return filterCriteria.checkedItems.includes(animalValue);
     }));
   }, [filterCriteria]);
-
-
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleSubmit = () => {
-    // kod za slanje komentara na backend tu negdje idk
-    //onCommentAdd(animal.animalId, commentText);
-    setCommentText('');
-    setOpen(false);
-  };
-
-
 
 
   const handleSubjectMapView = () => {
@@ -149,25 +125,8 @@ const ActionDetails = ({ onLogout }) => {
                   <br />
                   {`Description: ${animal.description}`}
                   <br />
-                 <div>
-                       <Button variant="outlined" onClick={handleClickOpen}>
-                         Dodaj komentar
-                       </Button>
-                       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-                         <DialogTitle>Unesite komentar</DialogTitle>
-                         <DialogContent>
-                           <textarea
-                             value={commentText}
-                             onChange={(e) => setCommentText(e.target.value)}
-                             style={{ width: '100%', height: '100px' }}
-                           />
-                         </DialogContent>
-                         <DialogActions>
-                           <Button onClick={handleClose}>Odbaci</Button>
-                           <Button onClick={handleSubmit}>Spremi</Button>
-                         </DialogActions>
-                       </Dialog>
-                     </div>
+                  <AddAnimalComment cardData={cardData} animal={animal}/>
+                  <ViewAnimalComments cardData={cardData} animal={animal}/>
                 </Popup>
               </Marker>
             ))}

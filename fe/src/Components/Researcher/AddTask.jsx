@@ -36,7 +36,7 @@ const Routing = ({waypointsRef, profile, isRoutingActive, reRenderKey,setReRende
       const clickedLatLng = event.latlng;
       waypointsRef.current.push(clickedLatLng);
       if(isRoutingActive == true){
-        routingControlRef.current.setWaypoints(waypointsRef.current);  
+        routingControlRef.current.setWaypoints(waypointsRef.current);
       }else{
         setReRenderKey(reRenderKey += 1);
       }

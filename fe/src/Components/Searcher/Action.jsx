@@ -14,10 +14,8 @@ import pawprint_icon from '../Assets/pawprint.png'
 import compass_icon from '../Assets/compass.png'
 import clipboard_icon from '../Assets/clipboard.png'
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
+import AddAnimalComment from './AddAnimalComment'
+import ViewAnimalComments from './ViewAnimalComments'
 
 const Action = ({ onLogout }) => {
     Action.propTypes = {
@@ -30,8 +28,7 @@ const Action = ({ onLogout }) => {
   const [allSearchers, setAllSearchers] = useState([]);
   const [allAnimals, setAllAnimals] = useState([]);
   const [allTasks, setAllTasks] = useState([]);
-  const [open, setOpen] = useState(false);
-    const [commentText, setCommentText] = useState('');
+  
   const checkAction = async () => {
     try {
       const response = await ApiService.get(`/wildTrack/searcherInTheField/getCheckUserOnAction`);
@@ -80,21 +77,6 @@ const Action = ({ onLogout }) => {
     removeFromAction();
     fetchData();
   };
-
-  const handleClickOpen = () => {
-      setOpen(true);
-    };
-
-    const handleClose = () => {
-      setOpen(false);
-    };
-
-    const handleSubmit = () => {
-      // kod za slanje komentara na backend tu negdje idk
-      //onCommentAdd(animal.animalId, commentText);
-      setCommentText('');
-      setOpen(false);
-    };
 
   const searcherIcon = new L.Icon({
     iconUrl: searcher_icon_png,
@@ -166,26 +148,9 @@ const Action = ({ onLogout }) => {
                   {`Name: ${animal.animalName} Breed: ${animal.breed}`}
                   <br />
                   {`Description: ${animal.description}`}
-                <br />
-                 <div>
-                       <Button variant="outlined" onClick={handleClickOpen}>
-                         Dodaj komentar
-                       </Button>
-                       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-                         <DialogTitle>Unesite komentar</DialogTitle>
-                         <DialogContent>
-                           <textarea
-                             value={commentText}
-                             onChange={(e) => setCommentText(e.target.value)}
-                             style={{ width: '100%', height: '100px' }}
-                           />
-                         </DialogContent>
-                         <DialogActions>
-                           <Button onClick={handleClose}>Odbaci</Button>
-                           <Button onClick={handleSubmit}>Spremi</Button>
-                         </DialogActions>
-                       </Dialog>
-                     </div>
+                  <br />
+                  <AddAnimalComment cardData={actionInfo} animal={animal}/>
+                  <ViewAnimalComments cardData={actionInfo} animal={animal}/>
                 </Popup>
               </Marker>
             ))}
