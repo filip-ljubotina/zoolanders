@@ -7,7 +7,7 @@ import hr.fer.progi.entity.AnimalComment;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CommentDtoMapper {
+public class AnimalCommentDtoMapper {
 
     public AnimalComment dtoToClass (AnimalCommentDto animalCommentDto, Action action, Animal animal, String userName) {
         AnimalComment animalComment = new AnimalComment();
