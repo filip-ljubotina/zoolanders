@@ -1,15 +1,13 @@
 package hr.fer.progi.controller;
 
 import hr.fer.progi.dto.AnimalCommentDto;
+import hr.fer.progi.dto.MapCommentDto;
 import hr.fer.progi.dto.researcherDto.*;
 import hr.fer.progi.dto.stationManagerDto.AvailableSearcherDto;
 import hr.fer.progi.jsonentities.CoordinatesJson;
 import hr.fer.progi.repository.StationRepository;
 import hr.fer.progi.security.JwtTokenProvider;
-import hr.fer.progi.service.impl.AnimalServiceJpa;
-import hr.fer.progi.service.impl.CommentServiceJpa;
-import hr.fer.progi.service.impl.ResearcherServiceJpa;
-import hr.fer.progi.service.impl.StationManagerJpa;
+import hr.fer.progi.service.impl.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +22,14 @@ public class ResearcherController {
     private final JwtTokenProvider jwtTokenProvider;
     private final StationRepository stationRepository;
     private final AnimalServiceJpa animalServiceJpa;
+    private final ActionServiceJpa actionServiceJpa;
 
-    public ResearcherController(ResearcherServiceJpa researcherServiceJpa, JwtTokenProvider jwtTokenProvider, StationRepository stationRepository, AnimalServiceJpa animalServiceJpa) {
+    public ResearcherController(ResearcherServiceJpa researcherServiceJpa, JwtTokenProvider jwtTokenProvider, StationRepository stationRepository, AnimalServiceJpa animalServiceJpa, ActionServiceJpa actionServiceJpa) {
         this.researcherServiceJpa = researcherServiceJpa;
         this.jwtTokenProvider = jwtTokenProvider;
         this.stationRepository = stationRepository;
         this.animalServiceJpa = animalServiceJpa;
+        this.actionServiceJpa = actionServiceJpa;
     }
 
     @PostMapping("/researcher/postNewAction")
@@ -113,6 +113,12 @@ public class ResearcherController {
     @PostMapping("/researcher/postAnimalComment/{actionId}/{animalId}")
     public HttpStatus postAnimalComment(@RequestBody AnimalCommentDto animalCommentDto, @PathVariable Long actionId, @PathVariable Long animalId, @RequestHeader("Authorization") String authorizationHeader) {
         animalServiceJpa.postAnimalComment(animalCommentDto, actionId, animalId, jwtTokenProvider.extractAppUserId(authorizationHeader));
+        return HttpStatus.CREATED;
+    }
+
+    @PostMapping("/researcher/postMapComment/{actionId}")
+    public HttpStatus postMapComment(@RequestBody MapCommentDto mapCommentDto, @PathVariable Long actionId, @RequestHeader("Authorization") String authorizationHeader) {
+        actionServiceJpa.postMapComment(mapCommentDto, actionId, jwtTokenProvider.extractAppUserId(authorizationHeader));
         return HttpStatus.CREATED;
     }
 }
