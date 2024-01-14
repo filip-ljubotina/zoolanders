@@ -10,19 +10,21 @@ public class AnimalDto {
     private String breed;
     private String description;
     private List<Double> currentPosition;
+    private byte[] image;
 
     public AnimalDto() {
     }
 
     public AnimalDto(Long animalId, String animalName,
                      String breed, String description,
-                     Object currentPositionObject) {
+                     Object currentPositionObject, byte[] image) {
         this.animalId = animalId;
         this.animalName = animalName;
         this.breed = breed;
         this.description = description;
         PositionCoordinates positionCoordinates = (PositionCoordinates) currentPositionObject;
         this.currentPosition = positionCoordinates.getCoordinates();
+        this.image = image;
     }
 
     public Long getAnimalId() {
@@ -63,5 +65,13 @@ public class AnimalDto {
 
     public void setCurrentPosition(List<Double> currentPosition) {
         this.currentPosition = currentPosition;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

@@ -17,7 +17,7 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
     List<String> findAllBreedsByStation(@Param("station") Station station);
 
-    @Query("SELECT new hr.fer.progi.dto.researcherDto.AnimalDto(a.animalId, a.name, a.breed, a.description, a.currentPosition)" +
+    @Query("SELECT new hr.fer.progi.dto.researcherDto.AnimalDto(a.animalId, a.name, a.breed, a.description, a.currentPosition, a.image)" +
             " FROM Animal a " +
             "WHERE a.station = :station")
     List<AnimalDto> findAllAnimalsByStation(@Param("station") Station station);

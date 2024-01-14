@@ -29,6 +29,8 @@ public class Animal {
 
     private String description;
 
+    private byte[] image;
+
     @Type(type = "json")
     @Column(columnDefinition = "json")
     private PositionCoordinates currentPosition;
