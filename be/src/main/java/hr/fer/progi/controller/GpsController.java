@@ -1,7 +1,6 @@
 package hr.fer.progi.controller;
 
 import hr.fer.progi.dto.gpsDto.NewAnimalLocationDto;
-import hr.fer.progi.dto.researcherDto.ActionDto;
 import hr.fer.progi.service.impl.AnimalServiceJpa;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,33 +1,33 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import { Select, MenuItem as SelectOption } from '@mui/material';
-import ApiService from '../../services/ApiService';
-import PropTypes from "prop-types"
-import SearchTypeMap from './SearchTypeMap';
+import { Select, MenuItem as SelectOption } from "@mui/material";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import PropTypes from "prop-types";
+import * as React from "react";
+import ApiService from "../../services/ApiService";
+import SearchTypeMap from "./SearchTypeMap";
 
-export default function Add({data, coordinates, onSave}) {
+export default function Add({ data, coordinates, onSave }) {
   Add.propTypes = {
     data: PropTypes.object.isRequired,
     coordinates: PropTypes.object.isRequired,
-    onSave: PropTypes.func.isRequired
-  }
+    onSave: PropTypes.func.isRequired,
+  };
   const [open, setOpen] = React.useState(false);
   const [change, setChange] = React.useState("FOOT");
   const [rowData, setRowData] = React.useState({
     searcherId: data.id,
-    qualification: "FOOT"
+    qualification: "FOOT",
   });
 
   const updateData = async () => {
     try {
-      await ApiService.put('/wildTrack/manager/putChosenSearcher', rowData);
+      await ApiService.put("/wildTrack/manager/putChosenSearcher", rowData);
       onSave();
     } catch (error) {
-      console.error('Error fetching table data:', error);
+      console.error("Error fetching table data:", error);
     }
   };
 
@@ -40,19 +40,22 @@ export default function Add({data, coordinates, onSave}) {
   };
 
   const handleChange = (e) => {
-    setRowData((rowData) => ({...rowData, qualification: e.target.value}))
-    setChange(e.target.value)
-  }
-
+    setRowData((rowData) => ({ ...rowData, qualification: e.target.value }));
+    setChange(e.target.value);
+  };
 
   const handleSubmit = () => {
-      updateData();
-      setOpen(false);
-  }
+    updateData();
+    setOpen(false);
+  };
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen} sx={{ borderColor: 'darkblue', color: 'darkblue'}}>
+      <Button
+        variant="outlined"
+        onClick={handleClickOpen}
+        sx={{ borderColor: "darkblue", color: "darkblue" }}
+      >
         Dodaj
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
@@ -66,10 +69,10 @@ export default function Add({data, coordinates, onSave}) {
             <SelectOption value="BOAT">Brod</SelectOption>
             <SelectOption value="HELICOPTER">Helikopter</SelectOption>
           </Select>
-          <div style={{ marginTop: '20px', width: '100%'}}>
-            <SearchTypeMap coordinates={coordinates} searchType={change}/>
+          <div style={{ marginTop: "20px", width: "100%" }}>
+            <SearchTypeMap coordinates={coordinates} searchType={change} />
           </div>
-          </DialogContent>
+        </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Odbaci</Button>
           <Button onClick={handleSubmit}>Spremi</Button>

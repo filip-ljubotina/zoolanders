@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import LoginComponent from './components/LoginComponent';
-import RegistrationComponent from './components/RegistrationComponent';
-import DashboardComponent from './components/DashboardComponent';
-import LogoutButton from './components/LogoutButton';
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import LoginComponent from "./components/LoginComponent";
+import RegistrationComponent from "./components/RegistrationComponent";
+import DashboardComponent from "./components/DashboardComponent";
+import LogoutButton from "./components/LogoutButton";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,7 +35,10 @@ const App = () => {
               ) : (
                 <div>
                   <LoginComponent onLoginSuccess={handleLoginSuccess} />
-                  <p onClick={() => window.location.href = '/register'} className="toggle-link">
+                  <p
+                    onClick={() => (window.location.href = "/register")}
+                    className="toggle-link"
+                  >
                     Don't have an account? Register here.
                   </p>
                 </div>
@@ -45,7 +53,10 @@ const App = () => {
               ) : (
                 <div>
                   <RegistrationComponent />
-                  <p onClick={() => window.location.href = '/login'} className="toggle-link">
+                  <p
+                    onClick={() => (window.location.href = "/login")}
+                    className="toggle-link"
+                  >
                     Have an account? Login here.
                   </p>
                 </div>
