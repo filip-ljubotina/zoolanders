@@ -1,10 +1,14 @@
-import './App.css'
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Login from './Components/Login/Login'
-import Register from './Components/Register/Register'
-import Dashboard from './Components/General/Dashboard'
-
+import React from "react";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
+import "./App.css";
+import Dashboard from "./Components/General/Dashboard";
+import Login from "./Components/Login/Login";
+import Register from "./Components/Register/Register";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
@@ -40,7 +44,7 @@ const App = () => {
                 <Navigate to="/dashboard" />
               ) : (
                 <div>
-                  <Register/>
+                  <Register />
                 </div>
               )
             }
@@ -48,7 +52,11 @@ const App = () => {
           <Route
             path="/dashboard/*"
             element={
-              isLoggedIn ? <Dashboard onLogout={handleLogout}/> : <Navigate to="/login" />
+              isLoggedIn ? (
+                <Dashboard onLogout={handleLogout} />
+              ) : (
+                <Navigate to="/login" />
+              )
             }
           />
           <Route path="/*" element={<Navigate to="/login" />} />

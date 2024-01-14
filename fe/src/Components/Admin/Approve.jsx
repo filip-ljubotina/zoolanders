@@ -1,27 +1,27 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import ApiService from '../../services/ApiService';
-import PropTypes from 'prop-types';
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import PropTypes from "prop-types";
+import * as React from "react";
+import ApiService from "../../services/ApiService";
 
-export default function Approve({row, onApprove}) {
+export default function Approve({ row, onApprove }) {
   Approve.propTypes = {
     row: PropTypes.object.isRequired,
     onApprove: PropTypes.func.isRequired,
   };
-  
+
   const [open, setOpen] = React.useState(false);
 
-  const updateData = async ({row}) => {
+  const updateData = async ({ row }) => {
     try {
-      await ApiService.put('/wildTrack/admin/putApprovalTable', row);
+      await ApiService.put("/wildTrack/admin/putApprovalTable", row);
       onApprove();
     } catch (error) {
-      console.error('Error fetching table data:', error);
+      console.error("Error fetching table data:", error);
     }
   };
 
@@ -32,17 +32,19 @@ export default function Approve({row, onApprove}) {
   const handleReject = () => {
     setOpen(false);
   };
-  
+
   const handleConfirm = () => {
-    updateData({row})
+    updateData({ row });
     setOpen(false);
   };
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}
-        sx={{ borderColor: 'darkblue',
-          color: 'darkblue'}}>
+      <Button
+        variant="outlined"
+        onClick={handleClickOpen}
+        sx={{ borderColor: "darkblue", color: "darkblue" }}
+      >
         Obradi
       </Button>
       <Dialog
@@ -69,4 +71,3 @@ export default function Approve({row, onApprove}) {
     </React.Fragment>
   );
 }
-
