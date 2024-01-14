@@ -92,12 +92,6 @@ public class ResearcherController {
         return new ResponseEntity<>(pastSearcherRoutesDtos, HttpStatus.OK);
     }
 
-    @GetMapping("/researcher/getPastAllSearchersRoutes/{actionId}")
-    public ResponseEntity<List<PastSearcherRoutesDto>> getPastAllSearchersRoutesByAction(@PathVariable Long actionId) {
-        List<PastSearcherRoutesDto> pastSearcherRoutesDtos = researcherServiceJpa.getPastAllSearchersRoutesByAction(actionId);
-        return new ResponseEntity<>(pastSearcherRoutesDtos, HttpStatus.OK);
-    }
-
     @GetMapping("/researcher/getPastSearchersLocations/{actionId}")
     public ResponseEntity<List<PastSearcherLocationDto>> getPastSearchersLocations(@PathVariable Long actionId) {
         List<PastSearcherLocationDto> pastSearcherLocationDtos = researcherServiceJpa.getPastSearchersLocations(actionId);

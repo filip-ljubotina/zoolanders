@@ -14,11 +14,7 @@ import java.util.List;
 
 @Repository
 public interface PastRoutesRepository extends JpaRepository<PastRoutes, Long> {
-    @Query("SELECT new hr.fer.progi.dto.researcherDto.PastSearcherRoutesDto(p.pastRoutesId, p.searcherInTheField.searcherInTheFieldId, p.routeWaypoints, p.searcherInTheField.qualification)" +
+    @Query("SELECT new hr.fer.progi.dto.researcherDto.PastSearcherRoutesDto(p.pastRoutesId, p.routeWaypoints)" +
             " FROM PastRoutes p WHERE p.searcherInTheField = :searcherInTheField AND p.action = :action")
     List<PastSearcherRoutesDto> findPastSearcherRoutesBySearcherAndAction(@Param("searcherInTheField") SearcherInTheField searcherInTheField,@Param("action") Action action);
-
-    @Query("SELECT new hr.fer.progi.dto.researcherDto.PastSearcherRoutesDto(p.pastRoutesId, p.searcherInTheField.searcherInTheFieldId, p.routeWaypoints, p.searcherInTheField.qualification)" +
-            " FROM PastRoutes p WHERE p.action = :action")
-    List<PastSearcherRoutesDto> findPastAllSearcherRoutesByAction(@Param("action") Action action);
 }

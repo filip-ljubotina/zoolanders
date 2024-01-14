@@ -42,10 +42,6 @@ public class PastDataServiceJpa {
         return pastRoutesRepository.findPastSearcherRoutesBySearcherAndAction(searcherInTheField, action);
     }
 
-    public List<PastSearcherRoutesDto> getPastAllSearchersRoutesByAction(Action action) {
-        return pastRoutesRepository.findPastAllSearcherRoutesByAction(action);
-    }
-
     public List<PastSearcherLocationDto> getPastSearchersLocations (Action action){
         return pastLocationsRepository.findPastSearchersLocationsByAction(action);
     }
@@ -84,6 +80,4 @@ public class PastDataServiceJpa {
     public void animalPostitionSave(Animal animal) {
         pastLocationsRepository.save(pastDataMapper.animalDataToNewPastLocations(animal, animal.getCurrentPosition()));
     }
-
-
 }
