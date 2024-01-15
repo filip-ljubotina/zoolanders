@@ -33,7 +33,7 @@
 				
 		\section{Baza podataka}
 				
-				Za bazu podataka koristi se relacijska baza podataka koja se sastoji od relacija. Svaka relacija ima svoje ime i atribute. Vrste atributa koji se mogu nalaziti u relaciji su primarni ključ, strani ključ ili atribut s nekom informacijom vezanom za relaciju. Baza podataka sastoji se od relacija:
+				Za bazu podataka koristi se relacijska baza podataka. Svaka tablica ima svoje ime i atribute. Vrste atributa koji se mogu nalaziti u tablici su primarni ključ, strani ključ ili atribut s nekom informacijom vezanom za tablicu. Baza podataka sastoji se od tablica:
 		
 				\begin{packed_item}
 					\item AppUser
@@ -47,11 +47,13 @@
 					\item Animal
 					\item Location
 				\end{packed_item}
+				
+				
 		
 			\subsection{Opis tablica}
 			
 
-				U relaciju \textbf{AppUser} pohranjuju se podaci o korisniku: \textit{id, userName, image, firstName, lastName, email, password, locked, enabled}. Primarni ključ je \textit{id}, i nema stranih ključeva. S atributom \textit{id} je u odnosu One-to-One s relacijama \textbf{StationManager} i \textbf{SearcherInTheField} i u odnosu One-to-Many s relacijama \textbf{ConfirmationToken} i \textbf{Action}.
+				U tablici \textbf{AppUser} pohranjuju se podaci o svim korisnicima: \textit{id, userName, image, firstName, lastName, email, password, locked, enabled}. Primarni ključ je \textit{id}, i nema stranih ključeva. U njoj se nalaze svi korisnici, odnosno sve vrste korisnika. Korisnike dalje razlikujemo na tragače koji imaju svoje dodatne atribute u tablici \textbf{SearcherInTheField} i voditelje postaja koji imaju svoje dodatne atribute u tablici \textbf{StationManager}. Istraživači nemaju svoju posebnu tablicu jer je nepotrebna, nemaju svoje dodatne atribute koje moramo spremiti, a jedino za što su nam potrebni su akcije, a za to imamo id spremljen pod \textit{begun} u tablici \textbf{Action} pa tako dobijemo sve ostale podatke o istraživaču. S atributom \textit{id} je u odnosu One-to-One s tablicama \textbf{StationManager} i \textbf{SearcherInTheField} i u odnosu One-to-Many s tablicama \textbf{ConfirmationToken} i \textbf{Action}.
 				
 				
 				\begin{longtblr}[
@@ -74,7 +76,7 @@
 					enabled & BOOLEAN & je li korisnik potvrđen emailom \\ \hline
 				\end{longtblr}
 				
-				U relaciju \textbf{ConfirmationToken} pohranjuju se podaci: \textit{id, token, createdAt, expiresAt, confirmedAt, user}. Primarni ključ je \textit{id}, a strani ključ je \textit{user}. S atributom \textit{user} je u odnosu Many-to-One s relacijom \textbf{AppUser}.
+				U tablici \textbf{ConfirmationToken} pohranjuju se podaci za token za potvrdu poslanu korisniku: \textit{id, token, createdAt, expiresAt, confirmedAt, user}. Svaki token je povezan s korisnikom kojem je poslan preko \textit{user} u koji se sprema id korisnika. Primarni ključ je \textit{id}, a strani ključ je \textit{user}. S atributom \textit{user} je u odnosu Many-to-One s tablicom \textbf{AppUser}.
 				
 				\begin{longtblr}[
 					label=none,
@@ -93,7 +95,7 @@
 					\SetCell{LightBlue}user	& BIGINT &  id korisnika kojemu je poslan token \\ \hline  
 				\end{longtblr}
 
-				U relaciju \textbf{StationManager} pohranjuju se podaci: \textit{id, station}. Primarni ključ i ujedno i strani ključ je \textit{id} i također je strani ključ \textit{station}. S atributom \textit{id} je u odnosu One-to-One s relacijom \textbf{AppUser}, s atributom \textit{station} je u odnosu One-to-One s relacijom \textbf{Station}.
+				U tablici \textbf{StationManager} pohranjuju se dodatni podaci za voditelja postaje: \textit{id, station}. U \textit{id} se sprema id korisnika koji je voditelj postaje, a u \textit{station} se sprema id postaje. Primarni ključ i ujedno i strani ključ je \textit{id} i također je strani ključ \textit{station}. S atributom \textit{id} je u odnosu One-to-One s tablicom \textbf{AppUser}, s atributom \textit{station} je u odnosu One-to-One s tablicom \textbf{Station}.
 				
 				\begin{longtblr}[
 					label=none,
@@ -109,7 +111,7 @@
 					\SetCell{LightBlue}station & BIGINT	&  	id postaje koju vodi voditelj 	\\ \hline
 				\end{longtblr}
 			
-			U relaciju \textbf{SearcherInTheField} pohranjuju se podaci: \textit{id, station, qualification}. Primarni ključ i ujedno i strani ključ je \textit{id} i također je strani ključ \textit{station} i \textit{qualification}. S atributom \textit{id} je u odnosu One-to-One s relacijom \textbf{AppUser}, s atributom \textit{station} je u odnosu Many-to-One s relacijom \textbf{Station}, s atributom \textit{qualification} je u odnosu Many-to-One s relacijom \textbf{Qualification}, s atributom \textit{id} je u odnosu One-to-Many s relacijom \textbf{Request} i  s atributom \textit{id} je u odnosu One-to-Many s relacijom \textbf{Location}.
+			U tablici \textbf{SearcherInTheField} pohranjuju se dodatni podaci za tragača: \textit{id, station, qualification}. U \textit{id} je spremljen id korisnika koji je tragač, u \textit{station} je pohranjen id postaje kojoj tragač pripada, a u \textit{qualification} je pohranjen id kvalifikacije koju tragač ima. Primarni ključ i ujedno i strani ključ je \textit{id} i također je strani ključ \textit{station} i \textit{qualification}. S atributom \textit{id} je u odnosu One-to-One s tablicom \textbf{AppUser}, s atributom \textit{station} je u odnosu Many-to-One s tablicom \textbf{Station}, s atributom \textit{qualification} je u odnosu Many-to-One s tablicom \textbf{Qualification}, s atributom \textit{id} je u odnosu One-to-Many s tablicom \textbf{Request} i  s atributom \textit{id} je u odnosu One-to-Many s tablicom \textbf{Location}.
 
 			
 				\begin{longtblr}[
@@ -127,7 +129,7 @@
 					\SetCell{LightBlue}qualification	& BIGINT &  id osposobljenosti tragača 	\\ \hline  
 				\end{longtblr}
 			
-			U relaciju \textbf{Action} pohranjuju se podaci: \textit{id, begun, description, comment}. Primarni ključ je \textit{id}, strani ključ je \textit{begun}. S atributom \textit{begun} je u odnosu Many-to-One s relacijom \textbf{AppUser} i s atributom \textit{id} je u odnosu One-to-Many s relacijom \textbf{Request}.
+			U tablici \textbf{Action} pohranjuju se podaci o akciji: \textit{id, begun, description, comment}. U \textit{id} se sprema id akcije, u \textit{begun} se sprema id istraživača koji je pokrenuo akciju, odnosno id korisnika koji je pokrenuo akciju. \textit{Description} je opis akcije, odnosno što se radi i koji je cilj i \textit{comment} je dodatni komentar za akciju. Primarni ključ je \textit{id}, strani ključ je \textit{begun}. S atributom \textit{begun} je u odnosu Many-to-One s tablicom \textbf{AppUser} i s atributom \textit{id} je u odnosu One-to-Many s tablicom \textbf{Request}.
 
 			
 			\begin{longtblr}[
@@ -146,7 +148,7 @@
 				comment & TEXT &  komentar za akciju 	\\ \hline  
 			\end{longtblr}
 			
-			U relaciju \textbf{Request} pohranjuju se podaci: \textit{id, action, searcher, description, qualification, completed}. Primarni ključ je \textit{id}, strani ključevi su \textit{action}, \textit{searcher} i \textit{qualification}. S atributom \textit{action} je u odnosu Many-to-One s relacijom \textbf{Action}, s atributom \textit{searcher} je u odnosu Many-to-One s relacijom \textbf{SearcherInTheField} i s atributom \textit{qualification} je u odnosu One-to-One s relacijom \textbf{Qualification}.
+			U tablici \textbf{Request} pohranjuju se podaci za zahtjev za tragačem: \textit{id, action, searcher, description, qualification, completed}. U \textit{id} je spremljen id zahtjeva, u \textit{action} je spremljen id akcije kojoj taj zahtjev pripada, odnosno zahtjevi se odnose na pojedini posao koji treba napraviti u pojedinoj akciji pa se u \textit{action} sprema id akcije kojoj taj posao pripada, \textit{description} služi kao opis posla koji tragač treba napraviti, u \textit{searcher} se sprema id tragača kojemu je dodijeljen posao, \textit{qualification} je id kvalifikacije potrebne za obavljanje posla i u \textit{completed} se sprema je li tragač izvršio taj posao ili nije. Primarni ključ je \textit{id}, strani ključevi su \textit{action}, \textit{searcher} i \textit{qualification}. S atributom \textit{action} je u odnosu Many-to-One s tablicom \textbf{Action}, s atributom \textit{searcher} je u odnosu Many-to-One s tablicom \textbf{SearcherInTheField} i s atributom \textit{qualification} je u odnosu One-to-One s tablicom \textbf{Qualification}.
 
 			
 			\begin{longtblr}[
@@ -167,7 +169,7 @@
 				completed & BOOLEAN & je li zahtjev završen ili ne \\ \hline
 			\end{longtblr}
 			
-			U relaciju \textbf{Station} pohranjuju se podaci: \textit{id, name}. Primarni ključ je \textit{id} i nema stranih ključeva. S atributom \textit{id} je u odnosu One-to-One s relacijom \textbf{StationManager}, s atributom \textit{id} je u odnosu One-to-Many s relacijom \textbf{SearcherInTheField} i s atributom \textit{id} je u odnosu One-to-One s relacijom \textbf{Location}.
+			U tablici \textbf{Station} pohranjuju se podaci za postaju: \textit{id, name}. U \textit{id} je spremljen id postaje, a u \textit{name} je spremljeno ime postaje. Primarni ključ je \textit{id} i nema stranih ključeva. S atributom \textit{id} je u odnosu One-to-One s tablicom \textbf{StationManager}, s atributom \textit{id} je u odnosu One-to-Many s tablicom \textbf{SearcherInTheField} i s atributom \textit{id} je u odnosu One-to-One s tablicom \textbf{Location}.
 
 			
 			\begin{longtblr}[
@@ -184,7 +186,7 @@
 				name & VARCHAR & ime postaje \\ \hline
 			\end{longtblr}
 			
-			U relaciju \textbf{Qualification} pohranjuju se podaci: \textit{id, description, coverage, visibility}. Primarni ključ je \textit{id} i nema stranih ključeva. S atributom \textit{id} je u odnosu One-to-Many s relacijom \textbf{SearcherInTheField} i u odnosu One-to-One s relacijom \textbf{Request}.
+			U tablici \textbf{Qualification} pohranjuju se podaci za kvalifikacije: \textit{id, description, coverage, visibility}. U \textit{id} pohranjuje se id od kvalifikacije, u \textit{description} pohranjuje se opis kvalifikacije, u \textit{coverage} pohranjuje se područje pokriveno u kilometrima, za helikopter bi bilo npr. 10.00 km, u \textit{visibility} se sprema ocjena vidljivosti koja je obrnuto proporcionalna pokrivenosti, npr. helikopter ima veliku pokrivenost, ali se teško vide tragovi životinja pa ima manju vidljivost, dok hodanje šumom ima malu pokrivenost, ali se dobro vide tragovi koje ostave životinjei pa ima veliku vidljivost. Primarni ključ je \textit{id} i nema stranih ključeva. S atributom \textit{id} je u odnosu One-to-Many s tablicom \textbf{SearcherInTheField} i u odnosu One-to-One s tablicom \textbf{Request}.
 
 			
 			\begin{longtblr}[
@@ -203,7 +205,7 @@
 				visibility & BIGINT & ocjena vidljivosti na skali od 1 do 10 (1 je najgore, a 10 najbolje) \\ \hline
 			\end{longtblr}
 			
-			U relaciju \textbf{Animal} pohranjuju se podaci: \textit{id, species, comment}. Primarni ključ je \textit{id} i nema stranih ključeva. S atributom \textit{id} je u odnosu One-to-Many s relacijom \textbf{Location}.
+			U tablici \textbf{Animal} pohranjuju se podaci o životinji: \textit{id, species, comment}. U \textit{id} se pohranjuje id od životinje, u \textit{species} se pohranjuje vrsta životinje i u \textit{comment} se pohranjuje komentar o životinji, komentar može biti bilo što: izgled, ponašanje, zdravstveno stanje, ime životinje ili nešto drugo. Primarni ključ je \textit{id} i nema stranih ključeva. S atributom \textit{id} je u odnosu One-to-Many s tablicom \textbf{Location}.
 
 			
 			\begin{longtblr}[
@@ -221,7 +223,7 @@
 				comment & TEXT & komentar za životinju \\ \hline
 			\end{longtblr}
 			
-			U relaciju \textbf{Location} pohranjuju se podaci: \textit{id, object, longitude, latitude, time, comment}. Primarni ključ je \textit{id}, a strani ključ je \textit{object}. S atributom \textit{object} je u odnosu One-to-One s relacijom \textbf{Station}, Many-to-One s relacijom \textbf{Animal} i Many-to-One s relacijom \textbf{SearcherInTheField}.
+			U tablici \textbf{Location} pohranjuju se podaci o lokaciji koja ima neku važnost: \textit{id, object, longitude, latitude, time, comment}. U \textit{id} se pohranjuje id lokacije, u \textit{object} se pohranjuje id objekta na nekoj lokaciji, objekt može biti tragač, životinja ili postaja. U \textit{longitude} i \textit{latitude} se spremaju geografska dužina i širina, u \textit{time} se sprema vrijeme kada je lokacija unesena i u \textit{comment} se sprema komentar za pojedinu lokaciju. Primarni ključ je \textit{id}, a strani ključ je \textit{object}. S atributom \textit{object} je u odnosu One-to-One s tablicom \textbf{Station}, Many-to-One s tablicom \textbf{Animal} i Many-to-One s tablicom \textbf{SearcherInTheField}.
 
 			
 			\begin{longtblr}[
