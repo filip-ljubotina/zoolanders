@@ -52,7 +52,7 @@ const Register = () => {
       await ApiService.post('/registration', userData);
       setSuccess(true);
     } catch (error) {
-      setError(error);
+      setError(error.response.data);
     }
   };
 
