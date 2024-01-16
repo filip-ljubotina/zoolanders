@@ -11,10 +11,13 @@ import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import ApiService from '../../services/ApiService';
 import AddTask from './AddTask'
+import AddAnimalComment from './AddAnimalComment'
+import ViewAnimalComments from './ViewAnimalComments'
 import ChooseSubjectView from './ChooseSubjectView'
 import home_icon_png from '../Assets/home.png'
 import searcher_icon_png from '../Assets/searcher.png'
 import pawprint_icon from '../Assets/pawprint.png'
+
 
 const ActionDetails = ({ onLogout }) => {
   ActionDetails.propTypes = {
@@ -121,6 +124,9 @@ const ActionDetails = ({ onLogout }) => {
                   {`Name: ${animal.animalName} Breed: ${animal.breed}`}
                   <br />
                   {`Description: ${animal.description}`}
+                  <br />
+                  <AddAnimalComment cardData={cardData} animal={animal}/>
+                  <ViewAnimalComments cardData={cardData} animal={animal}/>
                 </Popup>
               </Marker>
             ))}

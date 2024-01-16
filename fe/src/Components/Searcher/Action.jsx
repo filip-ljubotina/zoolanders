@@ -9,12 +9,13 @@ import SeeMore from './SeeMore'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
-import Button from '@mui/material/Button';
 import searcher_icon_png from '../Assets/searcher.png'
 import pawprint_icon from '../Assets/pawprint.png'
 import compass_icon from '../Assets/compass.png'
 import clipboard_icon from '../Assets/clipboard.png'
-
+import Button from '@mui/material/Button';
+import AddAnimalComment from './AddAnimalComment'
+import ViewAnimalComments from './ViewAnimalComments'
 
 const Action = ({ onLogout }) => {
     Action.propTypes = {
@@ -147,6 +148,9 @@ const Action = ({ onLogout }) => {
                   {`Name: ${animal.animalName} Breed: ${animal.breed}`}
                   <br />
                   {`Description: ${animal.description}`}
+                  <br />
+                  <AddAnimalComment cardData={actionInfo} animal={animal}/>
+                  <ViewAnimalComments cardData={actionInfo} animal={animal}/>
                 </Popup>
               </Marker>
             ))}
@@ -169,10 +173,10 @@ const Action = ({ onLogout }) => {
         <React.Fragment>
           {allTasks.length === 0 && checkActionFlag !== false && (
             <React.Fragment>
-              <div>Nemate više zadataka, možete se maknuti s akcije</div>
+              <h3 style={{ color: '#e8e8ec' }}>Nemate više zadataka, možete se maknuti s akcije</h3>
               <Button variant="outlined" onClick={handleDone}
-                      sx={{ borderColor: 'darkblue',
-                      color: 'darkblue'}}>
+                      sx={{ borderColor:'#bfbfbc' ,
+                      color: '#e8e8ec'}}>
                 Done
               </Button>
             </React.Fragment>

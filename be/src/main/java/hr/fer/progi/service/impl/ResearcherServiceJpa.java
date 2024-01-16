@@ -103,6 +103,11 @@ public class ResearcherServiceJpa {
         return pastDataServiceJpa.getPastSearcherRoutes(searcherInTheField, action);
     }
 
+    public List<PastSearcherRoutesDto> getPastAllSearchersRoutesByAction(Long actionId) {
+        Action action = actionRepository.findById(actionId).get();
+        return pastDataServiceJpa.getPastAllSearchersRoutesByAction(action);
+    }
+
     public List<PastSearcherLocationDto> getPastSearchersLocations (Long actionId){
         Action action = actionRepository.findById(actionId).get();
         return pastDataServiceJpa.getPastSearchersLocations(action);
@@ -112,4 +117,6 @@ public class ResearcherServiceJpa {
         Action action = actionRepository.findById(actionId).get();
         return pastDataServiceJpa.getPastAnimalsLocations(action);
     }
+
+
 }
