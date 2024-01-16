@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class JsonToClass {//TODO: preimenovati u JsonEntitiesMapper
+public class JsonToClass {
 
     public CoordinatesJson jsonToCoordinatesJsonClass(String jsonString){
         ObjectMapper objectMapper = new ObjectMapper();
