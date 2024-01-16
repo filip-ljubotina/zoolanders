@@ -81,7 +81,6 @@ public class DataInitializer {
                 positionCoordinates = new PositionCoordinates(coordinates);
                 animal = new Animal("roda2", "roda", "crna roda", positionCoordinates, station);
                 animalRepository.save(animal);
-
             } catch (IOException e) {
                 throw new RuntimeException("Error reading JSON file", e);
             }
