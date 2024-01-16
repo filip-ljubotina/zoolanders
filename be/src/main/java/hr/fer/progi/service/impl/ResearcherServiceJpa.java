@@ -9,6 +9,7 @@ import hr.fer.progi.mapper.ReqDtoToSearchersReqMapper;
 import hr.fer.progi.repository.ActionRepository;
 import hr.fer.progi.repository.StationRepository;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -51,11 +52,27 @@ public class ResearcherServiceJpa {
     }
 
     public void putNewRequest(RequestDto requestDto) {
-        Action action = actionRepository.findById(requestDto.getActionId()).get(); // TODO: napraviti provjeru postoji li vec zahtjev za tu akciju
+        checkRequestDto(requestDto);
+        Action action = actionRepository.findById(requestDto.getActionId()).get();
+        if (action.getSearchersRequest() != null) {
+            throw new IllegalArgumentException("Action already has a request!");
+        }
         Station station = stationRepository.findByStationName(requestDto.getStationName());
         SearchersRequest searchersRequest = reqDtoToSearchersReqMapper.mapper(station, requestDto.getQualifications());
         action.setSearchersRequest(searchersRequest);
         actionRepository.save(action);
+    }
+
+    public void checkRequestDto(RequestDto requestDto){
+        if (requestDto == null) {
+            throw new IllegalArgumentException("RequestDto is null");
+        }
+        if (requestDto.getStationName() == null || requestDto.getStationName().isEmpty()) {
+            throw new IllegalArgumentException("StationName is missing");
+        }
+        if (requestDto.getQualifications() == null || requestDto.getQualifications().isEmpty()) {
+            throw new IllegalArgumentException("Qualifications is missing");
+        }
     }
 
     public List<AvailableSearcherDto> getAllSearchersOnAction(Long actionId) {
