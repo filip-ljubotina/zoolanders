@@ -6,10 +6,10 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    password: ${DB_PASS:POs7zG6FzHxiri2A4zsbQINSf1eoz4lN}
-    username: ${DB_USERNAME:wildtrack_db_4a8m_user}
-    url: ${DB_URL:jdbc:postgresql://dpg-cmbichol5elc73fc8l8g-a:5432/wildtrack_db_4a8m}
-    driverClassName: ${DB_DRIVER:org.postgresql.Driver}
+    password: mp9876fer54377 #${DB_PASS:EO0aLFJyva6jYEb2oUGsVDpkD0gxJToE}
+    username: postgres #${DB_USERNAME:zoolanders}
+    url: jdbc:postgresql://localhost:5434/postgres #${DB_URL:jdbc:postgresql://dpg-cl7s8aivokcc73aprek0-a:5432/wildtrack_db}
+    #driverClassName: ${DB_DRIVER:org.postgresql.Driver}
 
 
   mail:
