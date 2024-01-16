@@ -285,18 +285,28 @@
 		\section{Dijagram stanja}
 			
 			
-			\textbf{\textit{dio 2. revizije}}\\
+			Dijagrami stanja prikazuju kako sustav prelazi iz jednog stanja u drugo kao odgovor na događaje. Prijavljenom korisniku, u ovom slučaju istraživaču, prikazuje se početna stranica s nekoliko opcija: pregled vlastitih akcija, stvaranje nove akcije i pregled osobnih podataka. Nakon odabira opcije stvaranja nove akcije, korisniku se nudi mogućnost slanja zahtjeva za tragačima za pripadajuću akciju. U slučaju da nema slobodnih tragača, sustav obavijesti korisnika i čeka na idući zahtjev. Ako se istraživaču dodijele tragači, može im dodijeliti zadatke. Zatim ima opciju unosa komentara na zadatak. Odabirom opcije ,,Moje akcije“ , istraživač može vidjeti sve svoje akcije i pregledati njihove članove te završiti neku od akcija.  Također, istraživač može odabrati prikaz karte i urediti je po želji. Nakon toga može ostaviti komentar na karti.
 			
-			\textit{Potrebno je priložiti dijagram stanja i opisati ga. Dovoljan je jedan dijagram stanja koji prikazuje \textbf{značajan dio funkcionalnosti} sustava. Na primjer, stanja korisničkog sučelja i tijek korištenja neke ključne funkcionalnosti jesu značajan dio sustava, a registracija i prijava nisu. }
+			\begin{figure}[H]
+				\includegraphics[scale=0.3]{dijagrami/DijagramStanja.png} 
+				\centering
+				\caption{Dijagram stanja}
+				\label{fig:promjene}
+			\end{figure}
 			
 			
 			\eject 
 		
 		\section{Dijagram aktivnosti}
 			
-			\textbf{\textit{dio 2. revizije}}\\
+			Dijagrami aktivnosti upotrebljavaju se za modeliranje dinamičkog ponašanja sustava. Izvođenje aktivnosti prikazano je kroz niz akcija koje čine upravljačke tokove i tokove objekata. Prikazan je proces stvaranja nove akcije. Aktivnost započinje prijavom istraživača u sustav. Nakon uspješne prijave, istraživaču se prikazuje početna stranica. Odabirom opcije za stvaranje nove akcije aplikacija prikazuje formu za unos podataka o akciji. Istraživač unosi podatke o akciji, a sustav ih pohranjuje u bazu podataka. Zatim istraživač šalje zahtjev za tragačima, a aplikacija prikazuje formu za unos detalja o zahtjevu. Aplikacija prosljeđuje zahtjev voditelju postaje koji dodjeljuje tragače akciji (pretpostavlja se da ima dostupnih tragača). Popis tragača se pohranjuje u bazu i prikazuje u aplikaciji. Na zahtjev za dodjeljivanje zadatka nekom od tragača prikazuje se forma za unos zadatka. Zadatak se sprema u bazu podataka, a istraživač može unijeti i komentar o zadatku. Nakon završetka unosa svih podataka o akciji aplikacija prikazuje poruku da su svi podaci spremljeni i aktivnost završava.
 			
-			 \textit{Potrebno je priložiti dijagram aktivnosti s pripadajućim opisom. Dijagram aktivnosti treba prikazivati značajan dio sustava.}
+			\begin{figure}[H]
+				\includegraphics[scale=0.4]{dijagrami/DijagramAkt.png} 
+				\centering
+				\caption{Dijagram aktivnosti}
+				\label{fig:promjene}
+			\end{figure}
 			
 			\eject
 		\section{Dijagram komponenti}
