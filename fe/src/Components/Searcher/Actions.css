@@ -1,0 +1,20 @@
+.leaflet-marker-icon.marker-cluster span {
+  display: inline-block;
+  width: 40px; /* Adjust the width of the circle */
+  height: 40px; /* Adjust the height of the circle */
+  background-color: blue; /* Set the background color of the circle */
+  border-radius: 50%; /* Make the circle round */
+  color: white; /* Set the color of the text (cluster count) */
+  text-align: center; /* Center the text horizontally */
+  line-height: 40px; /* Center the text vertically */
+  font-size: 18px; /* Adjust the font size of the cluster count */
+}
+
+.leaflet-marker-icon.marker-cluster {
+  border: 2px blue;
+  padding: 5px;
+}
+
+.leaflet-routing-container {
+  display: none;
+}

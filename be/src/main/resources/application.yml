@@ -1,0 +1,29 @@
+custom:
+  serverPath: ${SERVER_PATH:http://localhost:8080}
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    password: mp9876fer54377 #${DB_PASS:EO0aLFJyva6jYEb2oUGsVDpkD0gxJToE}
+    username: postgres #${DB_USERNAME:zoolanders}
+    url: jdbc:postgresql://localhost:5434/postgres #${DB_URL:jdbc:postgresql://dpg-cl7s8aivokcc73aprek0-a:5432/wildtrack_db}
+    #driverClassName: ${DB_DRIVER:org.postgresql.Driver}
+
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
+
