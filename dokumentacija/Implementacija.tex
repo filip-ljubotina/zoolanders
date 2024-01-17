@@ -23,8 +23,138 @@
 	
 			
 			\subsection{Ispitivanje komponenti}
-			\textit{Potrebno je provesti ispitivanje jedinica (engl. unit testing) nad razredima koji implementiraju temeljne funkcionalnosti. Razraditi \textbf{minimalno 6 ispitnih slučajeva} u kojima će se ispitati redovni slučajevi, rubni uvjeti te izazivanje pogreške (engl. exception throwing). Poželjno je stvoriti i ispitni slučaj koji koristi funkcionalnosti koje nisu implementirane. Potrebno je priložiti izvorni kôd svih ispitnih slučajeva te prikaz rezultata izvođenja ispita u razvojnom okruženju (prolaz/pad ispita). }
+			\underline{\textbf{1. checkAnimalDto}}
 			
+			Jedna od komponenti koju smo testirali je metoda checkAnimalDto iz klase SearcherInTheFieldJpa. Ta metoda provjerava sadrži li animalDto sve potrebne varijable:
+			\begin{lstlisting}
+			public void checkAnimalDto(AnimalDto animalDto){
+				if (animalDto == null) {
+					throw new IllegalArgumentException("AnimalDto is null");
+				}
+				if (animalDto.getAnimalName() == null || animalDto.getAnimalName().isEmpty()) {
+					throw new IllegalArgumentException("AnimalName is missing");
+				}
+				if (animalDto.getBreed() == null || animalDto.getBreed().isEmpty()) {
+					throw new IllegalArgumentException("Breed is missing");
+				}
+				if (animalDto.getDescription() == null || animalDto.getDescription().isEmpty()) {
+					throw new IllegalArgumentException("Description is missing");
+				}
+				if (animalDto.getCurrentPosition() == null || animalDto.getCurrentPosition().isEmpty()) {
+					throw new IllegalArgumentException("Current position is missing");
+				}
+			}
+			\end{lstlisting}
+			Ako se neka od varijabli ne nalazi u animalDto, metoda baca exception ovisan o tome koja varijabla nedostaje. Metoda također provjerava je li sam animalDto prazan. Svi ispitni slučajevi ove metode nalaze se u klasi CheckAnimalDtoTest.\\
+			
+			\noindent\textbf{Prvi slučaj: testCheckAnimalDtoValid}
+			
+			Prvi slučaj koji se testira je kada je ulaz metode checkAnimalDto animalDto koji sadrži sve potrebne varijable:
+			\begin{lstlisting}
+				@Test
+				public void testCheckAnimalDtoValid() {
+					
+					AnimalDto validAnimalDto = new AnimalDto();
+					validAnimalDto.setAnimalName("Vuk");
+					validAnimalDto.setBreed("Licki");
+					validAnimalDto.setDescription("Sivi, brzi vuk");
+					validAnimalDto.setCurrentPosition(Arrays.asList(1.0, 2.0));
+					
+					assertDoesNotThrow(() -> searcherJpa.checkAnimalDto(validAnimalDto));
+				}
+			\end{lstlisting}
+			Taj slučaj na kraju ispituje je li bačen exception, tj. ako exception nije bačen onda test prolazi. Rezultat ispitnog slučaja je:
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.8]{slike/testCheckAnimalDtoValid.PNG} 
+				\centering
+				\caption{testCheckAnimalDtoValid rezultat}
+				\label{fig:testCheckAnimalDtoValid}
+			\end{figure}
+			
+			\noindent\textbf{Drugi slučaj: testCheckAnimalDtoNull}
+			
+			Također postoji slučaj koji testira da će se baciti ispravan exception ako je animalDto na ulazu prazan:
+			\begin{lstlisting}
+				@Test
+				public void testCheckAnimalDtoNull() {
+					AnimalDto nullAnimalDto = null;
+					
+					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+					() -> searcherJpa.checkAnimalDto(nullAnimalDto));
+					
+					assertEquals("AnimalDto is null", exception.getMessage());
+				}
+			\end{lstlisting}
+			Ako se baci exception da je animalDto prazan s porukom "AnimalDto is null", ispitni slučaj prolazi. Rezultat ispitnog slučaja je:
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.8]{slike/testCheckAnimalDtoNull.PNG} 
+				\centering
+				\caption{testCheckAnimalDtoNull rezultat}
+				\label{fig:testCheckAnimalDtoNull}
+			\end{figure}
+			
+			\noindent\textbf{Treći slučaj: testCheckAnimalDtoMissingName}
+			
+			Ovaj ispitni slučaj provjerava da će se baciti ispravan exception ako u objektu animalDto nedostaje varijabla imena:
+			\begin{lstlisting}
+				@Test
+				public void testCheckAnimalDtoMissingName() {
+					AnimalDto missingNameDto = new AnimalDto();
+					missingNameDto.setBreed("Licki");
+					missingNameDto.setDescription("Sivi, brzi vuk");
+					missingNameDto.setCurrentPosition(Arrays.asList(1.0, 2.0));
+					
+					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+					() -> searcherJpa.checkAnimalDto(missingNameDto));
+					
+					assertEquals("AnimalName is missing", exception.getMessage());
+				}
+			\end{lstlisting}
+			Ovaj ispitni slučaj prolazi ako se baci exception s porukom "AnimalName is missing". Rezultat slučaja je:
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.8]{slike/testCheckAnimalDtoMissingName.PNG} 
+				\centering
+				\caption{testCheckAnimalDtoMissingName rezultat}
+				\label{fig:testCheckAnimalDtoMissingName}
+			\end{figure}
+			
+			\noindent\textbf{Četvrti slučaj: testCheckAnimalDtoMissingBreed}
+			
+			Posljednji ispitni slučaj ove komponente sičan je trećem ispitnom slučaju, ali ovaj put provjerava da će metoda ispravno reagirati ako nedostaje varijabla Breed:
+			\begin{lstlisting}
+				@Test
+				public void testCheckAnimalDtoMissingBreed() {
+					AnimalDto missingBreedDto = new AnimalDto();
+					missingBreedDto.setAnimalName("Vuk");
+					missingBreedDto.setDescription("Sivi, brzi vuk");
+					missingBreedDto.setCurrentPosition(Arrays.asList(1.0, 2.0));
+					
+					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+					() -> searcherJpa.checkAnimalDto(missingBreedDto));
+					
+					assertEquals("Breed is missing", exception.getMessage());
+				}
+			\end{lstlisting}
+			Slično kao u prijašnjem ispitnom slučaju, ako metoda baci exception s porukom "Breed is missing" ispitni slučaj prolazi. Rezultat ispitnog slučaja je:
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.8]{slike/testCheckAnimalDtoMissingBreed.PNG} 
+				\centering
+				\caption{testCheckAnimalDtoMissingBreed rezultat}
+				\label{fig:testCheckAnimalDtoMissingBreed}
+			\end{figure}
+			
+			
+			\underline{\textbf{2. putRemoveFromAction}}
+			
+			\underline{\textbf{3. checkRequestDto}}
+			
+			\underline{\textbf{4. validateCoordinates}}
+			
+			\underline{\textbf{5. checkAvailableSearcherDto}}
 			
 			
 			\subsection{Ispitivanje sustava}
