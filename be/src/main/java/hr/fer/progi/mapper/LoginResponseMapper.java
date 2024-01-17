@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoginResponseMapper {
 
-    public LoginResponse mapper(String token, String[] authoritiesArray, String stationName){
+    public LoginResponse mapper(String token, String[] authoritiesArray, String stationName, byte[] image){
         String authority =  authoritiesArray[0];
-        return new LoginResponse(token, authority.replace("ROLE_", ""), stationName);
+        return new LoginResponse(token, authority.replace("ROLE_", ""), stationName, image);
     }
 }

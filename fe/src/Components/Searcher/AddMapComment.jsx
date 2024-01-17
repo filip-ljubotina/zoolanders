@@ -4,37 +4,47 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
+import PropTypes from "prop-types";
 import * as React from "react";
-import { useMapEvents } from "react-leaflet/hooks";
+import { useMap } from "react-leaflet";
 import ApiService from "../../services/ApiService";
+import { DialogContentText } from "@mui/material";
 
-const AddComment = (onAddComment) => {
+const AddMapComment = ({ cardData, onAddComment }) => {
+  AddMapComment.propTypes = {
+    cardData: PropTypes.object.isRequired,
+    onAddComment: PropTypes.func.isRequired,
+  };
+
   const [open, setOpen] = React.useState(false);
+  const [error, setError] = React.useState("");
   const [newComment, setNewComment] = React.useState({
-    location: "",
-    content: "",
+    comment: "",
+    coordinates: [],
   });
 
   const postData = async () => {
     try {
       await ApiService.post(
-        "/wildTrack/searcherInTheField/postNewCommentOnMap",
+        `/wildTrack/researcher/postMapComment/${cardData.actionId}`,
         newComment
       );
       onAddComment();
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error fetching data:", error);
     }
   };
 
   const handleClose = () => {
+    setError("");
     setOpen(false);
   };
 
   const handleLocation = (e) => {
+    console.log(e.latlng);
     setNewComment({
       ...newComment,
-      ["location"]: e.target.value,
+      ["coordinates"]: [e.latlng.lat, e.latlng.lng],
     });
   };
 
@@ -46,16 +56,19 @@ const AddComment = (onAddComment) => {
   };
 
   const handleSubmit = () => {
+    if (!newComment.comment.trim()) {
+      setError("Potrebno je unijeti sadržaj komentara");
+      return null;
+    }
     postData();
+    setError("");
     setOpen(false);
   };
 
-  const map = useMapEvents({
-    dblclick: (e) => {
-      handleLocation(e);
-      setOpen(true);
-      console.log(map);
-    },
+  const map = useMap();
+  map.on("dblclick", (e) => {
+    handleLocation(e);
+    setOpen(true);
   });
 
   return (
@@ -66,8 +79,8 @@ const AddComment = (onAddComment) => {
           <TextField
             autoFocus
             margin="dense"
-            id="name"
-            name="actionName"
+            id="comment"
+            name="comment"
             label="Unesite komentar"
             type="text"
             fullWidth
@@ -75,14 +88,28 @@ const AddComment = (onAddComment) => {
             onChange={handleChange}
             required
           />
+          {error && (
+            <DialogContentText
+              style={{ color: "var(--error-color)", textAlign: "center" }}
+              className="error"
+            >
+              {error}
+            </DialogContentText>
+          )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}> Odbaci </Button>
-          <Button onClick={handleSubmit}> Spremi </Button>
+          <Button type="button" onClick={handleClose}>
+            {" "}
+            Odbaci{" "}
+          </Button>
+          <Button type="button" onClick={handleSubmit}>
+            {" "}
+            Spremi{" "}
+          </Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
   );
 };
 
-export default AddComment;
+export default AddMapComment;

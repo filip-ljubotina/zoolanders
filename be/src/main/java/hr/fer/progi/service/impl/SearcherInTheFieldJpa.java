@@ -15,6 +15,7 @@ import hr.fer.progi.mapper.AvailableSearcherDtoMapper;
 import hr.fer.progi.repository.SearcherInTheFieldRepository;
 import hr.fer.progi.repository.StationRepository;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,7 @@ public class SearcherInTheFieldJpa {
     private final AnimalServiceJpa animalServiceJpa;
     private final TaskServiceJpa taskServiceJpa;
     private final PastDataServiceJpa pastDataServiceJpa;
+
 
     public void createSearcherInTheField(AppUser appUser){
         SearcherInTheField searcherInTheField = new SearcherInTheField();
@@ -133,10 +135,30 @@ public class SearcherInTheFieldJpa {
     }
 
     public void postNewAnimal(AnimalDto animalDto, Long appUserId) {
+        checkAnimalDto(animalDto);
         SearcherInTheField searcherInTheField = findByAppUserId(appUserId);
         String stationName = searcherInTheField.getAction().getLocationName();
         animalServiceJpa.postNewAnimal(animalDto, stationRepository.findByStationName(stationName));
     }
+
+    public void checkAnimalDto(AnimalDto animalDto){
+        if (animalDto == null) {
+            throw new IllegalArgumentException("AnimalDto is null");
+        }
+        if (animalDto.getAnimalName() == null || animalDto.getAnimalName().isEmpty()) {
+            throw new IllegalArgumentException("AnimalName is missing");
+        }
+        if (animalDto.getBreed() == null || animalDto.getBreed().isEmpty()) {
+            throw new IllegalArgumentException("Breed is missing");
+        }
+        if (animalDto.getDescription() == null || animalDto.getDescription().isEmpty()) {
+            throw new IllegalArgumentException("Description is missing");
+        }
+        if (animalDto.getCurrentPosition() == null || animalDto.getCurrentPosition().isEmpty()) {
+            throw new IllegalArgumentException("Current position is missing");
+        }
+    }
+
 
     public void putTaskCompleted(Long taskId, Long appUserId) {
         SearcherInTheField searcherInTheField = findByAppUserId(appUserId);
@@ -153,6 +175,9 @@ public class SearcherInTheFieldJpa {
 
     public void putRemoveFromAction(Long appUserId) {
         SearcherInTheField searcherInTheField = findByAppUserId(appUserId);
+        if (searcherInTheField == null) {
+            throw new IllegalArgumentException("SearcherInTheField is null");
+        }
         pastDataServiceJpa.searcherPositionSave(searcherInTheField);
         searcherInTheField.setAction(null);
         searcherInTheField.setCurrentPosition(null);

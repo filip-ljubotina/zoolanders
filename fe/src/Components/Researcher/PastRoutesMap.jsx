@@ -8,9 +8,10 @@ import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import ApiService from "../../services/ApiService";
 import "./Actions.css";
 
-const PastRoutesMap = ({ cardData }) => {
+const PastRoutesMap = ({ cardData, filterCriteria }) => {
   PastRoutesMap.propTypes = {
     cardData: PropTypes.object.isRequired,
+    filterCriteria: PropTypes.object,
   };
 
   const [currentData, setCurrentData] = useState([]);
@@ -21,6 +22,7 @@ const PastRoutesMap = ({ cardData }) => {
         `wildTrack/researcher/getPastAllSearchersRoutes/${cardData.actionId}`
       );
       handleData(responsePastRoutes.data);
+      console.log(responsePastRoutes.data);
     } catch (error) {
       console.error("Error fetching table data:", error);
     }
@@ -28,6 +30,17 @@ const PastRoutesMap = ({ cardData }) => {
 
   const handleData = (data) => {
     const points = [];
+    if (filterCriteria !== undefined) {
+      data = data.map((route) => {
+        const routeValue =
+          route[
+            filterCriteria.subject === "individual"
+              ? "searcherId"
+              : filterCriteria.subject
+          ];
+        return filterCriteria.checkedItems.includes(routeValue);
+      });
+    }
     data.map((pastRoute) => {
       if (mapToQualification(pastRoute.qualification) !== false) {
         var myRoute = L.Routing.osrmv1({

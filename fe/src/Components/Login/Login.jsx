@@ -1,14 +1,15 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Login.css";
+import Password from "remixicon-react/Lock2FillIcon";
+import Email from "remixicon-react/MailFillIcon";
 import ApiService from "../../services/ApiService";
-import TokenService from "../../services/TokenService";
+import ProfileImageService from "../../services/ProfileImageService";
 import RoleService from "../../services/RoleService";
 import StationService from "../../services/StationService";
+import TokenService from "../../services/TokenService";
 import background_photo from "../Assets/login-bg.png";
-import Email from "remixicon-react/MailFillIcon";
-import Password from "remixicon-react/Lock2FillIcon";
-import PropTypes from "prop-types";
+import "./Login.css";
 
 const Login = ({ onLoginSuccess }) => {
   Login.propTypes = {
@@ -33,6 +34,7 @@ const Login = ({ onLoginSuccess }) => {
       TokenService.setToken(response.data.token);
       RoleService.setRole(response.data.role);
       StationService.setStation(response.data.stationName);
+      ProfileImageService.setProfileImage(response.data.image);
       onLoginSuccess();
     } catch (error) {
       setError(

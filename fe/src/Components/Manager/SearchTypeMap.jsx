@@ -1,9 +1,14 @@
+import { MapContainer, TileLayer, Marker, Popup, Polygon } from "react-leaflet";
 import L from "leaflet";
 import PropTypes from "prop-types";
-import { MapContainer, Marker, Polygon, Popup, TileLayer } from "react-leaflet";
 import home_icon_png from "../Assets/home.png";
 
 const SearchTypeMap = ({ coordinates, searchType }) => {
+  SearchTypeMap.propTypes = {
+    coordinates: PropTypes.object.isRequired,
+    searchType: PropTypes.string.isRequired,
+  };
+
   const polygonOpacity = {
     FOOT: 0.8,
     DRONE: 0.4,
@@ -49,11 +54,6 @@ const SearchTypeMap = ({ coordinates, searchType }) => {
       )}
     </MapContainer>
   );
-};
-
-SearchTypeMap.propTypes = {
-  coordinates: PropTypes.object.isRequired,
-  searchType: PropTypes.string.isRequired,
 };
 
 export default SearchTypeMap;

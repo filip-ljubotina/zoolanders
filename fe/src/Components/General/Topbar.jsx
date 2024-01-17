@@ -1,16 +1,16 @@
-import "./Topbar.css";
-import { useNavigate } from "react-router-dom";
-import TokenService from "../../services/TokenService";
-import RoleService from "../../services/RoleService";
-import { Box, IconButton } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
-import sky_photo from "../Assets/sky.png";
+import { Box, IconButton } from "@mui/material";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
+import RoleService from "../../services/RoleService";
+import TokenService from "../../services/TokenService";
+import sky_photo from "../Assets/sky.png";
+import "./Topbar.css";
 
 const Topbar = ({ title, onLogout }) => {
   Topbar.propTypes = {
-    title: PropTypes.string,
-    onLogout: PropTypes.func,
+    title: PropTypes.string.isRequired,
+    onLogout: PropTypes.func.isRequired,
   };
   const navigate = useNavigate();
 

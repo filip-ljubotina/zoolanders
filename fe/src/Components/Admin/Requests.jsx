@@ -11,7 +11,7 @@ import "./Users.css";
 
 const Requests = ({ onLogout }) => {
   Requests.propTypes = {
-    onLogout: PropTypes.object.isRequired,
+    onLogout: PropTypes.func.isRequired,
   };
   const [data, setData] = React.useState([]);
 

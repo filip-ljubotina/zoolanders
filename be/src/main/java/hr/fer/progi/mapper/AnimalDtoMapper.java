@@ -17,6 +17,7 @@ public class AnimalDtoMapper {
         animal.setDescription(animalDto.getDescription());
         animal.setCurrentPosition(positionCoordinates);
         animal.setStation(station);
+        animal.setImage(animalDto.getImage());
         return animal;
     }
 }

@@ -9,6 +9,7 @@ import hr.fer.progi.mapper.ReqDtoToSearchersReqMapper;
 import hr.fer.progi.repository.ActionRepository;
 import hr.fer.progi.repository.StationRepository;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -29,9 +30,19 @@ public class ResearcherServiceJpa {
     private final PastDataServiceJpa pastDataServiceJpa;
 
     public void postNewAction(ActionDto actionDto, Long appUserId) {
+        checkActionDto(actionDto);
         AppUser appUser = appUserServiceJpa.findById(appUserId);
         Action newAction = actionDtoMapper.dtoToClass(actionDto, appUser);
         actionRepository.save(newAction);
+    }
+
+    public void checkActionDto(ActionDto actionDto) throws IllegalArgumentException{
+        if (actionDto.getActionName() == null || actionDto.getActionType() == null || actionDto.getLocationName() == null) {
+            throw new IllegalArgumentException("All attributes in ActionDto must not be null");
+        }
+        if (actionDto.getActionName().trim().isEmpty() || actionDto.getActionType().trim().isEmpty() || actionDto.getLocationName().trim().isEmpty()) {
+            throw new IllegalArgumentException("All attributes in ActionDto must not be empty");
+        }
     }
 
     public List<ActionDto> getAllActions(Long appUserId) {
@@ -51,11 +62,27 @@ public class ResearcherServiceJpa {
     }
 
     public void putNewRequest(RequestDto requestDto) {
-        Action action = actionRepository.findById(requestDto.getActionId()).get(); // TODO: napraviti provjeru postoji li vec zahtjev za tu akciju
+        checkRequestDto(requestDto);
+        Action action = actionRepository.findById(requestDto.getActionId()).get();
+        if (action.getSearchersRequest() != null) {
+            throw new IllegalArgumentException("Action already has a request!");
+        }
         Station station = stationRepository.findByStationName(requestDto.getStationName());
         SearchersRequest searchersRequest = reqDtoToSearchersReqMapper.mapper(station, requestDto.getQualifications());
         action.setSearchersRequest(searchersRequest);
         actionRepository.save(action);
+    }
+
+    public void checkRequestDto(RequestDto requestDto){
+        if (requestDto == null) {
+            throw new IllegalArgumentException("RequestDto is null");
+        }
+        if (requestDto.getStationName() == null || requestDto.getStationName().isEmpty()) {
+            throw new IllegalArgumentException("StationName is missing");
+        }
+        if (requestDto.getQualifications() == null || requestDto.getQualifications().isEmpty()) {
+            throw new IllegalArgumentException("Qualifications is missing");
+        }
     }
 
     public List<AvailableSearcherDto> getAllSearchersOnAction(Long actionId) {

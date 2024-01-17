@@ -1,11 +1,10 @@
 package hr.fer.progi.service.impl;
 
 import hr.fer.progi.dto.researcherDto.ActionDto;
+import hr.fer.progi.dto.researcherDto.AnimalDto;
 import hr.fer.progi.dto.stationManagerDto.AvailableSearcherDto;
-import hr.fer.progi.dto.stationManagerDto.ChosenSearcherDto;
 import hr.fer.progi.entity.Action;
 import hr.fer.progi.entity.AppUser;
-import hr.fer.progi.entity.enums.Qualification;
 import hr.fer.progi.jsonentities.CoordinatesJson;
 import hr.fer.progi.entity.Station;
 import hr.fer.progi.entity.StationManager;
@@ -66,7 +65,7 @@ public class StationManagerJpa {
         return station;
     }
 
-                                                                //TODO: ne može ovako ostati
+
     private Station findStationByAppUserId(Long appUserId){
         AppUser appUser = appUserRepository.findById(appUserId).get();
         return stationManagerRepository.findStationByUserId(appUser);
@@ -88,8 +87,27 @@ public class StationManagerJpa {
 
 
     public void putChosenSearcherForAction(AvailableSearcherDto availableSearcherDto, Long actionId) {
+        checkAvailableSearcherDto(availableSearcherDto);
         Action action = actionRepository.findById(actionId).get();
         searcherInTheFieldJpa.putChosenSearcherForAction(availableSearcherDto, action);
+    }
+
+    public void checkAvailableSearcherDto(AvailableSearcherDto availableSearcherDto){
+        if (availableSearcherDto == null) {
+            throw new IllegalArgumentException("AvailableSearcherDto is null");
+        }
+        if (availableSearcherDto.getFirstName() == null || availableSearcherDto.getFirstName().isEmpty()) {
+            throw new IllegalArgumentException("First name is missing");
+        }
+        if (availableSearcherDto.getLastName() == null || availableSearcherDto.getLastName().isEmpty()) {
+            throw new IllegalArgumentException("Last name is missing");
+        }
+        if (availableSearcherDto.getQualification() == null || availableSearcherDto.getQualification().isEmpty()) {
+            throw new IllegalArgumentException("Qualification is missing");
+        }
+        if (availableSearcherDto.getCurrentPosition() == null || availableSearcherDto.getCurrentPosition().isEmpty()) {
+            throw new IllegalArgumentException("Current position is missing");
+        }
     }
 
     public void putActionSearcherRequestToNull(Long actionId) {

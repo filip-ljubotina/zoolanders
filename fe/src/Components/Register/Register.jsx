@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Password from "remixicon-react/Lock2FillIcon";
 import Email from "remixicon-react/MailFillIcon";
 import User from "remixicon-react/UserLineIcon";
@@ -54,11 +54,9 @@ const Register = () => {
       await ApiService.post("/registration", userData);
       setSuccess(true);
     } catch (error) {
-      setError(error);
+      setError(error.response.data);
     }
   };
-
-  useEffect;
 
   return (
     <div className="register">

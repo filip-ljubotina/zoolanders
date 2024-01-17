@@ -10,7 +10,12 @@ import * as React from "react";
 import ApiService from "../../services/ApiService";
 import Choose from "./Choose";
 
-function ChooseSearcher({ card, onSave }) {
+const ChooseSearcher = ({ card, onSave }) => {
+  ChooseSearcher.propTypes = {
+    card: PropTypes.object.isRequired,
+    onSave: PropTypes.func.isRequired,
+  };
+
   const [open, setOpen] = React.useState(false);
   const [data, setData] = React.useState([]);
 
@@ -114,11 +119,11 @@ function ChooseSearcher({ card, onSave }) {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Odabir Tragača
+        Odabir tragača
       </Button>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
         <DialogTitle>
-          Odaberite Tragače Za Akciju: {card.actionName}
+          Odaberite tragače za akciju: {card.actionName}
         </DialogTitle>
         <DialogContent>
           <Box m="20px">
@@ -141,11 +146,6 @@ function ChooseSearcher({ card, onSave }) {
       </Dialog>
     </div>
   );
-}
-
-ChooseSearcher.propTypes = {
-  card: PropTypes.object.isRequired,
-  onSave: PropTypes.func.isRequired,
 };
 
 export default ChooseSearcher;

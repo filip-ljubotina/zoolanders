@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import * as React from "react";
 import { useMap } from "react-leaflet";
 import ApiService from "../../services/ApiService";
+import { DialogContentText } from "@mui/material";
 
 const AddMapComment = ({ cardData, onAddComment }) => {
   AddMapComment.propTypes = {
@@ -16,7 +17,7 @@ const AddMapComment = ({ cardData, onAddComment }) => {
   };
 
   const [open, setOpen] = React.useState(false);
-  const [message, setMessage] = React.useState("");
+  const [error, setError] = React.useState("");
   const [newComment, setNewComment] = React.useState({
     comment: "",
     coordinates: [],
@@ -35,7 +36,7 @@ const AddMapComment = ({ cardData, onAddComment }) => {
   };
 
   const handleClose = () => {
-    setMessage("");
+    setError("");
     setOpen(false);
   };
 
@@ -56,11 +57,11 @@ const AddMapComment = ({ cardData, onAddComment }) => {
 
   const handleSubmit = () => {
     if (!newComment.comment.trim()) {
-      setMessage("Potrebno je unijeti sadržaj komentara");
+      setError("Potrebno je unijeti sadržaj komentara");
       return null;
     }
     postData();
-    setMessage("");
+    setError("");
     setOpen(false);
   };
 
@@ -87,13 +88,13 @@ const AddMapComment = ({ cardData, onAddComment }) => {
             onChange={handleChange}
             required
           />
-          {message && (
-            <h4
+          {error && (
+            <DialogContentText
               style={{ color: "var(--error-color)", textAlign: "center" }}
-              className="message"
+              className="error"
             >
-              {message}
-            </h4>
+              {error}
+            </DialogContentText>
           )}
         </DialogContent>
         <DialogActions>

@@ -26,11 +26,21 @@ public class TaskServiceJpa {
     }
 
     public void postNewTask(TaskDto taskDto, Action action, SearcherInTheField searcherInTheField) {
+        checkTaskDto(taskDto);
         try {
             Task newTask = taskDtoMapper.newTaskDtoAndActionMapper(taskDto, searcherInTheField, action);
             taskRepository.save(newTask);
         } catch (Exception e) {
-            e.printStackTrace(); // Log or print the exception
+            e.printStackTrace();
+        }
+    }
+
+    public void checkTaskDto(TaskDto taskDto){
+        if (taskDto.getSearcherId() == null || taskDto.getRouteWaypoints() == null || taskDto.getTaskToDo() == null || taskDto.getTaskComment() == null) {
+            throw new IllegalArgumentException("All attributes in TaskDto must not be null");
+        }
+        if (taskDto.getTaskToDo().trim().isEmpty()) {
+            throw new IllegalArgumentException("TaskToDo in TaskDto must not be empty");
         }
     }
 

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
   Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
 } from "react-router-dom";
-import LoginComponent from "./components/LoginComponent";
-import RegistrationComponent from "./components/RegistrationComponent";
 import DashboardComponent from "./components/DashboardComponent";
+import LoginComponent from "./components/LoginComponent";
 import LogoutButton from "./components/LogoutButton";
+import RegistrationComponent from "./components/RegistrationComponent";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

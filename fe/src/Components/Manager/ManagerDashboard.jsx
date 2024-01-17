@@ -1,13 +1,12 @@
 import PropTypes from "prop-types";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "../General/Dashboard.css";
-import Sidebar from "../General/Sidebar";
 import AddSearchers from "./AddSearchers";
 import Requests from "./Requests";
 
 const ManagerDashboard = ({ onLogout }) => {
   ManagerDashboard.propTypes = {
-    onLogout: PropTypes.func,
+    onLogout: PropTypes.func.isRequired,
   };
 
   return (
@@ -15,15 +14,7 @@ const ManagerDashboard = ({ onLogout }) => {
       <Routes>
         <Route
           path="/"
-          element={
-            <Sidebar
-              categories={[
-                { title: "Dodavanje tragača", link: "/addUsers" },
-                { title: "Zahtjevi istraživača", link: "/requests" },
-              ]}
-              user="manager"
-            />
-          }
+          element={<Navigate to="/dashboard/manager/addUsers" />}
         />
         <Route
           path="/addUsers"

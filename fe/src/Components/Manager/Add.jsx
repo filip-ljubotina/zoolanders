@@ -62,7 +62,7 @@ export default function Add({ data, coordinates, onSave }) {
         <DialogTitle>Odredite osposobljenost tragača</DialogTitle>
         <DialogContent>
           <Select id="select" value={change} onChange={handleChange} required>
-            <SelectOption value="FOOT">Pješke</SelectOption>
+            <SelectOption value="FOOT">Pješice</SelectOption>
             <SelectOption value="DRONE">Dron</SelectOption>
             <SelectOption value="CAR">Automobil</SelectOption>
             <SelectOption value="CROSS_MOTOR">Cross Motor</SelectOption>

@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "../General/Dashboard.css";
-import Sidebar from "../General/Sidebar";
 import ActionDetails from "./ActionDetails";
 import Actions from "./Actions";
 
@@ -14,15 +13,7 @@ const ResearcherDashboard = ({ onLogout }) => {
       <Routes>
         <Route
           path="/"
-          element={
-            <Sidebar
-              categories={[
-                { title: "Akcije", link: "/actions" },
-                { title: "Poslani zahtjevi", link: "/requests" },
-              ]}
-              user="researcher"
-            />
-          }
+          element={<Navigate to="/dashboard/researcher/actions" />}
         />
         <Route path="/actions" element={<Actions onLogout={onLogout} />} />
         <Route

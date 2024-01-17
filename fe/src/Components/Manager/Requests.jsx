@@ -1,13 +1,13 @@
+import * as React from "react";
+import Sidebar from "./Sidebar";
+import "./AddSearchers.css";
+import ApiService from "../../services/ApiService";
+import Topbar from "./Topbar";
+import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import PropTypes from "prop-types";
-import * as React from "react";
-import ApiService from "../../services/ApiService";
-import Sidebar from "../General/Sidebar";
-import Topbar from "../General/Topbar";
-import "./AddSearchers.css";
+import CardActions from "@mui/material/CardActions";
 import ChooseSearcher from "./ChooseSearcher";
 
 const Requests = ({ onLogout }) => {
@@ -50,17 +50,25 @@ const Requests = ({ onLogout }) => {
       />
       <div className="usersContainer">
         <Topbar title="Zahtjevi za tragače postaje" onLogout={onLogout} />
-        <div className="cardsGrid">
+        <div className="researcher-cardsGrid">
           {cards.map((card) => (
-            <Card key={card.id} sx={{ minWidth: 275, margin: 2 }}>
+            <Card
+              key={card.actionId}
+              sx={{ minWidth: 275, margin: 2, height: "fit-content" }}
+            >
               <CardContent>
                 <Typography variant="h5" component="div">
                   {card.actionName}
                 </Typography>
                 <Typography sx={{ mb: 1 }} color="text.secondary">
-                  {card.locationName.replace(/_/g, " ")}
+                  {card.locationName
+                    .replace(/_/g, " ")
+                    .replace(/./, (c) => c.toUpperCase())}{" "}
                 </Typography>
-                <Typography variant="body2">{card.actionType}</Typography>
+                <Typography variant="body2">
+                  {" "}
+                  {card.actionType.replace(/./, (c) => c.toUpperCase())}{" "}
+                </Typography>
               </CardContent>
               <CardActions>
                 <ChooseSearcher

@@ -13,4 +13,7 @@ public class RequestDto {
     private Long actionId;
     private String stationName;
     private List<String> qualifications;
+
+    public RequestDto() {
+    }
 }

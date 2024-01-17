@@ -28,6 +28,7 @@ import AddTask from "./AddTask";
 import ChooseSubjectView from "./ChooseSubjectView";
 import PastRoutesMap from "./PastRoutesMap";
 import ViewAnimalComments from "./ViewAnimalComments";
+import ChooseSearcherView from "./ChooseSearcherView";
 
 const ActionDetails = ({ onLogout }) => {
   ActionDetails.propTypes = {
@@ -42,7 +43,9 @@ const ActionDetails = ({ onLogout }) => {
   const [allAnimals, setAllAnimals] = useState([]);
   const [pastAnimals, setPastAnimals] = useState([]);
   const [filteredAnimals, setFilteredAnimals] = useState([]);
-  const [filterCriteria, setfilterCriteria] = useState([]);
+  const [filteredPastAnimals, setFilteredPastAnimals] = useState([]);
+  const [filterCriteria, setFilterCriteria] = useState([]);
+  const [searcherCriteria, setSearcherCriteria] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -61,23 +64,14 @@ const ActionDetails = ({ onLogout }) => {
       const responseComments = await ApiService.get(
         `/wildTrack/animal/getAllMapComments/${cardData.actionId}`
       );
-
       setSearchers(response.data);
       setStationCoordinates(responseJson.data.center);
       setAllAnimals(responseAnimals.data);
-      setPastAnimals(
-        responsePastAnimals.data.map((animal) => {
-          return [
-            animal.pastLocation[0],
-            animal.pastLocation[1],
-            animal.intensity,
-          ];
-        })
-      );
+      setPastAnimals(responsePastAnimals.data);
       setComments(responseComments.data);
       refreshSubjectMapView();
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -86,9 +80,9 @@ const ActionDetails = ({ onLogout }) => {
       const responseCriteria = await ApiService.get(
         `wildTrack/researcher/getMapViewCriteria/${cardData.actionId}`
       );
-      setfilterCriteria(responseCriteria.data);
+      setFilterCriteria(responseCriteria.data);
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -104,7 +98,22 @@ const ActionDetails = ({ onLogout }) => {
         return filterCriteria.checkedItems.includes(animalValue);
       })
     );
+    setFilteredPastAnimals(
+      pastAnimals.filter((animal) => {
+        const animalValue =
+          animal[
+            filterCriteria.subject === "individual"
+              ? "animalId"
+              : filterCriteria.subject
+          ];
+        return filterCriteria.checkedItems.includes(animalValue);
+      })
+    );
   }, [filterCriteria]);
+
+  const handleSearcherMapView = (mapView) => {
+    setSearcherCriteria(mapView);
+  };
 
   const handleSubjectMapView = () => {
     refreshSubjectMapView();
@@ -157,10 +166,7 @@ const ActionDetails = ({ onLogout }) => {
   return (
     <div className="users">
       <Sidebar
-        categories={[
-          { title: "Akcije", link: "/actions" },
-          { title: "Poslani zahtjevi", link: "/requests" },
-        ]}
+        categories={[{ title: "Akcije", link: "/actions" }]}
         user="researcher"
       />
       <div className="usersContainer">
@@ -226,11 +232,22 @@ const ActionDetails = ({ onLogout }) => {
                         <br />
                         {`Opis: ${animal.description}`}
                         <br />
-                        <AddAnimalComment cardData={cardData} animal={animal} />
-                        <ViewAnimalComments
-                          cardData={cardData}
-                          animal={animal}
-                        />
+                        <div
+                          className="animal-buttons"
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-evenly",
+                          }}
+                        >
+                          <AddAnimalComment
+                            cardData={cardData}
+                            animal={animal}
+                          />
+                          <ViewAnimalComments
+                            cardData={cardData}
+                            animal={animal}
+                          />
+                        </div>
                       </Popup>
                     </Marker>
                   ))}
@@ -238,11 +255,20 @@ const ActionDetails = ({ onLogout }) => {
               </LayerGroup>
             </LayersControl.Overlay>
 
-            <PastRoutesMap cardData={cardData} />
+            <PastRoutesMap
+              cardData={cardData}
+              searcherCriteria={searcherCriteria}
+            />
 
             <LayersControl.Overlay name="Životinje - povijesne pozicije">
               <HeatmapLayer
-                points={pastAnimals}
+                points={filteredPastAnimals.map((animal) => {
+                  return [
+                    animal.pastLocation[0],
+                    animal.pastLocation[1],
+                    animal.intensity,
+                  ];
+                })}
                 longitudeExtractor={(point) => point[1]}
                 latitudeExtractor={(point) => point[0]}
                 key={Math.random() + Math.random()}
@@ -273,10 +299,25 @@ const ActionDetails = ({ onLogout }) => {
             </LayersControl.Overlay>
           </LayersControl>
         </MapContainer>
-        <ChooseSubjectView
-          cardData={cardData}
-          onSubmit={handleSubjectMapView}
-        />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-evenly",
+            margin: "5px",
+            gap: "5px",
+            flexWrap: "wrap",
+          }}
+        >
+          <ChooseSubjectView
+            cardData={cardData}
+            onSubmit={handleSubjectMapView}
+            currentCriteria={filterCriteria}
+          />
+          <ChooseSearcherView
+            cardData={cardData}
+            onSubmit={handleSearcherMapView}
+          />
+        </div>
       </div>
     </div>
   );

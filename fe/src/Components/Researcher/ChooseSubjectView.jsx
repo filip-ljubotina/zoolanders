@@ -41,8 +41,18 @@ function ChooseSubjectView({ cardData, onSubmit }) {
       const responseAnimals = await ApiService.get(
         `wildTrack/animal/findAllAnimalsByStation/${cardData.locationName}`
       );
+      const responseCriteria = await ApiService.get(
+        `wildTrack/researcher/getMapViewCriteria/${cardData.actionId}`
+      );
       setAllBreeds(responseBreeds.data);
       setAllAnimals(responseAnimals.data);
+      if (responseCriteria.data.subject === "individual") {
+        setSubject("individual");
+        setCheckedAnimals(responseCriteria.data.checkedItems);
+      } else {
+        setSubject("breed");
+        setCheckedBreeds(responseCriteria.data.checkedItems);
+      }
     } catch (error) {
       console.error("Error fetching table data:", error);
     }
@@ -85,13 +95,6 @@ function ChooseSubjectView({ cardData, onSubmit }) {
     });
   };
 
-  useEffect(() => {
-    setSubjectMapView({
-      ...subjectMapView,
-      ["checkedItems"]: checkedBreeds,
-    });
-  }, [checkedBreeds]);
-
   const handleCheckboxAnimalsChange = (animalId) => {
     setCheckedAnimals((prevCheckedItems) => {
       if (prevCheckedItems.includes(animalId)) {
@@ -101,6 +104,13 @@ function ChooseSubjectView({ cardData, onSubmit }) {
       }
     });
   };
+
+  useEffect(() => {
+    setSubjectMapView({
+      ...subjectMapView,
+      ["checkedItems"]: checkedBreeds,
+    });
+  }, [checkedBreeds]);
 
   useEffect(() => {
     setSubjectMapView({
@@ -120,9 +130,6 @@ function ChooseSubjectView({ cardData, onSubmit }) {
     try {
       await putData();
       onSubmit();
-      setSubject("individual");
-      setCheckedAnimals([]);
-      setCheckedBreeds([]);
       setOpen(false);
     } catch (error) {
       console.error("Error in handleSubmit:", error);
@@ -141,7 +148,7 @@ function ChooseSubjectView({ cardData, onSubmit }) {
         sx={{
           borderColor: "darkblue",
           color: "darkblue",
-          width: "fit-content",
+          width: "180px",
           alignSelf: "center",
         }}
       >
@@ -188,6 +195,7 @@ function ChooseSubjectView({ cardData, onSubmit }) {
               ))}
             </FormGroup>
           )}
+
           {subject === "individual" && (
             <DialogContentText>
               Odaberite životinje za proučavanje

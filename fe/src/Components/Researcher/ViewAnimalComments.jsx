@@ -6,8 +6,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import PropTypes from "prop-types";
 import ApiService from "../../services/ApiService";
 import Button from "@mui/material/Button";
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import InsertCommentOutlinedIcon from "@mui/icons-material/InsertCommentOutlined";
+
 import "./Actions.css";
 
 const ViewAnimalComments = ({ cardData, animal }) => {
@@ -60,18 +62,19 @@ const ViewAnimalComments = ({ cardData, animal }) => {
 
   return (
     <React.Fragment>
-      <Button
+      <IconButton
         variant="outlined"
         onClick={handleClickOpen}
         sx={{
-          borderColor: "darkblue",
-          color: "darkblue",
+          borderColor: "black",
+          color: "black",
           fontSize: "12px",
           padding: "8px 16px",
         }}
+        title="Pregledaj komentare"
       >
-        View Commments
-      </Button>
+        <InsertCommentOutlinedIcon />
+      </IconButton>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle>
           Svi komentari za životinju {animal.animalName}

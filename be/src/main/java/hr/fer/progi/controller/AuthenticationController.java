@@ -24,7 +24,12 @@ public class AuthenticationController {
 
     @PostMapping("/registration")
     public ResponseEntity<String> register(@RequestBody RegistrationRequest request) {
-        return new ResponseEntity<>(authenticationServiceJpa.register(request), HttpStatus.OK);
+        try {
+            String token = authenticationServiceJpa.register(request);
+            return new ResponseEntity<>(token, HttpStatus.OK);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @GetMapping( "/registration/confirm")

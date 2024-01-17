@@ -1,13 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Sidebar as ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Box, IconButton } from "@mui/material";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import Placeholder from "../Assets/profile-placeholder.png";
-import background_photo from "../Assets/login-bg.png";
+import { Box, IconButton } from "@mui/material";
 import PropTypes from "prop-types";
+import React from "react";
+import { Menu, MenuItem, Sidebar as ProSidebar } from "react-pro-sidebar";
+import { Link } from "react-router-dom";
+import ProfileImageService from "../../services/ProfileImageService";
+import background_photo from "../Assets/login-bg.png";
+import Placeholder from "../Assets/profile-placeholder.png";
 
 const Sidebar = ({ user, categories }) => {
   Sidebar.propTypes = {
@@ -95,27 +96,30 @@ const Sidebar = ({ user, categories }) => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={Placeholder}
+                  src={
+                    ProfileImageService.getProfileImage() !== "null"
+                      ? `data:image/jpeg;base64,${ProfileImageService.getProfileImage()}`
+                      : Placeholder
+                  }
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
             </Box>
           )}
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            <DisplayCategory
-              title="Home"
-              to="/"
-              icon={<HomeOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-
+          <Box>
             {categories.map((category) => (
               <DisplayCategory
                 key={category.title}
                 title={category.title}
                 to={category.link}
-                icon={<PeopleOutlinedIcon />}
+                icon={
+                  category.link.includes("action") ||
+                  category.link.includes("requests") ? (
+                    <AssignmentIcon />
+                  ) : (
+                    <PeopleOutlinedIcon />
+                  )
+                }
                 selected={selected}
                 setSelected={setSelected}
               />

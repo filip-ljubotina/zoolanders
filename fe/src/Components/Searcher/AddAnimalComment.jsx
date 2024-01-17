@@ -1,14 +1,14 @@
+import AddCommentOutlinedIcon from "@mui/icons-material/AddCommentOutlined";
+import { IconButton } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
-import "leaflet-routing-machine";
-import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import PropTypes from "prop-types";
 import * as React from "react";
-import { useEffect } from "react";
 import ApiService from "../../services/ApiService";
 import "./Actions.css";
 
@@ -18,6 +18,7 @@ const AddAnimalComment = ({ cardData, animal }) => {
     animal: PropTypes.object,
   };
   const [open, setOpen] = React.useState(false);
+  const [error, setError] = React.useState("");
   const [newComment, setNewComment] = React.useState({
     comment: "",
   });
@@ -37,8 +38,10 @@ const AddAnimalComment = ({ cardData, animal }) => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (e) => {
+    e.preventDefault();
     setOpen(false);
+    setError("");
   };
 
   const handleChange = (e) => {
@@ -46,24 +49,32 @@ const AddAnimalComment = ({ cardData, animal }) => {
   };
 
   const handleSubmit = () => {
+    if (!newComment.trim()) {
+      setError("Potrebno je unijeti naziv akcije.");
+      return null;
+    }
     postData();
     setOpen(false);
   };
 
-  useEffect(() => {}, []);
-
   return (
     <React.Fragment>
-      <Button
+      <IconButton
         variant="outlined"
         onClick={handleClickOpen}
-        sx={{ borderColor: "darkblue", color: "darkblue" }}
+        sx={{
+          borderColor: "black",
+          color: "black",
+          fontSize: "12px",
+          padding: "8px 16px",
+        }}
+        title="Dodaj komentar"
       >
-        Add Commment
-      </Button>
+        <AddCommentOutlinedIcon />
+      </IconButton>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle>
-          Ostavite novi komentar komentar životinji {animal.animalName}
+          Ostavite novi komentar životinji {animal.animalName}
         </DialogTitle>
         <DialogContent>
           <TextField
@@ -78,6 +89,14 @@ const AddAnimalComment = ({ cardData, animal }) => {
             onChange={handleChange}
             required
           />
+          {error && (
+            <DialogContentText
+              style={{ color: "var(--error-color)", textAlign: "center" }}
+              className="error"
+            >
+              {error}
+            </DialogContentText>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Odbaci</Button>

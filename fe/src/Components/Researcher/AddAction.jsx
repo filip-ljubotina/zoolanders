@@ -11,7 +11,11 @@ import * as React from "react";
 import ApiService from "../../services/ApiService";
 
 const AddAction = ({ onAddCard }) => {
+  AddAction.propTypes = {
+    onAddCard: PropTypes.func.isRequired,
+  };
   const [open, setOpen] = React.useState(false);
+  const [error, setError] = React.useState("");
   const [changeType, setChangeType] = React.useState("pretraživanje");
   const [changeLocation, setChangeLocation] = React.useState("biokovo");
   const [newCard, setNewCard] = React.useState({
@@ -33,7 +37,11 @@ const AddAction = ({ onAddCard }) => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (e) => {
+    e.preventDefault();
+    setError("");
+    setChangeLocation("biokovo");
+    setChangeType("pretraživanje");
     setOpen(false);
   };
 
@@ -51,6 +59,10 @@ const AddAction = ({ onAddCard }) => {
   };
 
   const handleSubmit = () => {
+    if (!newCard.actionName.trim()) {
+      setError("Potrebno je unijeti naziv akcije.");
+      return null;
+    }
     postData();
     setOpen(false);
   };
@@ -64,6 +76,7 @@ const AddAction = ({ onAddCard }) => {
           borderColor: "darkblue",
           color: "darkblue",
           width: "fit-content",
+          margin: "5px",
           alignSelf: "center",
         }}
       >
@@ -117,6 +130,14 @@ const AddAction = ({ onAddCard }) => {
             onChange={handleChange}
             required
           />
+          {error && (
+            <DialogContentText
+              style={{ color: "var(--error-color)", textAlign: "center" }}
+              className="error"
+            >
+              {error}
+            </DialogContentText>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}> Odbaci </Button>
@@ -125,10 +146,6 @@ const AddAction = ({ onAddCard }) => {
       </Dialog>
     </React.Fragment>
   );
-};
-
-AddAction.propTypes = {
-  onAddCard: PropTypes.func.isRequired,
 };
 
 export default AddAction;

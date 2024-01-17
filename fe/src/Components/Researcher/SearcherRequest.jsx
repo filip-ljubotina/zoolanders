@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import { Select, MenuItem as SelectOption } from "@mui/material";
 import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
 import DialogContentText from "@mui/material/DialogContentText";
-import { Select, MenuItem as SelectOption } from "@mui/material";
-import PropTypes from "prop-types";
-import ApiService from "../../services/ApiService";
-import FormGroup from "@mui/material/FormGroup";
+import DialogTitle from "@mui/material/DialogTitle";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import FormGroup from "@mui/material/FormGroup";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import ApiService from "../../services/ApiService";
 
 function SearcherRequest({ card }) {
   const [open, setOpen] = useState(false);

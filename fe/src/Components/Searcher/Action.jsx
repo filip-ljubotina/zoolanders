@@ -9,15 +9,15 @@ import ApiService from "../../services/ApiService";
 import clipboard_icon from "../Assets/clipboard.png";
 import comment_icon_png from "../Assets/comment.png";
 import compass_icon from "../Assets/compass.png";
-import AddAnimalComment from "./AddAnimalComment";
-import ViewAnimalComments from "./ViewAnimalComments";
 import pawprint_icon from "../Assets/pawprint.png";
 import searcher_icon_png from "../Assets/searcher.png";
 import Sidebar from "../General/Sidebar";
 import Topbar from "../General/Topbar";
 import "./Actions.css";
-import AddComment from "./AddComment";
+import AddAnimalComment from "./AddAnimalComment";
+import AddMapComment from "./AddMapComment";
 import SeeMore from "./SeeMore";
+import ViewAnimalComments from "./ViewAnimalComments";
 
 const Action = ({ onLogout }) => {
   Action.propTypes = {
@@ -30,7 +30,6 @@ const Action = ({ onLogout }) => {
   const [allSearchers, setAllSearchers] = useState([]);
   const [allAnimals, setAllAnimals] = useState([]);
   const [allTasks, setAllTasks] = useState([]);
-  const [comments, setComments] = useState([]);
 
   const checkAction = async () => {
     try {
@@ -71,12 +70,12 @@ const Action = ({ onLogout }) => {
       const commentsResponse = await ApiService.get(
         `/wildTrack/searcherInTheField/getAllCommentsOnAction`
       );
+      console.log(actionResponse.data);
       setActionInfo(actionResponse.data);
       setSearcher(searcherResponse.data);
       setAllSearchers(allSearchersResponse.data);
       setAllAnimals(allAnimalsResponse.data);
       setAllTasks(allTasksResponse.data);
-      setComments(commentsResponse.data);
     } catch (error) {
       console.error("Error fetching table data:", error);
     }
@@ -92,7 +91,7 @@ const Action = ({ onLogout }) => {
     }
   }, [checkActionFlag]);
 
-  const handleAddComment = () => {
+  const handleAddMapComment = () => {
     fetchData();
   };
 
@@ -156,7 +155,7 @@ const Action = ({ onLogout }) => {
           <MapContainer
             center={centerCoordinates}
             zoom={7}
-            style={{ height: "80%", width: "80%" }}
+            style={{ height: "80%", width: "80%", alignSelf: "center" }}
           >
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -199,7 +198,6 @@ const Action = ({ onLogout }) => {
                       {`Ime: ${animal.animalName} Vrsta: ${animal.breed}`}
                       <br />
                       {`Opis: ${animal.description}`}
-                      <br />
                       <AddAnimalComment cardData={actionInfo} animal={animal} />
                       <ViewAnimalComments
                         cardData={actionInfo}
@@ -236,19 +234,22 @@ const Action = ({ onLogout }) => {
 
               {comments.map((comment) => (
                 <Marker
-                  key={comment.commentId}
-                  position={comment.position}
+                  key={comment.mapCommentId}
+                  position={comment.coordinates}
                   icon={commentIcon}
                 >
                   <Popup>
-                    {`Komentar: ${comment.content}`}
+                    <textarea defaultValue={comment.comment} readOnly />
                     <br />
-                    {`Korisnik: ${comment.creatorName}`}
+                    {`Kreirao korisnik: ${comment.userName}`}
                   </Popup>
                 </Marker>
               ))}
 
-              <AddComment onAddComment={handleAddComment} />
+              <AddMapComment
+                cardData={actionInfo}
+                onAddComment={handleAddMapComment}
+              />
             </MarkerClusterGroup>
             ;
           </MapContainer>
@@ -259,13 +260,21 @@ const Action = ({ onLogout }) => {
         <React.Fragment>
           {allTasks.length === 0 && checkActionFlag !== false && (
             <React.Fragment>
-              <div>Nemate više zadataka, možete se maknuti s akcije</div>
+              <span style={{ alignSelf: "center", margin: "5px" }}>
+                Nemate više zadataka, možete se maknuti s akcije
+              </span>
               <Button
                 variant="outlined"
                 onClick={handleDone}
-                sx={{ borderColor: "darkblue", color: "darkblue" }}
+                sx={{
+                  borderColor: "darkblue",
+                  color: "darkblue",
+                  width: "fit-content",
+                  alignSelf: "center",
+                  margin: "5px",
+                }}
               >
-                Done
+                ZAVRŠI
               </Button>
             </React.Fragment>
           )}

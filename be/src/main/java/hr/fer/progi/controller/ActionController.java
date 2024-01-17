@@ -21,7 +21,7 @@ public class ActionController {
         this.actionServiceJpa = actionServiceJpa;
     }
 
-    @GetMapping("/animal/getAllMapComments/{actionId}")
+    @GetMapping("/action/getAllMapComments/{actionId}")
     public ResponseEntity<List<MapCommentDto>> getAllMapComments(@PathVariable Long actionId) {
         List<MapCommentDto> allMapComments = actionServiceJpa.getAllMapComments(actionId);
         return new ResponseEntity<>(allMapComments, HttpStatus.OK);

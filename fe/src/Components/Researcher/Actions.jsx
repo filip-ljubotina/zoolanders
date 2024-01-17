@@ -26,7 +26,7 @@ const Actions = ({ onLogout }) => {
       );
       setCards(response.data);
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -41,10 +41,7 @@ const Actions = ({ onLogout }) => {
   return (
     <div className="users">
       <Sidebar
-        categories={[
-          { title: "Akcije", link: "/actions" },
-          { title: "Poslani zahtjevi", link: "/requests" },
-        ]}
+        categories={[{ title: "Akcije", link: "/actions" }]}
         user="researcher"
       />
       <div className="usersContainer">

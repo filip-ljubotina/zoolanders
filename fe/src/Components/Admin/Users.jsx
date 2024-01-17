@@ -39,7 +39,7 @@ const Users = ({ onLogout }) => {
   const editColumn = [
     {
       field: "edit",
-      headerName: "Edit user",
+      headerName: "Uredi",
       width: 100,
       renderCell: (params) => {
         return (

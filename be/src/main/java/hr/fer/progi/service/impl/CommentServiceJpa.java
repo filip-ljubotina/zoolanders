@@ -39,7 +39,22 @@ public class CommentServiceJpa {
     }
 
     public void postMapComment (MapCommentDto mapCommentDto, Action action, String userName) {
+        validateCoordinates(mapCommentDto);
         MapComment mapComment = mapCommentDtoMapper.dtoToClass(mapCommentDto, action, userName);
         mapCommentRepository.save(mapComment);
+    }
+
+    public static void validateCoordinates(MapCommentDto mapCommentDto) {
+        if (mapCommentDto == null || mapCommentDto.getCoordinates() == null) {
+            throw new IllegalArgumentException("Coordinates cannot be null");
+        }
+
+        List<Double> coordinates = mapCommentDto.getCoordinates();
+
+        for (Double coordinate : coordinates) {
+            if (coordinate == null) {
+                throw new IllegalArgumentException("Coordinate value cannot be null");
+            }
+        }
     }
 }

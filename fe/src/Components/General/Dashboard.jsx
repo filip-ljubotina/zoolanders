@@ -1,10 +1,10 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import RoleService from "../../services/RoleService";
-import SearcherDashboard from "../Searcher/SearcherDashboard";
-import ResearcherDashboard from "../Researcher/ResearcherDashboard";
-import ManagerDashboard from "../Manager/ManagerDashboard";
-import AdminDashboard from "../Admin/AdminDashboard";
 import PropTypes from "prop-types";
+import { Navigate, Route, Routes } from "react-router-dom";
+import RoleService from "../../services/RoleService";
+import AdminDashboard from "../Admin/AdminDashboard";
+import ManagerDashboard from "../Manager/ManagerDashboard";
+import ResearcherDashboard from "../Researcher/ResearcherDashboard";
+import SearcherDashboard from "../Searcher/SearcherDashboard";
 
 const Dashboard = ({ onLogout }) => {
   Dashboard.propTypes = {

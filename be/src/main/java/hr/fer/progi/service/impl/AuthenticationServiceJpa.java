@@ -15,7 +15,6 @@ import hr.fer.progi.mapper.LoginResponseMapper;
 import hr.fer.progi.security.JwtTokenProvider;
 import hr.fer.progi.service.AuthenticationService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,10 +27,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+
 @Service
 @AllArgsConstructor
 public class AuthenticationServiceJpa implements AuthenticationService {
-
     private final AppUserServiceJpa appUserServiceJpa;
     private final ConfirmationTokenServiceJpa confirmationTokenServiceJpa;
     private final EmailSender emailSender;
@@ -42,10 +41,7 @@ public class AuthenticationServiceJpa implements AuthenticationService {
     private final SearcherInTheFieldJpa searcherInTheFieldJpa;
     private final SearcherInTheFieldRepository searcherInTheFieldRepository;
     private final StationManagerRepository stationManagerRepository;
-
-    @Autowired
     private Environment env;
-
 
     @Override
     @Transactional
@@ -66,7 +62,6 @@ public class AuthenticationServiceJpa implements AuthenticationService {
                 .toArray(String[]::new);
 
         String stationName = null;
-        //TODO: ne moze ostati ovako
         if(authoritiesArray[0].equals("ROLE_STATION_MANAGER")){
             stationName = stationManagerRepository.findByAppUser((AppUser) userDetails).getStation().getStationName();
         }
@@ -79,7 +74,9 @@ public class AuthenticationServiceJpa implements AuthenticationService {
             }
         }
 
-        LoginResponse loginResponse = loginResponseMapper.mapper(token, authoritiesArray, stationName);
+        AppUser appUser = (AppUser) userDetails;
+
+        LoginResponse loginResponse = loginResponseMapper.mapper(token, authoritiesArray, stationName, appUser.getImage());
 
         return loginResponse;
     }
@@ -87,7 +84,7 @@ public class AuthenticationServiceJpa implements AuthenticationService {
     @Transactional
     @Override
     public String register(RegistrationRequest request) {
-        boolean isValidEmail = test(request.getEmail());
+        boolean isValidEmail = emailRegexCheck(request.getEmail());
 
         if (!isValidEmail) {
             throw new IllegalStateException("email not valid");
@@ -121,7 +118,7 @@ public class AuthenticationServiceJpa implements AuthenticationService {
         return token;
     }
 
-    private boolean test(String email) {
+    public boolean emailRegexCheck(String email) {
         // Check if email contains '@' and '.' after '@'
         int atIndex = email.indexOf('@');
 
