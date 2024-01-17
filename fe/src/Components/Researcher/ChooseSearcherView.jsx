@@ -38,8 +38,13 @@ const ChooseSearcherView = ({ cardData, onSubmit }) => {
         `wildTrack/researcher/getPastAllSearchersRoutes/${cardData.actionId}`
       );
       setPastRoutesData(responsePastRoutes.data);
+      setCheckedSearchers(
+        responsePastRoutes.data.map((pastRoute) => {
+          return pastRoute.searcherId;
+        })
+      );
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error fetching past routes:", error);
     }
   };
 
@@ -102,11 +107,7 @@ const ChooseSearcherView = ({ cardData, onSubmit }) => {
 
   const handleSubmit = async () => {
     try {
-      if (subjectMapView.checkedItems.length == 0) {
-        onSubmit(null);
-      } else {
-        onSubmit(subjectMapView);
-      }
+      onSubmit(subjectMapView);
       setOpen(false);
     } catch (error) {
       console.error("Error in handleSubmit:", error);

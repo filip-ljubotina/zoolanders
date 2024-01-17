@@ -22,7 +22,7 @@ const Requests = ({ onLogout }) => {
       );
       setData(response.data);
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error fetching request table:", error);
     }
   };
 
@@ -30,7 +30,7 @@ const Requests = ({ onLogout }) => {
     try {
       fetchData();
     } catch (error) {
-      console.error("Error approving row:", error);
+      console.error("Error fetching request table after approve:", error);
     }
   };
 

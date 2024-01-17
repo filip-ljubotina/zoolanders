@@ -29,7 +29,7 @@ const ViewAnimalComments = ({ cardData, animal }) => {
         responseData.data.map((row) => ({ ...row, id: row.animalCommentId }))
       );
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error fetching animal comments:", error);
     }
   };
 
@@ -39,10 +39,6 @@ const ViewAnimalComments = ({ cardData, animal }) => {
   };
 
   const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleSubmit = () => {
     setOpen(false);
   };
 
@@ -94,8 +90,7 @@ const ViewAnimalComments = ({ cardData, animal }) => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Odbaci</Button>
-          <Button onClick={handleSubmit}>Spremi</Button>
+          <Button onClick={handleClose}>Zatvori</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>

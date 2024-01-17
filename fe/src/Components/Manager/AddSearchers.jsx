@@ -35,7 +35,7 @@ const AddSearchers = ({ onLogout }) => {
       setData(data);
       setCoordinates(responseJson.data);
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error fetching available searchers:", error);
     }
   };
 
@@ -43,7 +43,7 @@ const AddSearchers = ({ onLogout }) => {
     try {
       fetchData();
     } catch (error) {
-      console.error("Error approving row:", error);
+      console.error("Error adding searcher to station:", error);
     }
   };
 

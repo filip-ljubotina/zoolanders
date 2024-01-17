@@ -1,4 +1,4 @@
-import { Select, MenuItem as SelectOption } from "@mui/material";
+import { IconButton, Select, MenuItem as SelectOption } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -24,6 +24,7 @@ import circle_icon from "../Assets/circle.png";
 import flag_icon from "../Assets/flag.png";
 import searcher_icon_png from "../Assets/searcher.png";
 import "./Actions.css";
+import AddTaskIcon from "@mui/icons-material/AddTask";
 
 const Routing = ({
   waypointsRef,
@@ -108,7 +109,7 @@ function AddTask({ cardData, searcher }) {
         newTask
       );
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error saving added task:", error);
     }
   };
 
@@ -213,13 +214,19 @@ function AddTask({ cardData, searcher }) {
 
   return (
     <React.Fragment>
-      <Button
+      <IconButton
         variant="outlined"
         onClick={handleClickOpen}
-        sx={{ borderColor: "darkblue", color: "darkblue" }}
+        sx={{
+          borderColor: "black",
+          color: "black",
+          fontSize: "12px",
+          padding: "8px 16px",
+        }}
+        title="Dodaj zadatak"
       >
-        Add Task
-      </Button>
+        <AddTaskIcon />
+      </IconButton>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
         <DialogTitle>
           Izradite novi zadatak tragaču {searcher.firstName}

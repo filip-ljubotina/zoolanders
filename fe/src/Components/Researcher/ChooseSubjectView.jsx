@@ -54,7 +54,7 @@ function ChooseSubjectView({ cardData, onSubmit }) {
         setCheckedBreeds(responseCriteria.data.checkedItems);
       }
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error fetching animal criteria:", error);
     }
   };
 
@@ -65,7 +65,7 @@ function ChooseSubjectView({ cardData, onSubmit }) {
         subjectMapView
       );
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error saving animal criteria:", error);
     }
   };
 

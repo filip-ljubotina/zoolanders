@@ -1,3 +1,5 @@
+import MoreOutlinedIcon from "@mui/icons-material/MoreOutlined";
+import { IconButton } from "@mui/material";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -22,6 +24,7 @@ import ApiService from "../../services/ApiService";
 import circle_icon from "../Assets/circle.png";
 import compass_icon from "../Assets/compass.png";
 import flag_icon from "../Assets/flag.png";
+import Placeholder from "../Assets/camera.png";
 import "./Actions.css";
 
 const Routing = ({ waypointsRef, profile }) => {
@@ -64,6 +67,8 @@ function SeeMore({ searcher, task, onSubmit }) {
   };
   const [open, setOpen] = React.useState(false);
   const [isRoutingActive, setIsRoutingActive] = React.useState(false);
+  const [error, setError] = React.useState("");
+  const [image, setImage] = React.useState(Placeholder);
   const waypointsRef = useRef([]);
   if (waypointsRef.current.length === 0) {
     waypointsRef.current = task.routeWaypoints;
@@ -73,6 +78,7 @@ function SeeMore({ searcher, task, onSubmit }) {
     animalName: "",
     breed: "",
     description: "",
+    image: "",
     currentPosition: task.routeWaypoints[task.routeWaypoints.length - 1],
   });
   const [isStored, setIsStored] = React.useState(
@@ -86,7 +92,7 @@ function SeeMore({ searcher, task, onSubmit }) {
         newAnimal
       );
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error saving new animal:", error);
     }
   };
 
@@ -106,6 +112,8 @@ function SeeMore({ searcher, task, onSubmit }) {
   };
 
   const handleClose = () => {
+    setError("");
+    setImage(Placeholder);
     setOpen(false);
   };
 
@@ -118,8 +126,17 @@ function SeeMore({ searcher, task, onSubmit }) {
   };
 
   const handleSave = () => {
+    if (
+      !newAnimal.animalName.trim() ||
+      !newAnimal.breed.trim() ||
+      !newAnimal.description.trim()
+    ) {
+      setError("Molimo Vas da unesete sve potrebne podatke.");
+      return null;
+    }
     if (isStored === false) {
       setIsStored(true);
+      setError("");
       postNewAnimal();
     }
   };
@@ -164,6 +181,21 @@ function SeeMore({ searcher, task, onSubmit }) {
   };
 
   const handleChange = (e) => {
+    if (e.target.type === "file") {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+          const base64String = reader.result.split(",")[1]; // Extracting the Base64-encoded string
+
+          setNewAnimal({ ...newAnimal, image: base64String });
+          setImage(reader.result);
+        };
+
+        reader.readAsDataURL(file);
+      }
+    }
     setNewAnimal({
       ...newAnimal,
       [e.target.name]: e.target.value,
@@ -178,15 +210,21 @@ function SeeMore({ searcher, task, onSubmit }) {
 
   return (
     <React.Fragment>
-      <Button
+      <IconButton
         variant="outlined"
         onClick={handleClickOpen}
-        sx={{ borderColor: "darkblue", color: "darkblue" }}
+        sx={{
+          borderColor: "black",
+          color: "black",
+          fontSize: "12px",
+          padding: "8px 16px",
+        }}
+        title="Detalji"
       >
-        See More
-      </Button>
+        <MoreOutlinedIcon />
+      </IconButton>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-        <DialogTitle>Prikaz Rute</DialogTitle>
+        <DialogTitle>Prikaz rute</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Pratite označenu rutu na karti za dolazak na lokaciju.
@@ -220,42 +258,62 @@ function SeeMore({ searcher, task, onSubmit }) {
               <DialogContentText>
                 Unesite podatke životinje s novim uređajem za prećenje.
               </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="animalName"
-                name="animalName"
-                label="Unesite ime životinje"
-                type="text"
-                fullWidth
-                variant="standard"
-                onChange={handleChange}
-                required
-              />
-              <TextField
-                autoFocus
-                margin="dense"
-                id="breed"
-                name="breed"
-                label="Unesite vrstu životinje"
-                type="text"
-                fullWidth
-                variant="standard"
-                onChange={handleChange}
-                required
-              />
-              <TextField
-                autoFocus
-                margin="dense"
-                id="description"
-                name="description"
-                label="Unesite dodatan opis za životinju"
-                type="text"
-                fullWidth
-                variant="standard"
-                onChange={handleChange}
-                required
-              />
+              <div className="register-input-container1 name-photo">
+                <div className="register-input">
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="animalName"
+                    name="animalName"
+                    label="Unesite ime životinje"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    onChange={handleChange}
+                    required
+                  />
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="breed"
+                    name="breed"
+                    label="Unesite vrstu životinje"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    onChange={handleChange}
+                    required
+                  />
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="description"
+                    name="description"
+                    label="Unesite dodatan opis za životinju"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div className="register-input-photo-animal">
+                  <label
+                    htmlFor="photo-upload"
+                    className="custom-file-upload-animal"
+                  >
+                    <div className="img-wrap img-upload">
+                      <img htmlFor="photo-upload" src={image} />
+                    </div>
+                    <input
+                      id="photo-upload"
+                      type="file"
+                      required
+                      onChange={handleChange}
+                    />
+                  </label>
+                </div>
+              </div>
               <Button
                 variant="outlined"
                 onClick={handleSave}
@@ -264,6 +322,14 @@ function SeeMore({ searcher, task, onSubmit }) {
                 Pohrani
               </Button>
             </>
+          )}
+          {error && (
+            <DialogContentText
+              style={{ color: "var(--error-color)", textAlign: "center" }}
+              className="error"
+            >
+              {error}
+            </DialogContentText>
           )}
         </DialogContent>
         <DialogActions>

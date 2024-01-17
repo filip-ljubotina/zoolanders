@@ -20,7 +20,7 @@ const Users = ({ onLogout }) => {
       const response = await ApiService.get("/wildTrack/admin/getUserTable");
       setData(response.data);
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error fetching users table:", error);
     }
   };
 
@@ -28,7 +28,7 @@ const Users = ({ onLogout }) => {
     try {
       fetchData();
     } catch (error) {
-      console.error("Error approving row:", error);
+      console.error("Error fetching users table after edit:", error);
     }
   };
 

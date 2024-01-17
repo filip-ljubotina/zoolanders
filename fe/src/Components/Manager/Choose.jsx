@@ -18,7 +18,7 @@ export default function Choose({ cardInfo, data, onChoose }) {
       );
       onChoose();
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error adding chosen searcher to action:", error);
     }
   };
 
@@ -33,7 +33,7 @@ export default function Choose({ cardInfo, data, onChoose }) {
         onClick={handleClick}
         sx={{ borderColor: "darkblue", color: "darkblue" }}
       >
-        Choose
+        Dodaj
       </Button>
     </React.Fragment>
   );

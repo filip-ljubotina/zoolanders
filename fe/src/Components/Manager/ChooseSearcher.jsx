@@ -26,7 +26,7 @@ const ChooseSearcher = ({ card, onSave }) => {
       );
       setData(responseData.data.map((row) => ({ ...row, id: row.searcherId })));
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error fetching available searchers:", error);
     }
   };
 
@@ -38,7 +38,7 @@ const ChooseSearcher = ({ card, onSave }) => {
       );
       onSave();
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error closing searcher request:", error);
     }
   };
 
@@ -60,7 +60,10 @@ const ChooseSearcher = ({ card, onSave }) => {
     try {
       fetchData();
     } catch (error) {
-      console.error("Error approving row:", error);
+      console.error(
+        "Error fetching available searchers after adding to action:",
+        error
+      );
     }
   };
 
@@ -104,7 +107,7 @@ const ChooseSearcher = ({ card, onSave }) => {
   const chooseColumn = [
     {
       field: "choose",
-      headerName: "Dodavanje Akciji",
+      headerName: "Dodaj akciji",
       width: 150,
       renderCell: (params) => {
         return (
@@ -140,7 +143,7 @@ const ChooseSearcher = ({ card, onSave }) => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Odbaci</Button>
           <Button onClick={handleSubmit}>Spremi</Button>
         </DialogActions>
       </Dialog>

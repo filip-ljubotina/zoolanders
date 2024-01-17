@@ -42,7 +42,7 @@ function SearcherRequest({ card }) {
         response.data.stationQualifications[changeLocation] || []
       );
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error fetching available qualifications:", error);
     }
   };
 
@@ -50,7 +50,7 @@ function SearcherRequest({ card }) {
     try {
       await ApiService.put("/wildTrack/researcher/putNewRequest", requset);
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error saving new request:", error);
     }
   };
 

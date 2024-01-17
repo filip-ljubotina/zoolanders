@@ -31,7 +31,7 @@ const AddMapComment = ({ cardData, onAddComment }) => {
       );
       onAddComment();
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error saving map comment:", error);
     }
   };
 

@@ -22,16 +22,15 @@ const PastRoutesMap = ({ cardData, filterCriteria }) => {
         `wildTrack/researcher/getPastAllSearchersRoutes/${cardData.actionId}`
       );
       handleData(responsePastRoutes.data);
-      console.log(responsePastRoutes.data);
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error fetching past searcher routes:", error);
     }
   };
 
   const handleData = (data) => {
     const points = [];
     if (filterCriteria !== undefined) {
-      data = data.map((route) => {
+      data = data.filter((route) => {
         const routeValue =
           route[
             filterCriteria.subject === "individual"
@@ -83,7 +82,7 @@ const PastRoutesMap = ({ cardData, filterCriteria }) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [filterCriteria]);
 
   const heatmapOptions = {
     radius: 20,

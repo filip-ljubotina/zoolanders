@@ -43,9 +43,8 @@ const ActionDetails = ({ onLogout }) => {
   const [allAnimals, setAllAnimals] = useState([]);
   const [pastAnimals, setPastAnimals] = useState([]);
   const [filteredAnimals, setFilteredAnimals] = useState([]);
-  const [filteredPastAnimals, setFilteredPastAnimals] = useState([]);
   const [filterCriteria, setFilterCriteria] = useState([]);
-  const [searcherCriteria, setSearcherCriteria] = useState([]);
+  const [searcherCriteria, setSearcherCriteria] = useState(undefined);
 
   const fetchData = async () => {
     try {
@@ -62,7 +61,7 @@ const ActionDetails = ({ onLogout }) => {
         `wildTrack/researcher/getPastAnimalsLocations/${cardData.actionId}`
       );
       const responseComments = await ApiService.get(
-        `/wildTrack/animal/getAllMapComments/${cardData.actionId}`
+        `/wildTrack/action/getAllMapComments/${cardData.actionId}`
       );
       setSearchers(response.data);
       setStationCoordinates(responseJson.data.center);
@@ -71,7 +70,7 @@ const ActionDetails = ({ onLogout }) => {
       setComments(responseComments.data);
       refreshSubjectMapView();
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching action details:", error);
     }
   };
 
@@ -80,26 +79,19 @@ const ActionDetails = ({ onLogout }) => {
       const responseCriteria = await ApiService.get(
         `wildTrack/researcher/getMapViewCriteria/${cardData.actionId}`
       );
+      const responsePastAnimals = await ApiService.get(
+        `wildTrack/researcher/getPastAnimalsLocations/${cardData.actionId}`
+      );
       setFilterCriteria(responseCriteria.data);
+      setPastAnimals(responsePastAnimals.data);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error getting filter criteria:", error);
     }
   };
 
   useEffect(() => {
     setFilteredAnimals(
       allAnimals.filter((animal) => {
-        const animalValue =
-          animal[
-            filterCriteria.subject === "individual"
-              ? "animalId"
-              : filterCriteria.subject
-          ];
-        return filterCriteria.checkedItems.includes(animalValue);
-      })
-    );
-    setFilteredPastAnimals(
-      pastAnimals.filter((animal) => {
         const animalValue =
           animal[
             filterCriteria.subject === "individual"
@@ -121,6 +113,29 @@ const ActionDetails = ({ onLogout }) => {
 
   const handleAddMapComment = () => {
     fetchData();
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const mapToQualification = (label) => {
+    switch (label) {
+      case "FOOT":
+        return "Pješice";
+      case "DRONE":
+        return "Dron";
+      case "CAR":
+        return "Automobil";
+      case "CROSS_MOTOR":
+        return "Cross Motor";
+      case "BOAT":
+        return "Brod";
+      case "HELICOPTER":
+        return "Helikopter";
+      default:
+        return label;
+    }
   };
 
   const homeIcon = new L.Icon({
@@ -158,10 +173,6 @@ const ActionDetails = ({ onLogout }) => {
     minOpacity: 0.5,
     maxOpacity: 1,
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <div className="users">
@@ -209,7 +220,9 @@ const ActionDetails = ({ onLogout }) => {
                       <Popup>
                         {`Ime: ${searcher.firstName} Prezime: ${searcher.lastName}`}
                         <br />
-                        {`Osposobljenost: ${searcher.qualification}`}
+                        {`Osposobljenost: ${mapToQualification(
+                          searcher.qualification
+                        )}`}
                         <AddTask searcher={searcher} cardData={cardData} />
                       </Popup>
                     </Marker>
@@ -257,12 +270,12 @@ const ActionDetails = ({ onLogout }) => {
 
             <PastRoutesMap
               cardData={cardData}
-              searcherCriteria={searcherCriteria}
+              filterCriteria={searcherCriteria}
             />
 
             <LayersControl.Overlay name="Životinje - povijesne pozicije">
               <HeatmapLayer
-                points={filteredPastAnimals.map((animal) => {
+                points={pastAnimals.map((animal) => {
                   return [
                     animal.pastLocation[0],
                     animal.pastLocation[1],

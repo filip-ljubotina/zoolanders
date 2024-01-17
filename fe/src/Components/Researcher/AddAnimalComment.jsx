@@ -30,7 +30,7 @@ const AddAnimalComment = ({ cardData, animal }) => {
         newComment
       );
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error saving animal comment:", error);
     }
   };
 

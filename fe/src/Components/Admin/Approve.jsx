@@ -21,7 +21,7 @@ export default function Approve({ row, onApprove }) {
       await ApiService.put("/wildTrack/admin/putApprovalTable", row);
       onApprove();
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error approving registration:", error);
     }
   };
 

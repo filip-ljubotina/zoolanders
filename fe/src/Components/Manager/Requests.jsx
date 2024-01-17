@@ -1,13 +1,13 @@
-import * as React from "react";
-import Sidebar from "./Sidebar";
-import "./AddSearchers.css";
-import ApiService from "../../services/ApiService";
-import Topbar from "./Topbar";
-import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import CardActions from "@mui/material/CardActions";
+import PropTypes from "prop-types";
+import * as React from "react";
+import ApiService from "../../services/ApiService";
+import Sidebar from "../General/Sidebar";
+import Topbar from "../General/Topbar";
+import "./AddSearchers.css";
 import ChooseSearcher from "./ChooseSearcher";
 
 const Requests = ({ onLogout }) => {
@@ -23,7 +23,7 @@ const Requests = ({ onLogout }) => {
       );
       setCards(response.data);
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error fetching requests for searchers:", error);
     }
   };
 
@@ -35,7 +35,7 @@ const Requests = ({ onLogout }) => {
     try {
       fetchData();
     } catch (error) {
-      console.error("Error approving row:", error);
+      console.error("Error after adding searcher to action:", error);
     }
   };
 

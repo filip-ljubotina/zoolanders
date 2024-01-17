@@ -27,7 +27,7 @@ export default function Add({ data, coordinates, onSave }) {
       await ApiService.put("/wildTrack/manager/putChosenSearcher", rowData);
       onSave();
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error adding user to station:", error);
     }
   };
 

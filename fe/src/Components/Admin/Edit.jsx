@@ -34,7 +34,7 @@ export default function Edit({ data, onSave }) {
       await ApiService.put("/wildTrack/admin/putUserTable", rowData);
       onSave();
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error editing user:", error);
     }
   };
 

@@ -7,7 +7,6 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import ApiService from "../../services/ApiService";
 import clipboard_icon from "../Assets/clipboard.png";
-import comment_icon_png from "../Assets/comment.png";
 import compass_icon from "../Assets/compass.png";
 import pawprint_icon from "../Assets/pawprint.png";
 import searcher_icon_png from "../Assets/searcher.png";
@@ -15,7 +14,6 @@ import Sidebar from "../General/Sidebar";
 import Topbar from "../General/Topbar";
 import "./Actions.css";
 import AddAnimalComment from "./AddAnimalComment";
-import AddMapComment from "./AddMapComment";
 import SeeMore from "./SeeMore";
 import ViewAnimalComments from "./ViewAnimalComments";
 
@@ -30,15 +28,20 @@ const Action = ({ onLogout }) => {
   const [allSearchers, setAllSearchers] = useState([]);
   const [allAnimals, setAllAnimals] = useState([]);
   const [allTasks, setAllTasks] = useState([]);
+  // const [comments, setComments] = useState([]);
 
   const checkAction = async () => {
     try {
       const response = await ApiService.get(
         `/wildTrack/searcherInTheField/getCheckUserOnAction`
       );
+      // setCheckActionFlag(response.data);
+      if (response.data === true) {
+        await fetchData();
+      }
       setCheckActionFlag(response.data);
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error checking searcher action:", error);
     }
   };
 
@@ -46,7 +49,7 @@ const Action = ({ onLogout }) => {
     try {
       await ApiService.put(`/wildTrack/searcherInTheField/putRemoveFromAction`);
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error saving action completion:", error);
     }
   };
 
@@ -67,17 +70,18 @@ const Action = ({ onLogout }) => {
       const allTasksResponse = await ApiService.get(
         `wildTrack/searcherInTheField/getAllActiveTasks`
       );
-      const commentsResponse = await ApiService.get(
-        `/wildTrack/searcherInTheField/getAllCommentsOnAction`
-      );
+      // const commentsResponse = await ApiService.get(
+      //   `/wildTrack/action/getAllMapComments/${actionResponse.data.actionId}`
+      // );
       console.log(actionResponse.data);
       setActionInfo(actionResponse.data);
       setSearcher(searcherResponse.data);
       setAllSearchers(allSearchersResponse.data);
       setAllAnimals(allAnimalsResponse.data);
       setAllTasks(allTasksResponse.data);
+      // setComments(commentsResponse.data);
     } catch (error) {
-      console.error("Error fetching table data:", error);
+      console.error("Error loading action:", error);
     }
   };
 
@@ -85,19 +89,19 @@ const Action = ({ onLogout }) => {
     checkAction();
   }, []);
 
-  useEffect(() => {
-    if (checkActionFlag === true) {
-      fetchData();
-    }
-  }, [checkActionFlag]);
+  // useEffect(() => {
+  //   if (checkActionFlag === true) {
+  //     fetchData();
+  //   }
+  // }, [checkActionFlag]);
 
-  const handleAddMapComment = () => {
-    fetchData();
-  };
+  // const handleAddMapComment = () => {
+  //   fetchData();
+  // };
 
   const handleDone = () => {
     removeFromAction();
-    fetchData();
+    checkAction();
   };
 
   const searcherIcon = new L.Icon({
@@ -128,12 +132,12 @@ const Action = ({ onLogout }) => {
     popupAnchor: [0, -32],
   });
 
-  const commentIcon = new L.Icon({
-    iconUrl: comment_icon_png,
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32],
-  });
+  // const commentIcon = new L.Icon({
+  //   iconUrl: comment_icon_png,
+  //   iconSize: [32, 32],
+  //   iconAnchor: [16, 32],
+  //   popupAnchor: [0, -32],
+  // });
 
   useEffect(() => {
     console.log("actionInfo changed:", actionInfo);
@@ -168,7 +172,7 @@ const Action = ({ onLogout }) => {
                   position={searcher.currentPosition}
                   icon={compassIcon}
                 >
-                  <Popup>Vaša Trenutna Lokacija</Popup>
+                  <Popup>Vaša trenutna lokacija</Popup>
                 </Marker>
               )}
 
@@ -232,7 +236,7 @@ const Action = ({ onLogout }) => {
                   </Marker>
                 ))}
 
-              {comments.map((comment) => (
+              {/* {comments.map((comment) => (
                 <Marker
                   key={comment.mapCommentId}
                   position={comment.coordinates}
@@ -244,21 +248,23 @@ const Action = ({ onLogout }) => {
                     {`Kreirao korisnik: ${comment.userName}`}
                   </Popup>
                 </Marker>
-              ))}
+              ))} */}
 
-              <AddMapComment
+              {/* <AddMapComment
                 cardData={actionInfo}
                 onAddComment={handleAddMapComment}
-              />
+              /> */}
             </MarkerClusterGroup>
             ;
           </MapContainer>
         )}
         {checkActionFlag === false && (
-          <div>NE PRIPADATE NITI JEDNOJ AKCIJI</div>
+          <span style={{ alignSelf: "center", margin: "5px" }}>
+            NE PRIPADATE NITI JEDNOJ AKCIJI
+          </span>
         )}
         <React.Fragment>
-          {allTasks.length === 0 && checkActionFlag !== false && (
+          {allTasks.length === 0 && checkActionFlag === true && (
             <React.Fragment>
               <span style={{ alignSelf: "center", margin: "5px" }}>
                 Nemate više zadataka, možete se maknuti s akcije
