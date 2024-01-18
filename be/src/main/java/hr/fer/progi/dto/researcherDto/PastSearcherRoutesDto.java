@@ -13,16 +13,18 @@ public class PastSearcherRoutesDto {
     private Long pastRoutesId;
     private Long searcherId;
     private String qualification;
+    private String userName;
     private List<List<Double>> routeWaypoints;
 
     public PastSearcherRoutesDto() {
     }
 
-    public PastSearcherRoutesDto(Long pastRoutesId, Long searcherId, Object routeWaypointsObject, Qualification qualificationObject) {
+    public PastSearcherRoutesDto(Long pastRoutesId, Long searcherId, Object routeWaypointsObject, Qualification qualificationObject, String userName) {
         this.pastRoutesId = pastRoutesId;
         this.searcherId = searcherId;
         RouteWaypoints routeWaypoints = (RouteWaypoints) routeWaypointsObject;
         this.qualification = qualificationObject.toString();
         this.routeWaypoints = routeWaypoints.getRouteWaypoints();
+        this.userName = userName;
     }
 }

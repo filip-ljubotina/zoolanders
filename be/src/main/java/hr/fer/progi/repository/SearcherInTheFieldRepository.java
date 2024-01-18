@@ -34,4 +34,9 @@ public interface SearcherInTheFieldRepository extends JpaRepository<SearcherInTh
             " FROM SearcherInTheField s " +
             "WHERE s.action = :action")
     List<AvailableSearcherDto> findAllSearchersOnActionByAction(@Param("action") Action action);
+
+    @Query("SELECT new hr.fer.progi.dto.stationManagerDto.AvailableSearcherDto(s.searcherInTheFieldId, s.appUser.firstName, s.appUser.lastName, s.qualification)" +
+            " FROM SearcherInTheField s " +
+            "WHERE s.station = :station")
+    List<AvailableSearcherDto> findAllSearchersByStation(@Param("station") Station station);
 }
