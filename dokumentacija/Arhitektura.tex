@@ -41,11 +41,13 @@
 					\item StationManager
 					\item SearcherInTheField
 					\item Action
-					\item Request
 					\item Station
-					\item Qualification
 					\item Animal
-					\item Location
+					\item PastRoutes
+					\item PastLocations
+					\item AnimalComment
+					\item MapComment
+					\item Task
 				\end{packed_item}
 				
 				
@@ -53,7 +55,7 @@
 			\subsection{Opis tablica}
 			
 
-				U tablici \textbf{AppUser} pohranjuju se podaci o svim korisnicima: \textit{id, userName, image, firstName, lastName, email, password, locked, enabled}. Primarni ključ je \textit{id}, i nema stranih ključeva. U njoj se nalaze svi korisnici, odnosno sve vrste korisnika. Korisnike dalje razlikujemo na tragače koji imaju svoje dodatne atribute u tablici \textbf{SearcherInTheField} i voditelje postaja koji imaju svoje dodatne atribute u tablici \textbf{StationManager}. Istraživači nemaju svoju posebnu tablicu jer je nepotrebna, nemaju svoje dodatne atribute koje moramo spremiti, a jedino za što su nam potrebni su akcije, a za to imamo id spremljen pod \textit{begun} u tablici \textbf{Action} pa tako dobijemo sve ostale podatke o istraživaču. S atributom \textit{id} je u odnosu One-to-One s tablicama \textbf{StationManager} i \textbf{SearcherInTheField} i u odnosu One-to-Many s tablicama \textbf{ConfirmationToken} i \textbf{Action}.
+				U tablici \textbf{AppUser} pohranjuju se podaci o svim korisnicima: \textit{id, userName, image, firstName, lastName, email, password, appUserRole, locked, enabled}. Primarni ključ je \textit{id}, i nema stranih ključeva. S atributom \textit{id} je u odnosu One-to-One s tablicama \textbf{StationManager} i \textbf{SearcherInTheField} i u odnosu One-to-Many s tablicama \textbf{ConfirmationToken} i \textbf{Action}.
 
 				
 				
@@ -72,7 +74,8 @@
 					firstName & VARCHAR	&  ime korisnika  \\ \hline 
 					lastName & VARCHAR	&  prezime korisnika  \\ \hline 
 					email & VARCHAR	&  email korisnika  \\ \hline 
-					password & VARCHAR	&  lozinka korisnika  \\ \hline 
+					password & VARCHAR	&  lozinka korisnika  \\ \hline
+					appUserRole & VARCHAR	&  uloga korisnika  \\ \hline 
 					locked & BOOLEAN & je li korisnika potvrdio admin \\ \hline
 					enabled & BOOLEAN & je li korisnik potvrđen emailom \\ \hline
 				\end{longtblr}
@@ -96,7 +99,7 @@
 					\SetCell{LightBlue}user	& BIGINT &  id korisnika kojemu je poslan token \\ \hline  
 				\end{longtblr}
 
-				U tablici \textbf{StationManager} pohranjuju se dodatni podaci za voditelja postaje: \textit{id, station}. U \textit{id} se sprema id korisnika koji je voditelj postaje, a u \textit{station} se sprema id postaje. Primarni ključ i ujedno i strani ključ je \textit{id} i također je strani ključ \textit{station}. S atributom \textit{id} je u odnosu One-to-One s tablicom \textbf{AppUser}, s atributom \textit{station} je u odnosu One-to-One s tablicom \textbf{Station}.
+				U tablici \textbf{StationManager} pohranjuju se dodatni podaci za voditelja postaje: \textit{stationManagerId, userId, stationId}. Primarni ključ  je \textit{stationManagerId}, te su \textit{userId } i \textit{stationId }  su strani ključevi. S atributom \textit{userId } je u odnosu One-to-One s tablicom \textbf{AppUser}, s atributom \textit{stationManagerId} je u odnosu Many-to-One s tablicom \textbf{Station}.
 
 				
 				\begin{longtblr}[
@@ -110,12 +113,12 @@
 
 					\hline \SetCell[c=3]{c}{\textbf{StationManager}}	 \\ \hline[3pt]
 					\SetCell{LightGreen}id & BIGINT	&  	id korisničkog računa voditelja 	\\ \hline
-					\SetCell{LightBlue}station & BIGINT	&  	id postaje koju vodi voditelj 	\\ \hline
+					\SetCell{LightBlue}stationId  & BIGINT	&  	id postaje koju vodi voditelj 	\\ \hline
+					\SetCell{LightBlue}userId  & BIGINT	&  id usera	\\ \hline
 				\end{longtblr}
 			
 
-			U tablici \textbf{SearcherInTheField} pohranjuju se dodatni podaci za tragača: \textit{id, station, qualification}. U \textit{id} je spremljen id korisnika koji je tragač, u \textit{station} je pohranjen id postaje kojoj tragač pripada, a u \textit{qualification} je pohranjen id kvalifikacije koju tragač ima. Primarni ključ i ujedno i strani ključ je \textit{id} i također je strani ključ \textit{station} i \textit{qualification}. S atributom \textit{id} je u odnosu One-to-One s tablicom \textbf{AppUser}, s atributom \textit{station} je u odnosu Many-to-One s tablicom \textbf{Station}, s atributom \textit{qualification} je u odnosu Many-to-One s tablicom \textbf{Qualification}, s atributom \textit{id} je u odnosu One-to-Many s tablicom \textbf{Request} i  s atributom \textit{id} je u odnosu One-to-Many s tablicom \textbf{Location}.
-
+			U tablici \textbf{SearcherInTheField} primarni ključ je \textit{searcherInTheFieldId}. Strani ključevi su \textit{stationId}, \textit{userId} i \textit{actionId}. S atributom \textit{userId} je u odnosu One-to-One s tablicom \textbf{AppUser}, s atributom \textit{stationId} je u odnosu Many-to-One s tablicom \textbf{Station}, s atributom \textit{actionId} je u odnosu Many-to-One s tablicom \textbf{Action}.
 
 			
 				\begin{longtblr}[
@@ -126,15 +129,17 @@
 						colspec={|X[10,l]|X[6, l]|X[20, l]|}, 
 						rowhead = 1,
 					} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-
 					\hline \SetCell[c=3]{c}{\textbf{SearcherInTheField}}	 \\ \hline[3pt]
-					\SetCell{LightGreen}id & BIGINT	&  	id korisničkog računa tragača 	\\ \hline
-					\SetCell{LightBlue}station & BIGINT	&  	id postaje kojoj pripada 	\\ \hline
-					\SetCell{LightBlue}qualification	& BIGINT &  id osposobljenosti tragača 	\\ \hline  
+					\SetCell{LightGreen}searcherInTheFieldId & BIGINT	&  	id korisničkog računa tragača 	\\ \hline
+					\SetCell{LightBlue}stationId & BIGINT	&  	id postaje kojoj pripada 	\\ \hline
+					\SetCell{LightBlue} userId  & BIGINT	&  id usera	\\ \hline
+					 qualification	& VARCHAR & osposobljenosti tragača 	\\ \hline  
+					 currentPosition & JSON &  trenutna pozicija tragača	\\ \hline 
+					\SetCell{LightBlue} actionId  & BIGINT	&  id akcije na kojoj tragač sudjeluje	\\ \hline
 				\end{longtblr}
 			
 
-			U tablici \textbf{Action} pohranjuju se podaci o akciji: \textit{id, begun, description, comment}. U \textit{id} se sprema id akcije, u \textit{begun} se sprema id istraživača koji je pokrenuo akciju, odnosno id korisnika koji je pokrenuo akciju. \textit{Description} je opis akcije, odnosno što se radi i koji je cilj i \textit{comment} je dodatni komentar za akciju. Primarni ključ je \textit{id}, strani ključ je \textit{begun}. S atributom \textit{begun} je u odnosu Many-to-One s tablicom \textbf{AppUser} i s atributom \textit{id} je u odnosu One-to-Many s tablicom \textbf{Request}.
+			U tablici \textbf{Action} pohranjuju se podaci vezani uz određenu akciju. Primarni ključ je \textit{actionId}, a strani ključ je \textit{appUserId}. S atributom \textit{appUserId} je u odnosu Many-to-One s tablicom \textbf{AppUser} i s atributom \textit{stationId} je u odnosu One-to-One s tablicom \textbf{Station}.
 
 
 			
@@ -143,126 +148,162 @@
 				entry=none
 				]{
 					width = \textwidth,
-					colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+					colspec={|X[8,l]|X[6, l]|X[20, l]|}, 
 					rowhead = 1,
 				} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 				
 				\hline \SetCell[c=3]{c}{\textbf{Action}}	 \\ \hline[3pt]
-				\SetCell{LightGreen}id & BIGINT	&  	id akcije 	\\ \hline
-				\SetCell{LightBlue}begun & BIGINT	&  	id korisnika (istraživača) koji je započeo akciju 	\\ \hline
-				description	& TEXT &  opis akcije 	\\ \hline
-				comment & TEXT &  komentar za akciju 	\\ \hline  
+				\SetCell{LightGreen}  actionId & BIGINT	&  	id akcije 	\\ \hline
+				\SetCell{LightBlue}appUserId & BIGINT	&  	id korisnika (istraživača) koji je započeo akciju 	\\ \hline
+				\SetCell{LightBlue} stationId & BIGINT	& id postaje kojoj se posalo zahtjev za tragačima \\ \hline
+				actionName	& TEXT &  naziv akcije 	\\ \hline
+				actionType & TEXT &  tip akcije	\\ \hline  
+				locationName & TEXT &  ime lokacije na kojoj se odvija akcija (npr. Biokovo)	\\ \hline 
+				mapViewCriteria & JSON & odabrani kriteriji (od strane istraživača) za prikaz životinja na mapi \\ \hline
+				qualificationsJson & JSON & popis traženih kvalifikacija tragača na akciji \\ \hline
 			\end{longtblr}
 			
 
-			U tablici \textbf{Request} pohranjuju se podaci za zahtjev za tragačem: \textit{id, action, searcher, description, qualification, completed}. U \textit{id} je spremljen id zahtjeva, u \textit{action} je spremljen id akcije kojoj taj zahtjev pripada, odnosno zahtjevi se odnose na pojedini posao koji treba napraviti u pojedinoj akciji pa se u \textit{action} sprema id akcije kojoj taj posao pripada, \textit{description} služi kao opis posla koji tragač treba napraviti, u \textit{searcher} se sprema id tragača kojemu je dodijeljen posao, \textit{qualification} je id kvalifikacije potrebne za obavljanje posla i u \textit{completed} se sprema je li tragač izvršio taj posao ili nije. Primarni ključ je \textit{id}, strani ključevi su \textit{action}, \textit{searcher} i \textit{qualification}. S atributom \textit{action} je u odnosu Many-to-One s tablicom \textbf{Action}, s atributom \textit{searcher} je u odnosu Many-to-One s tablicom \textbf{SearcherInTheField} i s atributom \textit{qualification} je u odnosu One-to-One s tablicom \textbf{Qualification}.
-
-
+			U tablici \textbf{Station} pohranjuju se podaci vezani uz postaju. Primarni ključ je \textit{stationId}. Strani ključ je \textit{stationId}. S atributom \textit{stationId} je u odnosu Many-to-One s tablicom \textbf{Station}.
 			
 			\begin{longtblr}[
 				label=none,
 				entry=none
 				]{
 					width = \textwidth,
-					colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
-					rowhead = 1,
-				} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-
-				\hline \SetCell[c=3]{c}{\textbf{Request}}	 \\ \hline[3pt]
-				\SetCell{LightGreen}id & BIGINT	&  	id zahtjeva 	\\ \hline
-				\SetCell{LightBlue}action & BIGINT	&  	id akcije kojoj pripada zahtjev 	\\ \hline
-				\SetCell{LightBlue}searcher & BIGINT	&  	id tragača koji je dobio zahtjev 	\\ \hline
-				description	& TEXT &  opis  što tragač mora napraviti 	\\ \hline 
-				\SetCell{LightBlue} qualification & TEXT & potrebne kvalifikacije \\ \hline
-				completed & BOOLEAN & je li zahtjev završen ili ne \\ \hline
-			\end{longtblr}
-			
-
-			U tablici \textbf{Station} pohranjuju se podaci za postaju: \textit{id, name}. U \textit{id} je spremljen id postaje, a u \textit{name} je spremljeno ime postaje. Primarni ključ je \textit{id} i nema stranih ključeva. S atributom \textit{id} je u odnosu One-to-One s tablicom \textbf{StationManager}, s atributom \textit{id} je u odnosu One-to-Many s tablicom \textbf{SearcherInTheField} i s atributom \textit{id} je u odnosu One-to-One s tablicom \textbf{Location}.
-
-
-			
-			\begin{longtblr}[
-				label=none,
-				entry=none
-				]{
-					width = \textwidth,
-					colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+					colspec={|X[8,l]|X[6, l]|X[20, l]|}, 
 					rowhead = 1,
 				} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 
 				\hline \SetCell[c=3]{c}{\textbf{Station}}	 \\ \hline[3pt]
-				\SetCell{LightGreen}id & BIGINT	&  	id postaje 	\\ \hline
-				name & VARCHAR & ime postaje \\ \hline
+				\SetCell{LightGreen}stationId & BIGINT	&  	id postaje 	\\ \hline
+				stationName & VARCHAR & ime postaje \\ \hline
+				coordinatesJson & JSON & popis koordinata postaje te koordinata za prikaz područje pokrivanja za određeno osposobljenje \\ \hline
 			\end{longtblr}
-
-			U tablici \textbf{Qualification} pohranjuju se podaci za kvalifikacije: \textit{id, description, coverage, visibility}. U \textit{id} pohranjuje se id od kvalifikacije, u \textit{description} pohranjuje se opis kvalifikacije, u \textit{coverage} pohranjuje se područje pokriveno u kilometrima, za helikopter bi bilo npr. 10.00 km, u \textit{visibility} se sprema ocjena vidljivosti koja je obrnuto proporcionalna pokrivenosti, npr. helikopter ima veliku pokrivenost, ali se teško vide tragovi životinja pa ima manju vidljivost, dok hodanje šumom ima malu pokrivenost, ali se dobro vide tragovi koje ostave životinjei pa ima veliku vidljivost. Primarni ključ je \textit{id} i nema stranih ključeva. S atributom \textit{id} je u odnosu One-to-Many s tablicom \textbf{SearcherInTheField} i u odnosu One-to-One s tablicom \textbf{Request}.
-
-
 			
+			U tablici \textbf{Animal} o svim životinjama za određenu postaju. Primarni ključ je \textit{animalId} nema stranih ključeva. S atributom \textit{id} je u odnosu One-to-Many s tablicom \textbf{Location}.
+
 			\begin{longtblr}[
 				label=none,
 				entry=none
 				]{
 					width = \textwidth,
-					colspec={|X[10,l]|X[6, l]|X[20, l]|}, 
-					rowhead = 1,
-				} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-
-				\hline \SetCell[c=3]{c}{\textbf{Qualification}}	 \\ \hline[3pt]
-				\SetCell{LightGreen}id & BIGINT	&  	id osposobljenost 	\\ \hline
-				description & VARCHAR & opis osposobljenosti (npr. pješice, autom,...) \\ \hline
-				coverage & DOUBLE PRECISION & područje pokriveno u kilometrima \\ \hline
-				visibility & BIGINT & ocjena vidljivosti na skali od 1 do 10 (1 je najgore, a 10 najbolje) \\ \hline
-			\end{longtblr}
-			
-
-			U tablici \textbf{Animal} pohranjuju se podaci o životinji: \textit{id, species, comment}. U \textit{id} se pohranjuje id od životinje, u \textit{species} se pohranjuje vrsta životinje i u \textit{comment} se pohranjuje komentar o životinji, komentar može biti bilo što: izgled, ponašanje, zdravstveno stanje, ime životinje ili nešto drugo. Primarni ključ je \textit{id} i nema stranih ključeva. S atributom \textit{id} je u odnosu One-to-Many s tablicom \textbf{Location}.
-
-
-			
-			\begin{longtblr}[
-				label=none,
-				entry=none
-				]{
-					width = \textwidth,
-					colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+					colspec={|X[7,l]|X[6, l]|X[20, l]|}, 
 					rowhead = 1,
 				} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 
 				\hline \SetCell[c=3]{c}{\textbf{Animal}}	 \\ \hline[3pt]
-				\SetCell{LightGreen}id & BIGINT	&  	id životinje 	\\ \hline
-				species & VARCHAR & vrsta životinje \\ \hline
-				comment & TEXT & komentar za životinju \\ \hline
+				\SetCell{LightGreen} animalId & BIGINT	&  	id životinje 	\\ \hline
+				name & VARCHAR & ime životinje \\ \hline
+				breed & VARCHAR & vrsta životinje \\ \hline
+				description & VARCHAR & opis životinje \\ \hline
+				image & BYTEA & slika životinje \\ \hline
+				currentPosition & JSON & trenutna pozicija životinje\\ \hline
+				\SetCell{LightBlue}stationId & BIGINT	&  id postaje, odn. područja (npr. postaja Biokovo) kojoj životinja pripada \\ \hline
 			\end{longtblr}
 			
 
-			U tablici \textbf{Location} pohranjuju se podaci o lokaciji koja ima neku važnost: \textit{id, object, longitude, latitude, time, comment}. U \textit{id} se pohranjuje id lokacije, u \textit{object} se pohranjuje id objekta na nekoj lokaciji, objekt može biti tragač, životinja ili postaja. U \textit{longitude} i \textit{latitude} se spremaju geografska dužina i širina, u \textit{time} se sprema vrijeme kada je lokacija unesena i u \textit{comment} se sprema komentar za pojedinu lokaciju. Primarni ključ je \textit{id}, a strani ključ je \textit{object}. S atributom \textit{object} je u odnosu One-to-One s tablicom \textbf{Station}, Many-to-One s tablicom \textbf{Animal} i Many-to-One s tablicom \textbf{SearcherInTheField}.
+			U tablici \textbf{PastRoutes} pohranjuju se podaci o svim prijašnjim rutama kojima je istraživač prošao na određenoj akciji. Primarni ključ je \textit{pastRoutesId}, a strani ključevi su \textit{actionId} i \textit{searcherId}. S atributom \textit{actionId} je u odnosu Many-to-One s tablicom \textbf{Action}, a s atributom \textit{searcherId} je u odnosu Many-to-One s tablicom \textbf{SearcherInTheField} .
 
+			\begin{longtblr}[
+				label=none,
+				entry=none
+				]{
+					width = \textwidth,
+					colspec={|X[8,l]|X[6, l]|X[20, l]|}, 
+					rowhead = 1,
+				} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
 
+				\hline \SetCell[c=3]{c}{\textbf{PastRoutes}}	 \\ \hline[3pt]
+				\SetCell{LightGreen}pastRoutesId & BIGINT & id rute \\ \hline
+				routeWaypoints & JSON & koordinate rute\\ \hline
+				\SetCell{LightBlue}actionId & BIGINT	&  id akcije na kojoj je istraživač prošo tom rutom \\ \hline
+				\SetCell{LightBlue}searcherId & BIGINT	&  id istraživača čija je ruta zabilježena  \\ \hline
+				
+			\end{longtblr}
+			
+			U tablici \textbf{PastLocations} pohranjuju se podaci o svim prijašnjim lokacijama životinja ili istraživača na određenoj akciji. Primarni ključ je \textit{pastLocationId}, a strani ključevi su \textit{actionId}, \textit{animalId} i \textit{searcherId}. S atributom \textit{actionId} je u odnosu Many-to-One s tablicom \textbf{Action}, s atributom \textit{animalId} je u odnosu Many-to-One s tablicom \textbf{Animal}, a s atributom \textit{searcherId} je u odnosu Many-to-One s tablicom \textbf{SearcherInTheField} .
 			
 			\begin{longtblr}[
 				label=none,
 				entry=none
 				]{
 					width = \textwidth,
-					colspec={|X[6,l]|X[6, l]|X[20, l]|}, 
+					colspec={|X[9,l]|X[6, l]|X[20, l]|}, 
 					rowhead = 1,
 				} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
-
-				\hline \SetCell[c=3]{c}{\textbf{Location}}	 \\ \hline[3pt]
-				\SetCell{LightGreen}id & BIGINT & id lokacije \\ \hline
-				\SetCell{LightBlue}object & BIGINT	&  	id objekta na određenoj lokaciji 	\\ \hline
-				longitude & DOUBLE PRECISION & geografska dužina \\ \hline
-				latitude & DOUBLE PRECISION & geografska širina \\ \hline
-				time & TIMESTAMP & vrijeme kada je lokacija spremljena \\ \hline
-				comment & TEXT & komentar za lokaciju \\ \hline
-
+				
+				\hline \SetCell[c=3]{c}{\textbf{PastLocations}}	 \\ \hline[3pt]
+				\SetCell{LightGreen}pastLocationId & BIGINT & id lokacije \\ \hline
+				positionCoordinates & JSON & koordinate lokacije\\ \hline
+				\SetCell{LightBlue}actionId & BIGINT	&  id akcije tokom koje je zabilježena lokacija \\ \hline
+				\SetCell{LightBlue}searcherId & BIGINT	&  id istraživača čija je lokacija zabilježenja  \\ \hline
+				\SetCell{LightBlue}animalId & BIGINT	&  id životinje čija je prijašnja lokacija zabilježenja  \\ \hline
+				
+			\end{longtblr}		
+			
+			U tablici \textbf{AnimalComment} pohranjuju se svi komentari koji su ostavljeni životinji na određenoj akciji. Primarni ključ je \textit{animalCommentId}, a strani ključevi su \textit{actionId} i \textit{animalId}. S atributom \textit{actionId} je u odnosu Many-to-One s tablicom \textbf{Action}, te s atributom \textit{animalId} je u odnosu Many-to-One s tablicom \textbf{Animal}.
+			
+			\begin{longtblr}[
+				label=none,
+				entry=none
+				]{
+					width = \textwidth,
+					colspec={|X[9,l]|X[6, l]|X[20, l]|}, 
+					rowhead = 1,
+				} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+				
+				\hline \SetCell[c=3]{c}{\textbf{AnimalComment}}	 \\ \hline[3pt]
+				\SetCell{LightGreen}animalCommentId & BIGINT & id komentara \\ \hline
+				comment & VARCHAR & komentar ostavljen životinji\\ \hline
+				userName & VARCHAR & korisničko ime korisnika koji je ostavio komentar životinji lokacije\\ \hline
+				\SetCell{LightBlue}actionId & BIGINT	&  id akcije tokom koje je zabilježena lokacija \\ \hline
+				\SetCell{LightBlue}animalId & BIGINT	&  id životinje čija je prijašnja lokacija zabilježenja  \\ \hline
+			\end{longtblr}
+			
+			U tablici \textbf{MapComment} pohranjuju se svi komentari koji su ostavljeni na mapi na određenoj akciji. Primarni ključ je \textit{mapCommentId}, a strani ključ je \textit{actionId}. S atributom \textit{actionId} je u odnosu Many-to-One s tablicom \textbf{Action}.
+			
+			\begin{longtblr}[
+				label=none,
+				entry=none
+				]{
+					width = \textwidth,
+					colspec={|X[9,l]|X[6, l]|X[20, l]|}, 
+					rowhead = 1,
+				} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+				
+				\hline \SetCell[c=3]{c}{\textbf{MapComment}}	 \\ \hline[3pt]
+				\SetCell{LightGreen}mapCommentId & BIGINT & id komentara \\ \hline
+				comment & VARCHAR & komentar ostavljen životinji\\ \hline
+				userName & VARCHAR & korisničko ime korisnika koji je ostavio komentar životinji lokacije\\ \hline
+				positionCoordinates & JSON & koordinate lokacije gdje je na mapi ostavljen komentar\\ \hline
+				\SetCell{LightBlue}actionId & BIGINT	&  id akcije tokom koje je zabilježena lokacija \\ \hline
+			\end{longtblr}
+			
+			U tablici \textbf{Task} pohranjuju se podaci zadataka koji su dodjeljeni tragaču na određenoj akciji. Primarni ključ je \textit{taskId}, strani ključevi su \textit{actionId} i \textit{searcher}. S atributom \textit{actionId} je u odnosu Many-to-One s tablicom \textbf{Action}, a s atributom \textit{searcherId} je u odnosu Many-to-One s tablicom \textbf{SearcherInTheField}.
+			
+			\begin{longtblr}[
+				label=none,
+				entry=none
+				]{
+					width = \textwidth,
+					colspec={|X[9,l]|X[6, l]|X[20, l]|}, 
+					rowhead = 1,
+				} %definicija širine tablice, širine stupaca, poravnanje i broja redaka naslova tablice
+				
+				\hline \SetCell[c=3]{c}{\textbf{Task}}	 \\ \hline[3pt]
+				\SetCell{LightGreen}taskId & BIGINT & id zadatka \\ \hline
+				taskComment	& VARCHAR &  komentar za zadatak od strane istra	\\ \hline 
+				taskToDo	& VARCHAR &  opis  što tragač mora napraviti 	\\ \hline 
+				completed & BOOLEAN & je li zadatak završen ili ne \\ \hline
+				routeWaypoints & JSON & koordinate rute koju tragač treba proći na zadatku\\ \hline
+				\SetCell{LightBlue}searcherId & BIGINT	&  id istraživača čija je lokacija zabilježenja  \\ \hline
+				\SetCell{LightBlue}actionId & BIGINT	&  	id akcije kojoj pripada zahtjev 	\\ \hline
 			\end{longtblr}
 			
 			\subsection{Dijagram baze podataka}
 				\begin{figure}[H]
-					\includegraphics[scale=0.35]{dijagrami/dijagram_baze_podataka.png}
+					\includegraphics[scale=0.6]{dijagrami/dijagramBaza.png}
 					\centering
 					\caption{Dijagram baze podataka}
 					\label{fig:promjene}
