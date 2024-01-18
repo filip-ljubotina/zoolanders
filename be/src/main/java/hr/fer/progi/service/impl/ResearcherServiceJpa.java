@@ -133,4 +133,7 @@ public class ResearcherServiceJpa {
         return taskServiceJpa.getAllActiveTasksBySearcherInTheField(searcherInTheField);
     }
 
+    public void putNewTaskComment(TaskDto taskDto) {
+        taskServiceJpa.putNewTaskComment(taskDto);
+    }
 }

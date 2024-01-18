@@ -8,5 +8,4 @@ import lombok.Setter;
 public class TaskCommentDto {
     private Long taskCommentId;
     private String comment;
-
 }

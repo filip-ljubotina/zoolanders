@@ -116,6 +116,12 @@ public class ResearcherController {
         return new ResponseEntity<>(taskDtos, HttpStatus.OK);
     }
 
+    @PutMapping("/researcher/putNewTaskComment")
+    public HttpStatus putNewTaskComment(@RequestBody TaskDto taskDto) {
+        researcherServiceJpa.putNewTaskComment(taskDto);
+        return HttpStatus.OK;
+    }
+
     @PostMapping("/researcher/postAnimalComment/{actionId}/{animalId}")
     public HttpStatus postAnimalComment(@RequestBody AnimalCommentDto animalCommentDto, @PathVariable Long actionId, @PathVariable Long animalId, @RequestHeader("Authorization") String authorizationHeader) {
         animalServiceJpa.postAnimalComment(animalCommentDto, actionId, animalId, jwtTokenProvider.extractAppUserId(authorizationHeader));

@@ -68,4 +68,10 @@ public class TaskServiceJpa {
     public List<TaskDto> getAllActiveTasksBySearcherInTheField(SearcherInTheField searcherInTheField){
         return taskRepository.findAllActiveTasksBySearcherInTheField(searcherInTheField);
     }
+
+    public void putNewTaskComment(TaskDto taskDto) {
+        Task task = findById(taskDto.getTaskId());
+        task.setTaskComment(taskDto.getTaskComment());
+        taskRepository.save(task);
+    }
 }

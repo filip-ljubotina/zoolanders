@@ -29,6 +29,7 @@ import ChooseSubjectView from "./ChooseSubjectView";
 import PastRoutesMap from "./PastRoutesMap";
 import ViewAnimalComments from "./ViewAnimalComments";
 import ChooseSearcherView from "./ChooseSearcherView";
+import ViewTaskComments from "./ViewTaskComments";
 
 const ActionDetails = ({ onLogout }) => {
   ActionDetails.propTypes = {
@@ -224,6 +225,7 @@ const ActionDetails = ({ onLogout }) => {
                           searcher.qualification
                         )}`}
                         <AddTask searcher={searcher} cardData={cardData} />
+                        <ViewTaskComments searcher={searcher} />
                       </Popup>
                     </Marker>
                   ))}
