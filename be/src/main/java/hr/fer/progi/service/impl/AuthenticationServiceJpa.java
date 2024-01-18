@@ -119,7 +119,6 @@ public class AuthenticationServiceJpa implements AuthenticationService {
     }
 
     public boolean emailRegexCheck(String email) {
-        // Check if email contains '@' and '.' after '@'
         int atIndex = email.indexOf('@');
 
         return atIndex > 0 && email.indexOf('.', atIndex) > atIndex + 1;
