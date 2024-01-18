@@ -105,9 +105,6 @@ public class StationManagerJpa {
         if (availableSearcherDto.getQualification() == null || availableSearcherDto.getQualification().isEmpty()) {
             throw new IllegalArgumentException("Qualification is missing");
         }
-        if (availableSearcherDto.getCurrentPosition() == null || availableSearcherDto.getCurrentPosition().isEmpty()) {
-            throw new IllegalArgumentException("Current position is missing");
-        }
     }
 
     public void putActionSearcherRequestToNull(Long actionId) {

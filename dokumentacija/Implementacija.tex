@@ -226,26 +226,6 @@
 				}
 			\end{lstlisting}
 			
-			\textbf{testCheckAvailableSearcherDtoMissingCurrentPosition:}
-			\begin{itemize}
-				\item U funkciju se šalje objekt \textit{AvailableSearcherDto} s neispravnim podacima (nedostaje varijabla \textit{CurrentPosition}).
-				\item Očekuje se da će doći do bacanja iznimke.
-			\end{itemize}
-			\begin{lstlisting}
-				@Test
-				public void testCheckAvailableSearcherDtoMissingCurrentPosition() {
-					AvailableSearcherDto missingPositionDto = new AvailableSearcherDto();
-					missingPositionDto.setFirstName("John");
-					missingPositionDto.setLastName("Doe");
-					missingPositionDto.setQualification("Biologist");
-					
-					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-					() -> stationManagerJpa.checkAvailableSearcherDto(missingPositionDto));
-					
-					assertEquals("Current position is missing", exception.getMessage());
-				}
-			\end{lstlisting}
-			
 			\begin{figure}[H]
 				\includegraphics[scale=1]{slike/checkAvailableSearchersDtoTest.png} 
 				\centering
@@ -884,10 +864,15 @@
 		
 		
 		\section{Dijagram razmještaja}
-			
-			\textbf{\textit{dio 2. revizije}}
-			
-			 \textit{Potrebno je umetnuti \textbf{specifikacijski} dijagram razmještaja i opisati ga. Moguće je umjesto specifikacijskog dijagrama razmještaja umetnuti dijagram razmještaja instanci, pod uvjetom da taj dijagram bolje opisuje neki važniji dio sustava.}
+		
+			 Specifikacijski dijagram razmještaja prikazuje pregled implementacije artefakata bez upućivanja na specifične slučajeve artefakata ili čvorova. Korisnici pristupaju aplikaciji, koja se nalazi na računalu poslžitelja, putem web preglednika. Komunikacija između računala korisnika (tragača, istraživača, administratora) i poslužitelja ostvaruje se putem HTTP veze.
+			 
+			 \begin{figure}[H]
+			 	\includegraphics[scale=0.8]{dijagrami/SpecDijRaz.png} 
+			 	\centering
+			 	\caption{Specifikacijski dijagram razmještaja}
+			 	\label{fig:Specifikacijski dijagram razmještaja}
+			 \end{figure}
 			
 			\eject 
 		

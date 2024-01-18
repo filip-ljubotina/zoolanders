@@ -46,16 +46,4 @@ public class CheckAvailableSearcherDtoTest {
         assertEquals("First name is missing", exception.getMessage());
     }
 
-    @Test
-    public void testCheckAvailableSearcherDtoMissingCurrentPosition() {
-        AvailableSearcherDto missingPositionDto = new AvailableSearcherDto();
-        missingPositionDto.setFirstName("John");
-        missingPositionDto.setLastName("Doe");
-        missingPositionDto.setQualification("Biologist");
-
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> stationManagerJpa.checkAvailableSearcherDto(missingPositionDto));
-
-        assertEquals("Current position is missing", exception.getMessage());
-    }
 }
