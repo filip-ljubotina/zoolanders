@@ -4,7 +4,7 @@ custom:
 spring:
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
   datasource:
     password: ${DB_PASS:POs7zG6FzHxiri2A4zsbQINSf1eoz4lN}
     username: ${DB_USERNAME:wildtrack_db_4a8m_user}
