@@ -62,14 +62,6 @@
   border-bottom: none;
 }
 
-.register-input-container1 {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-bottom: 2px solid var(--white-color);
-}
-
 .name-photo {
   border-bottom: none;
 }
@@ -89,6 +81,10 @@
 
 .register-input {
   position: relative;
+}
+
+.register-input > .register-input-container {
+  margin-top: 10px;
 }
 
 .register-input-photo {

@@ -76,7 +76,8 @@ public class AuthenticationServiceJpa implements AuthenticationService {
 
         AppUser appUser = (AppUser) userDetails;
 
-        LoginResponse loginResponse = loginResponseMapper.mapper(token, authoritiesArray, stationName, appUser.getImage());
+        LoginResponse loginResponse = loginResponseMapper.mapper(token, authoritiesArray, stationName, appUser.getImage(),
+                appUser.getFirstName(), appUser.getLastName(), appUser.getEmail(), appUser.getUsername());
 
         return loginResponse;
     }

@@ -151,7 +151,10 @@ const Action = ({ onLogout }) => {
   return (
     <div className="users">
       <Sidebar
-        categories={[{ title: "Akcija", link: "/action" }]}
+        categories={[
+          { title: "Akcija", link: "/action" },
+          { title: "Moji podaci", link: "/userInfo" },
+        ]}
         user="searcher"
       />
       <div className="usersContainer">
@@ -234,12 +237,14 @@ const Action = ({ onLogout }) => {
                     icon={taskIcon}
                   >
                     <Popup>
-                      Vaš zadatak:
-                      <br />
-                      Trebate postaviti&nbsp;
+                      Vaš zadatak: Trebate postaviti&nbsp;
                       {task.taskToDo === "tracker"
                         ? "uređaj za praćenje"
                         : "kameru"}
+                      <br />
+                      Komentar uz zadatak:&nbsp;
+                      {task.taskComment}
+                      <br />
                       <SeeMore
                         searcher={searcher}
                         task={task}

@@ -9,7 +9,7 @@ import "./Topbar.css";
 
 const Topbar = ({ title, onLogout }) => {
   Topbar.propTypes = {
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     onLogout: PropTypes.func.isRequired,
   };
   const navigate = useNavigate();

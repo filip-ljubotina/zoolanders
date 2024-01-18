@@ -14,4 +14,8 @@ public class LoginResponse {
     private String role;
     private String stationName;
     private byte[] image;
+    private String userName;
+    private String firstName;
+    private String lastName;
+    private String email;
 }

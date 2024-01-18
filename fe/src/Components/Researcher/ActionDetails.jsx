@@ -178,7 +178,10 @@ const ActionDetails = ({ onLogout }) => {
   return (
     <div className="users">
       <Sidebar
-        categories={[{ title: "Akcije", link: "/actions" }]}
+        categories={[
+          { title: "Akcije", link: "/actions" },
+          { title: "Moji podaci", link: "/userInfo" },
+        ]}
         user="researcher"
       />
       <div className="usersContainer">
@@ -224,8 +227,15 @@ const ActionDetails = ({ onLogout }) => {
                         {`Osposobljenost: ${mapToQualification(
                           searcher.qualification
                         )}`}
-                        <AddTask searcher={searcher} cardData={cardData} />
-                        <ViewTaskComments searcher={searcher} />
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-evenly",
+                          }}
+                        >
+                          <AddTask searcher={searcher} cardData={cardData} />
+                          <ViewTaskComments searcher={searcher} />
+                        </div>
                       </Popup>
                     </Marker>
                   ))}
@@ -248,7 +258,6 @@ const ActionDetails = ({ onLogout }) => {
                         {`Opis: ${animal.description}`}
                         <br />
                         <div
-                          className="animal-buttons"
                           style={{
                             display: "flex",
                             justifyContent: "space-evenly",

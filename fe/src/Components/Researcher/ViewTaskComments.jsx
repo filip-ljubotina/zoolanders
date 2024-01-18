@@ -14,7 +14,7 @@ import AddNewTaskComment from "./AddNewTaskComment";
 import "./Actions.css";
 
 const ViewTaskComments = ({ searcher }) => {
-ViewTaskComments.propTypes = {
+  ViewTaskComments.propTypes = {
     searcher: PropTypes.object.isRequired,
   };
   const [data, setData] = React.useState([]);
@@ -22,9 +22,16 @@ ViewTaskComments.propTypes = {
 
   const fetchData = async () => {
     try {
-      const responseData = await ApiService.get(`/wildTrack/researcher/getAllSearcherTasks/${searcher.searcherId}`);
+      const responseData = await ApiService.get(
+        `/wildTrack/researcher/getAllSearcherTasks/${searcher.searcherId}`
+      );
       setData(
-        responseData.data.map((row) => ({ ...row, id: row.taskId, taskToDo: row.taskToDo, comment: row.taskComment}))
+        responseData.data.map((row) => ({
+          ...row,
+          id: row.taskId,
+          taskToDo: row.taskToDo,
+          comment: row.taskComment,
+        }))
       );
     } catch (error) {
       console.error("Error fetching tasks comments:", error);
@@ -41,28 +48,43 @@ ViewTaskComments.propTypes = {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
+    { field: "taskId", headerName: "ID", minWidth: 50, flex: 0.5 },
     {
       field: "taskToDo",
       headerName: "Zadatak",
-      width: 150,
+      minWidth: 150,
+      flex: 1,
+      renderCell: ({ row: { taskToDo } }) => {
+        return (
+          <div>
+            {taskToDo === "tracker" && <a>Uređaj za praćenje</a>}
+            {taskToDo === "camera" && <a>Kamere</a>}
+          </div>
+        );
+      },
     },
     {
       field: "taskComment",
       headerName: "Komentar",
-      width: 150,
+      minWidth: 200,
+      flex: 1,
     },
   ];
 
   const addColumn = [
     {
       field: "add",
-      headerName: "Novi komentar",
-      width: 150,
+      headerName: "Novo",
+      minWidth: 50,
+      flex: 1,
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <AddNewTaskComment searcherInfo={searcher} data={params.row} onClose={handleClose} />
+            <AddNewTaskComment
+              searcherInfo={searcher}
+              data={params.row}
+              onClose={handleClose}
+            />
           </div>
         );
       },
@@ -85,9 +107,7 @@ ViewTaskComments.propTypes = {
         <InsertCommentOutlinedIcon />
       </IconButton>
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-        <DialogTitle>
-            Pregled svih zadataka
-        </DialogTitle>
+        <DialogTitle>Pregled svih zadataka</DialogTitle>
         <DialogContent>
           <Box m="20px">
             <Box
@@ -98,7 +118,13 @@ ViewTaskComments.propTypes = {
                 "& .MuiDataGrid-cell": { borderBottom: "none" },
               }}
             >
-              <DataGrid rows={data} columns={columns.concat(addColumn)} />
+              <DataGrid
+                rows={data}
+                columns={columns.concat(addColumn)}
+                getRowId={(row) => {
+                  return row.taskId;
+                }}
+              />
             </Box>
           </Box>
         </DialogContent>

@@ -58,6 +58,7 @@ const Users = ({ onLogout }) => {
         categories={[
           { title: "Korisnici", link: "/users" },
           { title: "Zahtjevi", link: "/requests" },
+          { title: "Moji podaci", link: "/userInfo" },
         ]}
         user="admin"
       />

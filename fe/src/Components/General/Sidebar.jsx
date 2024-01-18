@@ -6,9 +6,10 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Menu, MenuItem, Sidebar as ProSidebar } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
-import ProfileImageService from "../../services/ProfileImageService";
+import UserInfoService from "../../services/UserInfoService";
 import background_photo from "../Assets/login-bg.png";
 import Placeholder from "../Assets/profile-placeholder.png";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 const Sidebar = ({ user, categories }) => {
   Sidebar.propTypes = {
@@ -97,11 +98,11 @@ const Sidebar = ({ user, categories }) => {
                   width="100px"
                   height="100px"
                   src={
-                    ProfileImageService.getProfileImage() !== "null"
-                      ? `data:image/jpeg;base64,${ProfileImageService.getProfileImage()}`
+                    UserInfoService.getImage() !== "null"
+                      ? `data:image/jpeg;base64,${UserInfoService.getImage()}`
                       : Placeholder
                   }
-                  style={{ cursor: "pointer", borderRadius: "50%" }}
+                  style={{ borderRadius: "50%" }}
                 />
               </Box>
             </Box>
@@ -116,6 +117,8 @@ const Sidebar = ({ user, categories }) => {
                   category.link.includes("action") ||
                   category.link.includes("requests") ? (
                     <AssignmentIcon />
+                  ) : category.link.includes("Info") ? (
+                    <AccountCircleOutlinedIcon />
                   ) : (
                     <PeopleOutlinedIcon />
                   )
