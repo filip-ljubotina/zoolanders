@@ -367,6 +367,12 @@
 			\eject
 		\section{Dijagram komponenti}
 		
-			\textbf{\textit{dio 2. revizije}}\\
-		
-			 \textit{Potrebno je priložiti dijagram komponenti s pripadajućim opisom. Dijagram komponenti treba prikazivati strukturu cijele aplikacije.}
+			 Dijagram komponenti prikazuje komponente u sustavu i njihovu organizaciju. Sustav se sastoji od tri glavne komponente: \textbf{Frontend web aplikacije}, \textbf{Backend web aplikacije} i \textbf{Baza podataka}. \textbf{Frontend web aplikacije} sastoji se od manjih komponenti: \textbf{ApiService.js, index.js, Admin, Assets, General, Login, Manager, Register, Researcher, Searcher}. Komponenta \textbf{ApiService.js} služi za komunikaciju s backendom pomoću HTTP metoda \textit{get, post, put, delete}. Komponente \textbf{Admin, Assets, General, Login, Manager, Register, Researcher, Searcher} su skupovi react komponenti koji služe za prikaz za određenu svrhu. Npr. \textbf{Admin} ima komponente koje se prikazuju samo za admina, a \textbf{Manager} ima komponente koje se pokazuju samo za voditelja postaje. \textbf{Backend web aplikacije} sastoji se od komponenti \textbf{Controller, Service, Mapper, DTO, Repository}. \textbf{Controller} prima i odgovara na HTTP metode i poziva usluge u komponenti \textbf{Service}. Komponenta \textbf{Service} obavlja funkcije aplikacije, npr. registracija korisnika, dodavanje komentara, stvaranje postaje itd. Komponenta \textbf{Repository} služi za komunikaciju s \textbf{Bazom podataka}. \textbf{DTO} sadrži objekte s podacima koji se koriste u aplikaciji. \textbf{Mapper} služi za pretvorbu objekata iz \textbf{DTO} u normalne objekte, npr. pretvorbu AnimalDto u Animal.
+			 
+			 
+			 \begin{figure}[H]
+			 	\includegraphics[scale=0.45]{dijagrami/dijagram_komponenti2.png}
+			 	\centering
+			 	\caption{Dijagram komponenti}
+			 	\label{fig:promjene}
+			 \end{figure}

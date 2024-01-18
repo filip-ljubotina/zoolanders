@@ -845,7 +845,7 @@
 					}
 					WebElement errorElement = driver.findElement(By.className("register-success"));
 					String actualText = errorElement.getText();
-					String expectedText = "Registracija uspješna!";
+ 					String expectedText = "Registracija uspjesna!";
 					
 					assertEquals(expectedText, actualText);
 					
@@ -878,12 +878,40 @@
 		
 		\section{Upute za puštanje u pogon}
 		
-			\textbf{\textit{dio 2. revizije}}\\
-		
-			 \textit{U ovom poglavlju potrebno je dati upute za puštanje u pogon (engl. deployment) ostvarene aplikacije. Na primjer, za web aplikacije, opisati postupak kojim se od izvornog kôda dolazi do potpuno postavljene baze podataka i poslužitelja koji odgovara na upite korisnika. Za mobilnu aplikaciju, postupak kojim se aplikacija izgradi, te postavi na neku od trgovina. Za stolnu (engl. desktop) aplikaciju, postupak kojim se aplikacija instalira na računalo. Ukoliko mobilne i stolne aplikacije komuniciraju s poslužiteljem i/ili bazom podataka, opisati i postupak njihovog postavljanja. Pri izradi uputa preporučuje se \textbf{naglasiti korake instalacije uporabom natuknica} te koristiti što je više moguće \textbf{slike ekrana} (engl. screenshots) kako bi upute bile jasne i jednostavne za slijediti.}
+			U ovom poglavlju prikazat ćemo kako se provodi pokretanje aplikacije na lokalnom računalu.
 			
+			\textbf{Instalacija poslužitelja baze podataka}
+			Potrebno je preuzeti PostgreSQL bazu podataka za operacijski sustav Windows. Instalacija se može provesti pomoću sljedećeg linka: https://www.postgresql.org/download/. Prilikom instalacije, zapamtite koji ste port odabrali za pristup bazi podataka, pošto će nam to biti potrebno kasnije (preporučeni port je 5432). Nakon uspješno provedene instalacije, PostgreSQL baza podataka bit će dostupna na vašem računalu.
 			
-			 \textit{Dovršenu aplikaciju potrebno je pokrenuti na javno dostupnom poslužitelju. Studentima se preporuča korištenje neke od sljedećih besplatnih usluga: \href{https://aws.amazon.com/}{Amazon AWS}, \href{https://azure.microsoft.com/en-us/}{Microsoft Azure} ili \href{https://www.heroku.com/}{Heroku}. Mobilne aplikacije trebaju biti objavljene na F-Droid, Google Play ili Amazon App trgovini.}
+			\textbf{Konfiguracija baze podataka}
+			Za daljnju konfiguraciju baze podataka i ostatak projekta koristit ćemo IntelliJ IDE. Prije svega, s GitHub repozitorija https://github.com/filip-ljubotina/zoolanders.git preuzet ćemo projekt. Zatim, u IntelliJ-u, u gornjem lijevom kutu odabiremo File -\textgreater Open... te se pozicioniramo u bazni direktorij projekta.
 			
+			Sljedeći korak, kako je prikazano na slici, je odabrati izvor podataka (engl. Data Source).
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.3]{slike/postgreSql.png} 
+				\centering
+				\caption{Odabir izvora podataka}
+				\label{fig:promjene}
+			\end{figure}
+			Nakon odabira PostgreSQL-a kao izvora podataka, potrebno je unijeti podatke o bazi podataka. Za korisničko ime (user) koristimo "postgres", dok su port i lozinka (password) isti kao što smo ih postavili tijekom instalacije.
+			
+			\textbf{Punjenje baze podataka}
+			Nakon konfiguracije baze podataka, potrebno je napuniti ju. Ovaj korak također obavljamo unutar IntelliJ-a tako što desnim klikom na postreg bazu odaberemo opciju "Run SQL Script", kao što je prikazano na slici. Zatim odaberemo skriptu koja se nalazi u direktoriju projekta. Nakon pokretanja, baza će biti napunjena početnim podacima.
+			
+			\begin{figure}[H]
+				\includegraphics[scale=0.3]{slike/runSqlScript.png} 
+				\centering
+				\caption{Pokretanje SQL skripte}
+				\label{fig:promjene}
+			\end{figure}
+			
+			\textbf{Konfiguracija frontend-a i backend-a}
+			Nakon postavljanja baze podataka, slijedi konfiguracija backend-a. Potrebno je otvoriti "application.yaml" datoteku unutar "resources" paketa te postaviti korisničko ime, lozinku i URL podatkovnog izvora (datasource) tako da budu isti kao što su bili postavljeni tijekom konfiguracije datasourca.
+			
+			Za konfiguraciju frontend-a, potrebno je otvoriti "fe" direktorij, zatim unutar "services" -\textgreater "ApiService" postaviti "baseURL" na "http://localhost:8080". Nakon toga, u naredbenom retku (Command Prompt-u), potrebno se pozicionirati unutar "fe" direktorija i pokrenuti naredbu "npm install".
+			
+			\textbf{Pokretanje aplikacije}
+			Za pokretanje backenda u Intellij-eju je potrebno pokrenuti WildtrackApplication, a za frontend u terminalu je potrebnu pokrenuti naredbu npm start.
 			
 			\eject 

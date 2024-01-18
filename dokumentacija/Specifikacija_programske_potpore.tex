@@ -26,7 +26,7 @@
 				
 				\begin{packed_enum}
 					
-					\item poslati zahtjev za registraciju s željenom ulogom za koju se prijavljuje
+					\item poslati zahtjev za registraciju sa željenom ulogom za koju se prijavljuje
 					
 				\end{packed_enum}
 				
@@ -66,7 +66,7 @@
 					 
 					\item dobiti prikaz na karti zadataka koje treba obaviti, trenutne pozicije ostalih tragača aktivnih na istoj akciji, te trenutne pozicije praćenih životinja 
 					\item ostaviti komentar za ostale sudionike u akciji
-					\item ostaviti komentar praćenoj životinji tijekom akcije 
+					\item ostaviti komentar o praćenoj životinji tijekom akcije 
 					
 				\end{packed_enum}
 				
@@ -217,7 +217,7 @@
 						
 						\item[] \begin{packed_item}
 							
-							\item[1.a] Ne postoji registrirani tragač koji već nije član neke postaje
+							\item[2.a] Ne postoji registrirani tragač koji već nije član neke postaje
 							\item[] \begin{packed_enum}
 								
 								\item Sustav obavještava korisnika o nepostojanju slobodnih tragača
@@ -246,6 +246,18 @@
 							\item Voditelj potvrđuje odabir 
 							\item Sustav ažurira bazu podataka i odabrane tragače dodaje na listu slobodnih tragača
 						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] Ne postoji tragač koji je član postaje
+							\item[] \begin{packed_enum}
+								
+								\item Sustav obavještava korisnika o nepostojanju tragača koji su članovi postaje
+								
+							\end{packed_enum}
+						\end{packed_item}
 					\end{packed_item}
 					
 					\noindent \underbar{\textbf{UC7 - Definiranje osposobljenosti tragača}}
@@ -282,6 +294,18 @@
 							\item Voditelj odabire opciju "Pristigli zahtjevi"
 							\item Sustav prikazuje popis pristiglih zahtjeva za alociranje tragača za sudjelovanje u akciji
 						\end{packed_enum}
+						
+						\item  \textbf{Opis mogućih odstupanja:}
+						
+						\item[] \begin{packed_item}
+							
+							\item[2.a] Nije pristigao niti jedan zahtjev
+							\item[] \begin{packed_enum}
+								
+								\item Sustav obavještava korisnika o nepostojanju pristiglih zahtjeva
+								
+							\end{packed_enum}
+						\end{packed_item}
 					\end{packed_item}
 					
 					
@@ -445,6 +469,8 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
+					\eject
+					
 					\noindent \underbar{\textbf{UC16 - Pregled zadataka}}
 					\begin{packed_item}
 						
@@ -483,7 +509,7 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
-					\noindent \underbar{\textbf{UC18 - Proglašenje zadatka dovršenim}}
+					\noindent \underbar{\textbf{UC18 - Dovršavanje zadatka}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik:} Istraživač
@@ -501,6 +527,8 @@
 							\item Sustav ažurira bazu podataka s oznakom da je tragač završio zadatak 
 						\end{packed_enum}
 					\end{packed_item}
+					
+					\eject
 					
 					\noindent \underbar{\textbf{UC19 - Prikaz interaktivne karte}}
 					\begin{packed_item}
@@ -608,13 +636,15 @@
 						\end{packed_enum}
 					\end{packed_item}
 					
+					\eject
+					
 					\noindent \underbar{\textbf{UC25 - Potvrda registracije}}
 					\begin{packed_item}
 						
 						\item \textbf{Glavni sudionik:} Administrator
 						\item \textbf{Cilj:} Potvrditi/odbiti registraciju korisnika koji se želi registrirati kao istraživač ili voditelj postaje
 						\item \textbf{Sudionici:} Baza podataka, neregistrirani korisnik
-						\item \textbf{Preduvjet:} Korisnik je registriran i dodijeljena su mu prava administratora
+						\item \textbf{Preduvjet:} Administrator je registriran 
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -632,7 +662,7 @@
 						\item \textbf{Glavni sudionik:} Administrator
 						\item \textbf{Cilj:} Pregledati sve registrirane korisnike i njihove osobne podatke
 						\item \textbf{Sudionici:} Baza podataka
-						\item \textbf{Preduvjet:} Korisnik je registriran i dodijeljena su mu prava administratora
+						\item \textbf{Preduvjet:} Administrator je registriran
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -648,7 +678,7 @@
 						\item \textbf{Glavni sudionik:} Administrator
 						\item \textbf{Cilj:} Promijeniti osobne podatke korisnika
 						\item \textbf{Sudionici:} Baza podataka, korisnik 
-						\item \textbf{Preduvjet:} Korisnik je registriran i dodijeljena su mu prava administratora te postoji barem jedan registrirani korisnik
+						\item \textbf{Preduvjet:} Administrator je registriran te postoji barem jedan registrirani korisnik
 						\item \textbf{Opis osnovnog tijeka:}
 						
 						\item[] \begin{packed_enum}
@@ -787,7 +817,7 @@
 				\item Sustav mora podržavati veći broj korisnika u stvarnom vremenu.
 				\item Korisničko sučelje mora biti jednostavno i intuitivno za uporabu.
 				\item Sustav je potrebno oblikovati na način koji pridonosi ponovnoj uporabi kao što je uvođenje kopči u program. 
-				\item Programska potpora treba biti pripremljena za moguće promjene u budućnosti. 
+				\item Programska potpora treba biti pripremljena za promjene u budućnosti. 
 				\item Sustav mora odgovoriti na zahtjev korisnika u roku od nekoliko sekundi. 
 				\item Pristup bazi podataka mora biti dobro zaštićen. 
 				\item Dohvat sadržaja iz baze podataka trebao bi biti brz i učinkovit. 
