@@ -1,25 +1,29 @@
-import { Routes, Route } from "react-router-dom";
-import './ManagerDashboard.css'
-import Sidebar from './Sidebar'
-import PropTypes from "prop-types"
-import AddSearchers from './AddSearchers'
-import Requests from './Requests'
+import PropTypes from "prop-types";
+import { Navigate, Route, Routes } from "react-router-dom";
+import "../General/Dashboard.css";
+import AddSearchers from "./AddSearchers";
+import Requests from "./Requests";
 
-
-const ManagerDashboard = ({onLogout}) => {
+const ManagerDashboard = ({ onLogout }) => {
   ManagerDashboard.propTypes = {
-    onLogout: PropTypes.func
-  }
+    onLogout: PropTypes.func.isRequired,
+  };
 
   return (
     <div>
       <Routes>
-        <Route path = "/" element={<Sidebar onLogout={onLogout} />} />
-        <Route path = "/addUsers" element={<AddSearchers onLogout={onLogout} />} />
-        <Route path = "/requests" element={<Requests onLogout={onLogout} />} />
+        <Route
+          path="/"
+          element={<Navigate to="/dashboard/manager/addUsers" />}
+        />
+        <Route
+          path="/addUsers"
+          element={<AddSearchers onLogout={onLogout} />}
+        />
+        <Route path="/requests" element={<Requests onLogout={onLogout} />} />
       </Routes>
-    </div>  
-  )
-}
+    </div>
+  );
+};
 
-export default ManagerDashboard
+export default ManagerDashboard;

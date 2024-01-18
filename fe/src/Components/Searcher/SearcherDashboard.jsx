@@ -1,21 +1,23 @@
-import { Routes, Route } from "react-router-dom";
-import './SearcherDashboard.css'
-import Sidebar from './Sidebar'
-import Action from './Action'
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
+import { Navigate, Route, Routes } from "react-router-dom";
+import "../General/Dashboard.css";
+import Action from "./Action";
 
-
-const SearcherDashboard = ({onLogout}) => {
+const SearcherDashboard = ({ onLogout }) => {
   SearcherDashboard.propTypes = {
-    onLogout: PropTypes.func
-  }
+    onLogout: PropTypes.func,
+  };
   return (
     <div>
       <Routes>
-        <Route path = "/" element={<Sidebar onLogout={onLogout} />} />
-        <Route path = "/action" element={<Action onLogout={onLogout} />} />
+        <Route
+          path="/"
+          element={<Navigate to="/dashboard/searcher/action" />}
+        />
+        <Route path="/action" element={<Action onLogout={onLogout} />} />
       </Routes>
-    </div>  )
-}
+    </div>
+  );
+};
 
-export default SearcherDashboard
+export default SearcherDashboard;

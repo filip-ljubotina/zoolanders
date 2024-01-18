@@ -1,25 +1,23 @@
-import { Routes, Route } from "react-router-dom";
-import './AdminDashboard.css'
-import Sidebar from './Sidebar'
-import Users from './Users'
-import Requests from './Requests'
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
+import { Navigate, Route, Routes } from "react-router-dom";
+import "../General/Dashboard.css";
+import Requests from "./Requests";
+import Users from "./Users";
 
-
-const AdminDashboard = ({onLogout}) => {
+const AdminDashboard = ({ onLogout }) => {
   AdminDashboard.propTypes = {
-    onLogout: PropTypes.func
-  }
-  
+    onLogout: PropTypes.func,
+  };
+
   return (
     <div>
       <Routes>
-        <Route path = "/" element={<Sidebar onLogout={onLogout} />} />
-        <Route path = "/users" element={<Users onLogout={onLogout} />} />
-        <Route path = "/requests" element={<Requests onLogout={onLogout} />} />
+        <Route path="/" element={<Navigate to="/dashboard/admin/users" />} />
+        <Route path="/users" element={<Users onLogout={onLogout} />} />
+        <Route path="/requests" element={<Requests onLogout={onLogout} />} />
       </Routes>
-    </div>  
-  )
-}
+    </div>
+  );
+};
 
-export default AdminDashboard
+export default AdminDashboard;
