@@ -112,4 +112,9 @@ public class StationManagerJpa {
         action.setSearchersRequest(null);
         actionRepository.save(action);
     }
+
+    public List<AvailableSearcherDto> getAllSearchersInStation(Long appUserId) {
+        Station station = findStationByAppUserId(appUserId);
+        return searcherInTheFieldJpa.getAllSearchersInStation(station);
+    }
 }

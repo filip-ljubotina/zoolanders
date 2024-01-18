@@ -183,5 +183,9 @@ public class SearcherInTheFieldJpa {
         searcherInTheField.setCurrentPosition(null);
         searcherInTheFieldRepository.save(searcherInTheField);
     }
+
+    public List<AvailableSearcherDto> getAllSearchersInStation(Station station) {
+        return searcherInTheFieldRepository.findAllSearchersByStation(station);
+    }
 }
 

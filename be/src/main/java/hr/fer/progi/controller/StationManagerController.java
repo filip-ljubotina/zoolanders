@@ -72,4 +72,11 @@ public class StationManagerController {
         stationManagerJpa.putActionSearcherRequestToNull(actionId);
         return HttpStatus.OK;
     }
+
+    @GetMapping("/manager/getAllSearchersInStation")
+    public ResponseEntity<List<AvailableSearcherDto>> getAllSearchersInStation(@RequestHeader("Authorization") String authorizationHeader) {
+        List<AvailableSearcherDto> listOfAvailableSearchers =
+                stationManagerJpa.getAllSearchersInStation(jwtTokenProvider.extractAppUserId(authorizationHeader));
+        return new ResponseEntity<>(listOfAvailableSearchers, HttpStatus.CREATED);
+    }
 }
