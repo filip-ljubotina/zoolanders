@@ -6,7 +6,7 @@ import Users from "./Users";
 
 const AdminDashboard = ({ onLogout }) => {
   AdminDashboard.propTypes = {
-    onLogout: PropTypes.func,
+    onLogout: PropTypes.func.isRequired,
   };
 
   return (

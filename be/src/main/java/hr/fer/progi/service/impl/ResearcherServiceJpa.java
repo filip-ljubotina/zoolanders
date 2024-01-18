@@ -128,5 +128,9 @@ public class ResearcherServiceJpa {
         return pastDataServiceJpa.getPastAnimalsLocations(action);
     }
 
+    public List<TaskDto> getAllSearcherTasks(Long searcherInTheFieldId){
+        SearcherInTheField searcherInTheField = searcherInTheFieldJpa.findById(searcherInTheFieldId);
+        return taskServiceJpa.getAllActiveTasksBySearcherInTheField(searcherInTheField);
+    }
 
 }

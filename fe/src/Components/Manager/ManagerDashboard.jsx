@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import "../General/Dashboard.css";
 import AddSearchers from "./AddSearchers";
 import Requests from "./Requests";
+import Searchers from "./Searchers";
 
 const ManagerDashboard = ({ onLogout }) => {
   ManagerDashboard.propTypes = {
@@ -14,8 +15,12 @@ const ManagerDashboard = ({ onLogout }) => {
       <Routes>
         <Route
           path="/"
-          element={<Navigate to="/dashboard/manager/addUsers" />}
+          element={<Navigate to="/dashboard/manager/searchers" />}
         />
+        <Route
+          path="/searchers"
+          element={<Searchers onLogout={onLogout} />}
+        ></Route>
         <Route
           path="/addUsers"
           element={<AddSearchers onLogout={onLogout} />}

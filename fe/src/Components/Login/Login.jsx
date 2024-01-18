@@ -35,6 +35,7 @@ const Login = ({ onLoginSuccess }) => {
       RoleService.setRole(response.data.role);
       StationService.setStation(response.data.stationName);
       ProfileImageService.setProfileImage(response.data.image);
+      console.log(response.data);
       onLoginSuccess();
     } catch (error) {
       setError(
