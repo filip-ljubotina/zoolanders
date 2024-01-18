@@ -110,6 +110,12 @@ public class ResearcherController {
         return new ResponseEntity<>(pastAnimalLocationsDtos, HttpStatus.OK);
     }
 
+    @GetMapping("/researcher/getAllSearcherTasks/{searcherInTheFieldId}")
+    public ResponseEntity<List<TaskDto>> getAllSearcherTasks(@PathVariable Long searcherInTheFieldId) {
+        List<TaskDto> taskDtos = researcherServiceJpa.getAllSearcherTasks(searcherInTheFieldId);
+        return new ResponseEntity<>(taskDtos, HttpStatus.OK);
+    }
+
     @PostMapping("/researcher/postAnimalComment/{actionId}/{animalId}")
     public HttpStatus postAnimalComment(@RequestBody AnimalCommentDto animalCommentDto, @PathVariable Long actionId, @PathVariable Long animalId, @RequestHeader("Authorization") String authorizationHeader) {
         animalServiceJpa.postAnimalComment(animalCommentDto, actionId, animalId, jwtTokenProvider.extractAppUserId(authorizationHeader));
