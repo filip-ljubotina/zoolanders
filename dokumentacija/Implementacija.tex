@@ -17,59 +17,8 @@
 	
 		\section{Ispitivanje programskog rješenja}
 			\section{Ispitivanje komponenti}
-			Napisati kratki opis sto se koristilo i kako za testove(JUnit 5 za unit testove)...
 			
-			\subsection{Ispitivanje funkcije emailRegexCheck:}
-			Provjerava se funkcionalnost metode \textit{emailRegexCheck} u \textit{AuthenticationServiceJpa servisu} koja služi za provjeru ispravnog formata maila.
-			
-			\textbf{emailRegexCheckValidEmailReturnsTrue:}
-			\begin{itemize}
-				\item U funkciju se šalje mail ispravnog formata.
-				\item Očekuje se da funkcija vraća true.
-			\end{itemize}
-			\begin{lstlisting}
-			@Test
-			void emailRegexCheck_ValidEmail_ReturnsTrue() {
-				String validEmail = "test@example.com";
-				boolean result = authenticationServiceJpa.emailRegexCheck(validEmail);
-				assertTrue(result);
-			}
-			\end{lstlisting}
-			
-			\textbf{testEmailRegexCheckInvalidEmail:}
-			\begin{itemize}
-				\item U funkciju se šalje mail neispravnog formata.
-				\item Očekuje se da funkcija vraća false.
-			\end{itemize}
-			\begin{lstlisting}
-				@Test
-				public void testEmailRegexCheckInvalidEmail() {
-					String invalidEmail = "invalidemail";
-					boolean isValid = authenticationServiceJpa.emailRegexCheck(invalidEmail);
-					assertFalse(isValid);
-				}
-			\end{lstlisting}
-			
-			\textbf{testEmailRegexCheckInvalidEmailEdgeCase:}
-			\begin{itemize}
-				\item U funkciju se šalje mail neispravnog formata.
-				\item Očekuje se da funkcija vraća false.
-			\end{itemize}
-			\begin{lstlisting}
-				@Test
-				public void testEmailRegexCheckInvalidEmail_EdgeCase() {
-					String invalidEmail = "@.";
-					boolean isValid = authenticationServiceJpa.emailRegexCheck(invalidEmail);
-					assertFalse(isValid);
-				}
-			\end{lstlisting}
-			\begin{figure}[H]
-				\includegraphics[scale=1]{slike/emailRegexTest.png} 
-				\centering
-				\caption{Rezultati ispitivanja}
-				\label{fig:promjene}
-			\end{figure}
-			
+			Sveobuhvatan pregled našeg testiranja temeljio se na korištenju JUnit 5 za izvođenje unit testova. Većina testova odnosi se na ispitivanje ispravnosti podataka u Dto objektima (ActionDto, AnimalDto, AvailableSearcherDto, RequestDto i TaskDto). Jedan od ispitivanja služi za provjeru ispravnog formata maila, a jedan za provjeru ispravnosti koordinata. Zadnje od ispitivanja provjerava ispravnost funkcije koja služi za micanje tragača s akcije.
 			
 			\subsection{Ispitivanje funkcije checkActionDto:}
 			Provjerava se funkcionalnost metode \textit{checkActionDto} u \textit{researcherServiceJpa servisu} koja služi za provjeru ispravnosti podataka unutar \textit{ActionDto} objekta.
@@ -133,6 +82,257 @@
 				\label{fig:promjene}
 			\end{figure}
 			
+			\subsection{Ispitivanje funkcije checkAnimalDto:}
+			Provjerava se funkcionalnost funkcije \textit{checkAnimalDto} u \textit{SearcherInTheFieldJpa servisu} koja služi za provjeru ispravnosti podataka unutar \textit{AnimalDto} objekta.
+			
+			\textbf{testCheckAnimalDtoValid:}
+			\begin{itemize}
+				\item U funkciju se šalje objekt \textit{AnimalDto} s ispravnim podacima.
+				\item Očekuje se da neće doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testCheckAnimalDtoValid() {
+					
+					AnimalDto validAnimalDto = new AnimalDto();
+					validAnimalDto.setAnimalName("Vuk");
+					validAnimalDto.setBreed("Licki");
+					validAnimalDto.setDescription("Sivi, brzi vuk");
+					validAnimalDto.setCurrentPosition(Arrays.asList(1.0, 2.0));
+					
+					assertDoesNotThrow(() -> searcherJpa.checkAnimalDto(validAnimalDto));
+				}
+			\end{lstlisting}
+			
+			\textbf{testCheckAnimalDtoNull:}
+			\begin{itemize}
+				\item U funkciju se šalje objekt \textit{AnimalDto} postavljen na \textit{null}.
+				\item Očekuje se da će doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testCheckAnimalDtoNull() {
+					AnimalDto nullAnimalDto = null;
+					
+					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+					() -> searcherJpa.checkAnimalDto(nullAnimalDto));
+					
+					assertEquals("AnimalDto is null", exception.getMessage());
+				}
+			\end{lstlisting}
+			
+			\textbf{testCheckAnimalDtoMissingName:}
+			\begin{itemize}
+				\item U funkciju se šalje objekt \textit{AnimalDto} s neispravnim podacima (nedostaje varijabla \textit{AnimalName}).
+				\item Očekuje se da će doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testCheckAnimalDtoMissingName() {
+					AnimalDto missingNameDto = new AnimalDto();
+					missingNameDto.setBreed("Licki");
+					missingNameDto.setDescription("Sivi, brzi vuk");
+					missingNameDto.setCurrentPosition(Arrays.asList(1.0, 2.0));
+					
+					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+					() -> searcherJpa.checkAnimalDto(missingNameDto));
+					
+					assertEquals("AnimalName is missing", exception.getMessage());
+				}
+			\end{lstlisting}
+			
+			\textbf{testCheckAnimalDtoMissingBreed:}
+			\begin{itemize}
+				\item U funkciju se šalje objekt \textit{AnimalDto} s neispravnim podacima (nedostaje varijabla \textit{Breed}).
+				\item Očekuje se da će doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testCheckAnimalDtoMissingBreed() {
+					AnimalDto missingBreedDto = new AnimalDto();
+					missingBreedDto.setAnimalName("Vuk");
+					missingBreedDto.setDescription("Sivi, brzi vuk");
+					missingBreedDto.setCurrentPosition(Arrays.asList(1.0, 2.0));
+					
+					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+					() -> searcherJpa.checkAnimalDto(missingBreedDto));
+					
+					assertEquals("Breed is missing", exception.getMessage());
+				}
+			\end{lstlisting}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=1]{slike/checkAnimalDtoTest.png} 
+				\centering
+				\caption{Rezultati ispitivanja}
+				\label{fig:checkAnimalDtoTest}
+			\end{figure}
+			
+			\subsection{Ispitivanje funkcije checkAvailableSearcherDto:}
+			Provjerava se funkcionalnost funkcije \textit{checkAvailableSearcherDto} u \textit{StationManagerJpa servisu} koja služi za provjeru ispravnosti podataka unutar \textit{AvailableSearcherDto} objekta.
+			
+			\textbf{testCheckAvailableSearcherDtoValid:}
+			\begin{itemize}
+				\item U funkciju se šalje objekt \textit{AvailableSearcherDto} s ispravnim podacima.
+				\item Očekuje se da neće doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testCheckAvailableSearcherDtoValid() {
+					AvailableSearcherDto validSearcherDto = new AvailableSearcherDto();
+					validSearcherDto.setFirstName("John");
+					validSearcherDto.setLastName("Doe");
+					validSearcherDto.setQualification("Biologist");
+					validSearcherDto.setCurrentPosition(Arrays.asList(1.0, 2.0));
+					
+					assertDoesNotThrow(() -> stationManagerJpa.checkAvailableSearcherDto(validSearcherDto));
+				}
+			\end{lstlisting}
+			
+			\textbf{testCheckAvailableSearcherDtoNull:}
+			\begin{itemize}
+				\item U funkciju se šalje objekt \textit{AvailableSearcherDto} postavljen na \textit{null}.
+				\item Očekuje se da će doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testCheckAvailableSearcherDtoNull() {
+					AvailableSearcherDto nullSearcherDto = null;
+					
+					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+					() -> stationManagerJpa.checkAvailableSearcherDto(nullSearcherDto));
+					
+					assertEquals("AvailableSearcherDto is null", exception.getMessage());
+				}
+			\end{lstlisting}
+			
+			\textbf{testCheckAvailableSearcherDtoMissingFirstName:}
+			\begin{itemize}
+				\item U funkciju se šalje objekt \textit{AvailableSearcherDto} s neispravnim podacima (nedostaje varijabla \textit{FirstName}).
+				\item Očekuje se da će doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testCheckAvailableSearcherDtoMissingFirstName() {
+					AvailableSearcherDto missingFirstNameDto = new AvailableSearcherDto();
+					missingFirstNameDto.setLastName("Doe");
+					missingFirstNameDto.setQualification("Biologist");
+					missingFirstNameDto.setCurrentPosition(Arrays.asList(1.0, 2.0));
+					
+					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+					() -> stationManagerJpa.checkAvailableSearcherDto(missingFirstNameDto));
+					
+					assertEquals("First name is missing", exception.getMessage());
+				}
+			\end{lstlisting}
+			
+			\textbf{testCheckAvailableSearcherDtoMissingCurrentPosition:}
+			\begin{itemize}
+				\item U funkciju se šalje objekt \textit{AvailableSearcherDto} s neispravnim podacima (nedostaje varijabla \textit{CurrentPosition}).
+				\item Očekuje se da će doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testCheckAvailableSearcherDtoMissingCurrentPosition() {
+					AvailableSearcherDto missingPositionDto = new AvailableSearcherDto();
+					missingPositionDto.setFirstName("John");
+					missingPositionDto.setLastName("Doe");
+					missingPositionDto.setQualification("Biologist");
+					
+					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+					() -> stationManagerJpa.checkAvailableSearcherDto(missingPositionDto));
+					
+					assertEquals("Current position is missing", exception.getMessage());
+				}
+			\end{lstlisting}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=1]{slike/checkAvailableSearchersDtoTest.png} 
+				\centering
+				\caption{Rezultati ispitivanja}
+				\label{fig:checkAvailableSearchersDtoTest}
+			\end{figure}
+			
+			\subsection{Ispitivanje funkcije checkRequestDto:}
+			Provjerava se funkcionalnost funkcije \textit{checkRequestDto} u \textit{ResearcherServiceJpa servisu} koja služi za provjeru ispravnosti podataka unutar \textit{RequestDto} objekta.
+			
+			\textbf{testCheckRequestDtoValid:}
+			\begin{itemize}
+				\item U funkciju se šalje objekt \textit{RequestDto} s ispravnim podacima.
+				\item Očekuje se da neće doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testCheckRequestDtoValid() {
+					RequestDto validRequestDto = new RequestDto();
+					validRequestDto.setStationName("StationA");
+					List<String> qualifications = Arrays.asList("QualificationA", "QualificationB");
+					validRequestDto.setQualifications(qualifications);
+					
+					assertDoesNotThrow(() -> service.checkRequestDto(validRequestDto));
+				}
+			\end{lstlisting}
+			
+			\textbf{testCheckRequestDtoNull:}
+			\begin{itemize}
+				\item U funkciju se šalje objekt \textit{RequestDto} postavljen na \textit{null}.
+				\item Očekuje se da će doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testCheckRequestDtoNull() {
+					RequestDto nullRequestDto = null;
+					
+					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+					() -> service.checkRequestDto(nullRequestDto));
+					
+					assertEquals("RequestDto is null", exception.getMessage());
+				}
+			\end{lstlisting}
+			
+			\textbf{testCheckRequestDtoMissingStationName:}
+			\begin{itemize}
+				\item U funkciju se šalje objekt \textit{RequestDto} s neispravnim podacima (nedostaje varijabla \textit{StationName}).
+				\item Očekuje se da će doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testCheckRequestDtoMissingStationName() {
+					RequestDto missingStationNameDto = new RequestDto();
+					List<String> qualifications = Arrays.asList("QualificationA", "QualificationB");
+					missingStationNameDto.setQualifications(qualifications);
+					
+					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+					() -> service.checkRequestDto(missingStationNameDto));
+					
+					assertEquals("StationName is missing", exception.getMessage());
+				}
+			\end{lstlisting}
+			
+			\textbf{testCheckRequestDtoMissingQualifications:}
+			\begin{itemize}
+				\item U funkciju se šalje objekt \textit{RequestDto} s neispravnim podacima (nedostaje varijabla \textit{Qualifications}).
+				\item Očekuje se da će doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testCheckRequestDtoMissingQualifications() {
+					RequestDto missingQualificationsDto = new RequestDto();
+					missingQualificationsDto.setStationName("StationA");
+					
+					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+					() -> service.checkRequestDto(missingQualificationsDto));
+					
+					assertEquals("Qualifications is missing", exception.getMessage());
+				}
+			\end{lstlisting}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=1]{slike/checkRequestDtoTest.png} 
+				\centering
+				\caption{Rezultati ispitivanja}
+				\label{fig:checkRequestDtoTest}
+			\end{figure}
 			
 			\subsection{Ispitivanje funkcije checkTaskDto:}
 			Provjerava se funkcionalnost metode \textit{checkTaskDto} u \textit{taskServiceJpa servisu} koja služi za provjeru ispravnosti podataka unutar \textit{TaskDto} objekta.
@@ -194,6 +394,196 @@
 				\centering
 				\caption{Rezultati ispitivanja}
 				\label{fig:promjene}
+			\end{figure}
+			
+			\subsection{Ispitivanje funkcije emailRegexCheck:}
+			Provjerava se funkcionalnost metode \textit{emailRegexCheck} u \textit{AuthenticationServiceJpa servisu} koja služi za provjeru ispravnog formata maila.
+			
+			\textbf{emailRegexCheckValidEmailReturnsTrue:}
+			\begin{itemize}
+				\item U funkciju se šalje mail ispravnog formata.
+				\item Očekuje se da funkcija vraća true.
+			\end{itemize}
+			\begin{lstlisting}
+			@Test
+			void emailRegexCheck_ValidEmail_ReturnsTrue() {
+				String validEmail = "test@example.com";
+				boolean result = authenticationServiceJpa.emailRegexCheck(validEmail);
+				assertTrue(result);
+			}
+			\end{lstlisting}
+			
+			\textbf{testEmailRegexCheckInvalidEmail:}
+			\begin{itemize}
+				\item U funkciju se šalje mail neispravnog formata.
+				\item Očekuje se da funkcija vraća false.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testEmailRegexCheckInvalidEmail() {
+					String invalidEmail = "invalidemail";
+					boolean isValid = authenticationServiceJpa.emailRegexCheck(invalidEmail);
+					assertFalse(isValid);
+				}
+			\end{lstlisting}
+			
+			\textbf{testEmailRegexCheckInvalidEmailEdgeCase:}
+			\begin{itemize}
+				\item U funkciju se šalje mail neispravnog formata.
+				\item Očekuje se da funkcija vraća false.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testEmailRegexCheckInvalidEmail_EdgeCase() {
+					String invalidEmail = "@.";
+					boolean isValid = authenticationServiceJpa.emailRegexCheck(invalidEmail);
+					assertFalse(isValid);
+				}
+			\end{lstlisting}
+			\begin{figure}[H]
+				\includegraphics[scale=1]{slike/emailRegexTest.png} 
+				\centering
+				\caption{Rezultati ispitivanja}
+				\label{fig:promjene}
+			\end{figure}
+			
+			\subsection{Ispitivanje funkcije validateCoordinates:}
+			Provjerava se funkcionalnost funkcije \textit{validateCoordinates} u \textit{CommentServiceJpa servisu} koja služi za provjeru ispravnosti koordinata koje prima ta klasa preko objekta \textit{MapCommentDto}.
+			
+			\textbf{testValidateCoordinatesValid:}
+			\begin{itemize}
+				\item U funkciju se šalje objekt \textit{MapCommentDto} s ispravnim podacima koordinata.
+				\item Očekuje se da neće doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testValidateCoordinatesValid() {
+					MapCommentDto validMapCommentDto = new MapCommentDto();
+					List<Double> validCoordinates = Arrays.asList(1.0, 2.0, 3.0);
+					validMapCommentDto.setCoordinates(validCoordinates);
+					
+					assertDoesNotThrow(() -> CommentServiceJpa.validateCoordinates(validMapCommentDto));
+				}
+			\end{lstlisting}
+			
+			\textbf{testValidateCoordinatesNullDto:}
+			\begin{itemize}
+				\item U funkciju se šalje objekt \textit{MapCommentDto} postavljen na \textit{null}.
+				\item Očekuje se da će doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testValidateCoordinatesNullDto() {
+					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+					() -> CommentServiceJpa.validateCoordinates(null));
+					
+					assertEquals("Coordinates cannot be null", exception.getMessage());
+				}
+			\end{lstlisting}
+			
+			\textbf{testValidateCoordinatesNullCoordinate:}
+			\begin{itemize}
+				\item U funkciju se šalje objekt \textit{MapCommentDto} s jednom koordinatom postavljenom na \textit{null}.
+				\item Očekuje se da će doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testValidateCoordinatesNullCoordinate() {
+					MapCommentDto nullCoordinateDto = new MapCommentDto();
+					List<Double> coordinatesWithNull = Arrays.asList(1.0, null, 3.0);
+					nullCoordinateDto.setCoordinates(coordinatesWithNull);
+					
+					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+					() -> CommentServiceJpa.validateCoordinates(nullCoordinateDto));
+					
+					assertEquals("Coordinate value cannot be null", exception.getMessage());
+				}
+			\end{lstlisting}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=1]{slike/validateCoordinatesTest.png} 
+				\centering
+				\caption{Rezultati ispitivanja}
+				\label{fig:validateCoordinatesTest}
+			\end{figure}
+			
+			\subsection{Ispitivanje funkcije putRemoveFromAction:}
+			Provjerava se funkcionalnost funkcije \textit{putRemoveFromAction} u \textit{SearcherInTheFieldJpa servisu} koja služi za micanje tragača s akcije.
+			
+			\textbf{testPutRemoveFromAction:}
+			\begin{itemize}
+				\item U funkciju se šalje \textit{appUserId} i vraća se mock objekt \textit{SearcherInTheField}.
+				\item Očekuje se da neće doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testPutRemoveFromAction() {
+					Long appUserId = 123L;
+					
+					SearcherInTheField searcherMock = mock(SearcherInTheField.class);
+					
+					when(searcherInTheFieldJpa.findByAppUserId(appUserId)).thenReturn(searcherMock);
+					
+					searcherInTheFieldJpa.putRemoveFromAction(appUserId);
+					
+					verify(searcherMock).setAction(null);
+					verify(searcherMock).setCurrentPosition(null);
+					
+					verify(pastDataServiceJpa).searcherPositionSave(searcherMock);
+					
+					verify(searcherInTheFieldRepository).save(searcherMock);
+				}
+			\end{lstlisting}
+			
+			\textbf{testPutRemoveFromAction\_AppUserNotFound:}
+			\begin{itemize}
+				\item U funkciju se šalje \textit{appUserId} i vraća se objekt \textit{SearcherInTheField} postavljen na \textit{null}.
+				\item Očekuje se da će doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testPutRemoveFromAction_AppUserNotFound() {
+					Long appUserId = 123L;
+					
+					when(searcherInTheFieldJpa.findByAppUserId(appUserId)).thenReturn(null);
+					
+					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+					() -> searcherInTheFieldJpa.putRemoveFromAction(appUserId));
+					
+					assertEquals("SearcherInTheField is null", exception.getMessage());
+					
+					verifyNoMoreInteractions(searcherInTheFieldRepository, pastDataServiceJpa);
+				}
+			\end{lstlisting}
+			
+			\textbf{testPutRemoveFromAction\_SaveFailure:}
+			\begin{itemize}
+				\item U funkciju se šalje \textit{appUserId} i vraća se objekt \textit{SearcherInTheField} postavljen na \textit{null}. Provjerava se ponašanje funkcije kada spremanje u repozitorij nije uspješno tj. vraća \textit{null}.
+				\item Očekuje se da neće doći do bacanja iznimke.
+			\end{itemize}
+			\begin{lstlisting}
+				@Test
+				public void testPutRemoveFromAction_SaveFailure() {
+					Long appUserId = 123L;
+					
+					SearcherInTheField searcherMock = mock(SearcherInTheField.class);
+					
+					when(searcherInTheFieldJpa.findByAppUserId(appUserId)).thenReturn(searcherMock);
+					when(searcherInTheFieldRepository.save(searcherMock)).thenReturn(null);
+					
+					searcherInTheFieldJpa.putRemoveFromAction(appUserId);
+					
+					verify(pastDataServiceJpa).searcherPositionSave(searcherMock);
+					
+					verify(searcherInTheFieldRepository).save(searcherMock);
+				}
+			\end{lstlisting}
+			
+			\begin{figure}[H]
+				\includegraphics[scale=1]{slike/putRemoveFromActionTest.png} 
+				\centering
+				\caption{Rezultati ispitivanja}
+				\label{fig:putRemoveFromActionTest}
 			\end{figure}
 			
 			
