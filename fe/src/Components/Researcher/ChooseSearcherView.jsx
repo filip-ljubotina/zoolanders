@@ -39,7 +39,7 @@ const ChooseSearcherView = ({ cardData, onSubmit }) => {
       );
       setPastRoutesData(
         responsePastRoutes.data.filter((route, i, self) => {
-          for (let j = 0; j < i; i++) {
+          for (let j = 0; j < i; j++) {
             if (self[j].searcherId === route.searcherId) {
               return false;
             }
