@@ -55,7 +55,8 @@ const AddSearchers = ({ onLogout }) => {
     {
       field: "add",
       headerName: "Dodaj tragača",
-      width: 100,
+      minWidth: 100,
+      flex: 1,
       renderCell: (params) => {
         return (
           <div className="cellAction">
@@ -99,16 +100,18 @@ const AddSearchers = ({ onLogout }) => {
 };
 
 const columns = [
-  { field: "id", headerName: "ID", width: 100 },
+  { field: "id", headerName: "ID", minWidth: 50, flex: 0.5 },
   {
     field: "firstName",
     headerName: "Ime",
-    width: 150,
+    minWidth: 150,
+    flex: 1,
   },
   {
     field: "lastName",
     headerName: "Prezime",
-    width: 150,
+    minWidth: 150,
+    flex: 1,
   },
 ];
 

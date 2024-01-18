@@ -80,11 +80,9 @@ public class LogInSystemTest {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("https://wildtrack-fe.onrender.com/login");
 
-        // Leave the email field empty
         WebElement emailElement = driver.findElement(By.name("email"));
         emailElement.sendKeys("");
 
-        // Set the password to some value
         WebElement passwordElement = driver.findElement(By.name("password"));
         passwordElement.sendKeys("somePassword");
 
@@ -93,7 +91,6 @@ public class LogInSystemTest {
         String redirURL = driver.getCurrentUrl();
         boolean compRes = redirURL.contains("dashboard");
 
-        // Assert that the redirection URL does not contain "dashboard"
         assertEquals(compRes, false);
 
         driver.quit();

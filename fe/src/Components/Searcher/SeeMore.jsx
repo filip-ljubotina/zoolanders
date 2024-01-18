@@ -36,6 +36,8 @@ const Routing = ({ waypointsRef, profile }) => {
   const map = useMap();
 
   useEffect(() => {
+    console.log("TU SAM");
+    console.log(waypointsRef.current);
     routingControlRef.current = L.Routing.control({
       waypoints: waypointsRef.current,
       show: false,
@@ -60,9 +62,8 @@ const Routing = ({ waypointsRef, profile }) => {
 
 function SeeMore({ searcher, task, onSubmit }) {
   SeeMore.propTypes = {
-    cardData: PropTypes.object.isRequired,
     searcher: PropTypes.object,
-    task: PropTypes.object,
+    task: PropTypes.object.isRequired,
     onSubmit: PropTypes.func,
   };
   const [open, setOpen] = React.useState(false);
@@ -108,6 +109,8 @@ function SeeMore({ searcher, task, onSubmit }) {
   };
 
   const handleClickOpen = () => {
+    console.log(searcher.currentPosition);
+    console.log(task.routeWaypoints);
     setOpen(true);
   };
 

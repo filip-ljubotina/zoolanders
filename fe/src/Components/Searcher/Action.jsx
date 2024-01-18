@@ -10,12 +10,14 @@ import clipboard_icon from "../Assets/clipboard.png";
 import compass_icon from "../Assets/compass.png";
 import pawprint_icon from "../Assets/pawprint.png";
 import searcher_icon_png from "../Assets/searcher.png";
+import comment_icon_png from "../Assets/comment.png";
 import Sidebar from "../General/Sidebar";
 import Topbar from "../General/Topbar";
 import "./Actions.css";
 import AddAnimalComment from "./AddAnimalComment";
 import SeeMore from "./SeeMore";
 import ViewAnimalComments from "./ViewAnimalComments";
+import AddMapComment from "../Searcher/AddMapComment";
 
 const Action = ({ onLogout }) => {
   Action.propTypes = {
@@ -28,7 +30,7 @@ const Action = ({ onLogout }) => {
   const [allSearchers, setAllSearchers] = useState([]);
   const [allAnimals, setAllAnimals] = useState([]);
   const [allTasks, setAllTasks] = useState([]);
-  // const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([]);
 
   const checkAction = async () => {
     try {
@@ -70,16 +72,15 @@ const Action = ({ onLogout }) => {
       const allTasksResponse = await ApiService.get(
         `wildTrack/searcherInTheField/getAllActiveTasks`
       );
-      // const commentsResponse = await ApiService.get(
-      //   `/wildTrack/action/getAllMapComments/${actionResponse.data.actionId}`
-      // );
-      console.log(actionResponse.data);
+      const commentsResponse = await ApiService.get(
+        `/wildTrack/action/getAllMapComments/${actionResponse.data.actionId}`
+      );
       setActionInfo(actionResponse.data);
       setSearcher(searcherResponse.data);
       setAllSearchers(allSearchersResponse.data);
       setAllAnimals(allAnimalsResponse.data);
       setAllTasks(allTasksResponse.data);
-      // setComments(commentsResponse.data);
+      setComments(commentsResponse.data);
     } catch (error) {
       console.error("Error loading action:", error);
     }
@@ -95,9 +96,9 @@ const Action = ({ onLogout }) => {
   //   }
   // }, [checkActionFlag]);
 
-  // const handleAddMapComment = () => {
-  //   fetchData();
-  // };
+  const handleAddMapComment = () => {
+    fetchData();
+  };
 
   const handleDone = () => {
     removeFromAction();
@@ -132,12 +133,12 @@ const Action = ({ onLogout }) => {
     popupAnchor: [0, -32],
   });
 
-  // const commentIcon = new L.Icon({
-  //   iconUrl: comment_icon_png,
-  //   iconSize: [32, 32],
-  //   iconAnchor: [16, 32],
-  //   popupAnchor: [0, -32],
-  // });
+  const commentIcon = new L.Icon({
+    iconUrl: comment_icon_png,
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32],
+  });
 
   useEffect(() => {
     console.log("actionInfo changed:", actionInfo);
@@ -202,11 +203,23 @@ const Action = ({ onLogout }) => {
                       {`Ime: ${animal.animalName} Vrsta: ${animal.breed}`}
                       <br />
                       {`Opis: ${animal.description}`}
-                      <AddAnimalComment cardData={actionInfo} animal={animal} />
-                      <ViewAnimalComments
-                        cardData={actionInfo}
-                        animal={animal}
-                      />
+                      <br />
+                      <div
+                        className="animal-buttons"
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-evenly",
+                        }}
+                      >
+                        <AddAnimalComment
+                          cardData={actionInfo}
+                          animal={animal}
+                        />
+                        <ViewAnimalComments
+                          cardData={actionInfo}
+                          animal={animal}
+                        />
+                      </div>
                     </Popup>
                   </Marker>
                 ))}
@@ -236,7 +249,7 @@ const Action = ({ onLogout }) => {
                   </Marker>
                 ))}
 
-              {/* {comments.map((comment) => (
+              {comments.map((comment) => (
                 <Marker
                   key={comment.mapCommentId}
                   position={comment.coordinates}
@@ -248,12 +261,12 @@ const Action = ({ onLogout }) => {
                     {`Kreirao korisnik: ${comment.userName}`}
                   </Popup>
                 </Marker>
-              ))} */}
+              ))}
 
-              {/* <AddMapComment
+              <AddMapComment
                 cardData={actionInfo}
                 onAddComment={handleAddMapComment}
-              /> */}
+              />
             </MarkerClusterGroup>
             ;
           </MapContainer>

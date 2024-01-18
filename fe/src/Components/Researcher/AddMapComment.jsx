@@ -57,7 +57,7 @@ const AddMapComment = ({ cardData, onAddComment }) => {
 
   const handleSubmit = () => {
     if (!newComment.comment.trim()) {
-      setError("Potrebno je unijeti sadržaj komentara");
+      setError("Potrebno je unijeti sadržaj komentara.");
       return null;
     }
     postData();

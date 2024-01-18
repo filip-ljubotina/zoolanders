@@ -43,16 +43,18 @@ const ViewAnimalComments = ({ cardData, animal }) => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
+    { field: "id", headerName: "ID", minWidth: 50, flex: 0.5 },
     {
       field: "userName",
-      headerName: "UserName",
-      width: 150,
+      headerName: "Korisnik",
+      minWidth: 200,
+      flex: 1,
     },
     {
       field: "comment",
       headerName: "Komentar",
-      width: 150,
+      minWidth: 200,
+      flex: 1,
     },
   ];
 

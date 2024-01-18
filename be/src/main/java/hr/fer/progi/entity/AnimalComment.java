@@ -23,5 +23,4 @@ public class AnimalComment {
     private Action action;
 
     private String userName;
-
 }

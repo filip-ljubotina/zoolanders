@@ -37,7 +37,16 @@ const ChooseSearcherView = ({ cardData, onSubmit }) => {
       const responsePastRoutes = await ApiService.get(
         `wildTrack/researcher/getPastAllSearchersRoutes/${cardData.actionId}`
       );
-      setPastRoutesData(responsePastRoutes.data);
+      setPastRoutesData(
+        responsePastRoutes.data.filter((route, i, self) => {
+          for (let j = 0; j < i; i++) {
+            if (self[j].searcherId === route.searcherId) {
+              return false;
+            }
+          }
+          return true;
+        })
+      );
       setCheckedSearchers(
         responsePastRoutes.data.map((pastRoute) => {
           return pastRoute.searcherId;

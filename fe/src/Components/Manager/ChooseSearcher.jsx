@@ -68,21 +68,24 @@ const ChooseSearcher = ({ card, onSave }) => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
+    { field: "id", headerName: "ID", width: 100, flex: 0.5 },
     {
       field: "firstName",
       headerName: "Ime",
-      width: 150,
+      minWidth: 150,
+      flex: 1,
     },
     {
       field: "lastName",
       headerName: "Prezime",
-      width: 150,
+      minWidth: 150,
+      flex: 1,
     },
     {
       field: "qualification",
       headerName: "Osposobljenje",
-      width: 150,
+      minWidth: 150,
+      flex: 1,
       renderCell: ({ row: { qualification } }) => {
         return (
           <Box
@@ -108,7 +111,8 @@ const ChooseSearcher = ({ card, onSave }) => {
     {
       field: "choose",
       headerName: "Dodaj akciji",
-      width: 150,
+      minWidth: 150,
+      flex: 1,
       renderCell: (params) => {
         return (
           <div className="cellAction">

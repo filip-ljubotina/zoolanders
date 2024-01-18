@@ -14,11 +14,11 @@ import java.util.List;
 @Repository
 public interface PastLocationsRepository extends JpaRepository<PastLocations, Long> {
 
-    @Query("SELECT new hr.fer.progi.dto.researcherDto.PastSearcherLocationDto(p.pastRoutesId, p.searcherInTheField.searcherInTheFieldId, p.searcherInTheField.appUser.userName, p.searcherInTheField.qualification,p.positionCoordinates)" +
+    @Query("SELECT new hr.fer.progi.dto.researcherDto.PastSearcherLocationDto(p.pastLocationId, p.searcherInTheField.searcherInTheFieldId, p.searcherInTheField.appUser.userName, p.searcherInTheField.qualification,p.positionCoordinates)" +
             " FROM PastLocations p WHERE p.action = :action AND p.searcherInTheField IS NOT NULL")
     List<PastSearcherLocationDto> findPastSearchersLocationsByAction(@Param("action") Action action);
 
-    @Query("SELECT new hr.fer.progi.dto.researcherDto.PastAnimalLocationsDto(p.pastRoutesId, p.animal.animalId, p.animal.name, p.animal.breed, p.positionCoordinates)" +
+    @Query("SELECT new hr.fer.progi.dto.researcherDto.PastAnimalLocationsDto(p.pastLocationId, p.animal.animalId, p.animal.name, p.animal.breed, p.positionCoordinates)" +
             " FROM PastLocations p WHERE p.animal IS NOT NULL AND p.animal.station.stationName = :locationName")
     List<PastAnimalLocationsDto> findPastAnimalsLocationsByAction(@Param("locationName") String locationName);
 }

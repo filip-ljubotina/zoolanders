@@ -87,6 +87,7 @@ function AddTask({ cardData, searcher }) {
     searcher: PropTypes.object,
   };
   const [open, setOpen] = React.useState(false);
+  const [error, setError] = React.useState("");
   const [taskToDo, setTaskToDo] = React.useState("camera");
   const [taskComment, setTaskComment] = React.useState("");
   const [isRoutingActive, setIsRoutingActive] = React.useState(false);
@@ -118,6 +119,7 @@ function AddTask({ cardData, searcher }) {
   };
 
   const handleClose = () => {
+    setError("");
     setOpen(false);
   };
 
@@ -155,6 +157,10 @@ function AddTask({ cardData, searcher }) {
   }
 
   const handleSubmit = () => {
+    if (!newTask.taskComment.trim()) {
+      setError("Potrebno je unijeti komentar za zadatak.");
+      return null;
+    }
     const latLngArray = extractLatLng(waypointsRef.current);
     console.log(latLngArray);
     setNewTask({
@@ -163,6 +169,7 @@ function AddTask({ cardData, searcher }) {
     });
     postData();
     waypointsRef.current = [];
+    setError("");
     setTaskToDo("camera");
     setOpen(false);
   };
@@ -288,6 +295,14 @@ function AddTask({ cardData, searcher }) {
             onChange={handleChange}
             required
           />
+          {error && (
+            <DialogContentText
+              style={{ color: "var(--error-color)", textAlign: "center" }}
+              className="error"
+            >
+              {error}
+            </DialogContentText>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Odbaci</Button>

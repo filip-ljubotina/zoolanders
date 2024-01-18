@@ -49,8 +49,8 @@ const AddAnimalComment = ({ cardData, animal }) => {
   };
 
   const handleSubmit = () => {
-    if (!newComment.trim()) {
-      setError("Potrebno je unijeti naziv akcije.");
+    if (!newComment.comment.trim()) {
+      setError("Potrebno je unijeti sadržaj komentara.");
       return null;
     }
     postData();

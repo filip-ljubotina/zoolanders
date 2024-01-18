@@ -41,7 +41,6 @@ const AddMapComment = ({ cardData, onAddComment }) => {
   };
 
   const handleLocation = (e) => {
-    console.log(e.latlng);
     setNewComment({
       ...newComment,
       ["coordinates"]: [e.latlng.lat, e.latlng.lng],
@@ -57,7 +56,7 @@ const AddMapComment = ({ cardData, onAddComment }) => {
 
   const handleSubmit = () => {
     if (!newComment.comment.trim()) {
-      setError("Potrebno je unijeti sadržaj komentara");
+      setError("Potrebno je unijeti sadržaj komentara.");
       return null;
     }
     postData();

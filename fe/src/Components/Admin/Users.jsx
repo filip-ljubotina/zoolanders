@@ -40,7 +40,8 @@ const Users = ({ onLogout }) => {
     {
       field: "edit",
       headerName: "Uredi",
-      width: 100,
+      minWidth: 100,
+      flex: 1,
       renderCell: (params) => {
         return (
           <div className="cellAction">
@@ -80,32 +81,37 @@ const Users = ({ onLogout }) => {
 };
 
 const columns = [
-  { field: "id", headerName: "ID", width: 100 },
+  { field: "id", headerName: "ID", minWidth: 50, flex: 0.5 },
   {
     field: "userName",
     headerName: "Korisničko ime",
-    width: 150,
+    minWidth: 150,
     cellClassName: "username-column--cell",
+    flex: 1,
   },
   {
     field: "firstName",
     headerName: "Ime",
-    width: 150,
+    minWidth: 150,
+    flex: 1,
   },
   {
     field: "lastName",
     headerName: "Prezime",
-    width: 150,
+    minWidth: 150,
+    flex: 1,
   },
   {
     field: "email",
     headerName: "Email",
-    width: 250,
+    minWidth: 250,
+    flex: 1,
   },
   {
     field: "role",
     headerName: "Uloga",
-    width: 150,
+    minWidth: 150,
+    flex: 1,
     renderCell: ({ row: { role } }) => {
       return (
         <Box
