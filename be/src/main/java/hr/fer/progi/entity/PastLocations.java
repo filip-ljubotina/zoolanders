@@ -2,7 +2,6 @@ package hr.fer.progi.entity;
 
 import com.vladmihalcea.hibernate.type.json.JsonType;
 import hr.fer.progi.jsonentities.PositionCoordinates;
-import hr.fer.progi.jsonentities.RouteWaypoints;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +20,7 @@ import javax.persistence.*;
 public class PastLocations {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long pastRoutesId;
+    private Long pastLocationId;
 
     @Type(type = "json")
     @Column(columnDefinition = "json")
@@ -35,5 +34,8 @@ public class PastLocations {
     private Action action;
 
     @ManyToOne
+    @JoinColumn(
+            name = "searcherId"
+    )
     private SearcherInTheField searcherInTheField;
 }

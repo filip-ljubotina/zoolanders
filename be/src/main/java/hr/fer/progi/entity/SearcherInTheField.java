@@ -40,5 +40,6 @@ public class SearcherInTheField {
     private Station station;
 
     @ManyToOne
+    @JoinColumn(name = "action_id")
     private Action action;
 }

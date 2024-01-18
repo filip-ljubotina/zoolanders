@@ -30,6 +30,9 @@ public class Task {
     private RouteWaypoints routeWaypoints;
 
     @ManyToOne
+    @JoinColumn(
+            name = "searcherId"
+    )
     private SearcherInTheField searcherInTheField;
 
     @ManyToOne

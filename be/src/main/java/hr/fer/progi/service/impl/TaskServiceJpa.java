@@ -36,7 +36,7 @@ public class TaskServiceJpa {
     }
 
     public void checkTaskDto(TaskDto taskDto){
-        if (taskDto.getSearcherId() == null || taskDto.getRouteWaypoints() == null || taskDto.getTaskToDo() == null || taskDto.getTaskComment() == null) {
+        if (taskDto.getSearcherId() == null || taskDto.getTaskToDo() == null || taskDto.getTaskComment() == null) {
             throw new IllegalArgumentException("All attributes in TaskDto must not be null");
         }
         if (taskDto.getTaskToDo().trim().isEmpty()) {

@@ -30,5 +30,8 @@ public class PastRoutes {
     private Action action;
 
     @ManyToOne
+    @JoinColumn(
+            name = "searcherId"
+    )
     private SearcherInTheField searcherInTheField;
 }
