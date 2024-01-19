@@ -1,5 +1,6 @@
 package hr.fer.progi.entity;
 
+import hr.fer.progi.entity.enums.AppUserRole;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -57,6 +58,10 @@ public class AppUser implements UserDetails {
         this.password = password;
         this.appUserRole = appUserRole;
         this.image = image;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     @Override

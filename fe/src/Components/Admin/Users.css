@@ -1,33 +1,27 @@
-.users{
-    width: 100vw;
-    display: flex;
-    background-color: #677030;
-    color: black;
+.users {
+  width: 100vw;
+  min-height: 100vh;
+  height: 100%;
+  display: flex;
+  background-color: #5f7567;
+  color: black;
 }
 
-.usersContainer{
-    flex: 6;
+.usersContainer {
+  width: calc(100% - var(--content-width));
 }
 
-.cellAction{
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
+.cellAction {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
 }
 
-.viewButton{
-    padding: 2px 5px;
-    border-radius: 5px;
-    color: darkblue;
-    border: 1px dotted rgba(0,0,139,0.596);
-    cursor: pointer;
-}
-
-.deleteButton{
-    padding: 2px 5px;
-    border-radius: 5px;
-    color: black;
-    border: 1px dotted rgba(220,20,60,0.6);
-    cursor: pointer;
+.viewButton {
+  padding: 2px 5px;
+  border-radius: 5px;
+  color: darkblue;
+  border: 1px dotted rgba(0, 0, 139, 0.596);
+  cursor: pointer;
 }

@@ -22,11 +22,6 @@ public class AdminController {
         this.appUserServiceJpa = appUserServiceJpa;
     }
 
-    @GetMapping
-    public String test() {
-        return "radi";
-    }
-
     @GetMapping("/admin/getUserTable")
     public ResponseEntity<List<AdminTableResponseDto>> adminGetAllUsers() {
         List<AdminTableResponseDto> listOfAllUser = appUserServiceJpa.getAllTableUsers();
@@ -46,7 +41,7 @@ public class AdminController {
     }
 
     @PutMapping("/admin/putApprovalTable")
-    public HttpStatus asdFunction(@RequestBody AdminTablePutRequestDto adminTablePutRequestDto) {
+    public HttpStatus updateApproval(@RequestBody AdminTablePutRequestDto adminTablePutRequestDto) {
         appUserServiceJpa.updateApproval(adminTablePutRequestDto);
         return HttpStatus.OK;
     }

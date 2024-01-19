@@ -3,7 +3,7 @@ package hr.fer.progi.service.impl;
 import hr.fer.progi.dto.adminDto.AdminTableResponseDto;
 import hr.fer.progi.dto.adminDto.AdminTablePutRequestDto;
 import hr.fer.progi.entity.AppUser;
-import hr.fer.progi.entity.AppUserRole;
+import hr.fer.progi.entity.enums.AppUserRole;
 import hr.fer.progi.repository.AppUserRepository;
 import hr.fer.progi.entity.ConfirmationToken;
 import hr.fer.progi.service.AppUserService;
@@ -112,5 +112,9 @@ public class AppUserServiceJpa implements UserDetailsService, AppUserService {
         AppUser appUser = appUserOptional.get();
         appUser.setLocked(false);
         appUserRepository.save(appUser);
+    }
+
+    public AppUser findById(Long appUserId) {
+        return appUserRepository.findById(appUserId).get();
     }
 }
