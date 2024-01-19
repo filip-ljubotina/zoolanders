@@ -69,7 +69,7 @@ const Register = () => {
         <h1 className="register-header"> Registracija </h1>
 
         <div className="register-inputs">
-          <div className="register-input-container1 name-photo">
+          <div className="register-input-container name-photo">
             <div className="register-input">
               <div className="register-input-container">
                 <div className="register-input">

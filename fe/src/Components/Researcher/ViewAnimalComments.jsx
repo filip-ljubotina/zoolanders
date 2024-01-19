@@ -25,9 +25,7 @@ const ViewAnimalComments = ({ cardData, animal }) => {
       const responseData = await ApiService.get(
         `/wildTrack/animal/getAllAnimalComments/${cardData.actionId}/${animal.animalId}`
       );
-      setData(
-        responseData.data.map((row) => ({ ...row, id: row.animalCommentId }))
-      );
+      setData(responseData.data);
     } catch (error) {
       console.error("Error fetching animal comments:", error);
     }
@@ -43,7 +41,7 @@ const ViewAnimalComments = ({ cardData, animal }) => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", minWidth: 50, flex: 0.5 },
+    { field: "animalCommentId", headerName: "ID", minWidth: 50, flex: 0.5 },
     {
       field: "userName",
       headerName: "Korisnik",
@@ -87,7 +85,13 @@ const ViewAnimalComments = ({ cardData, animal }) => {
                 "& .MuiDataGrid-cell": { borderBottom: "none" },
               }}
             >
-              <DataGrid rows={data} columns={columns} />
+              <DataGrid
+                rows={data}
+                columns={columns}
+                getRowId={(row) => {
+                  return row.animalCommentId;
+                }}
+              />
             </Box>
           </Box>
         </DialogContent>

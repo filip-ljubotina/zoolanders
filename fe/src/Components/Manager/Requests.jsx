@@ -43,8 +43,10 @@ const Requests = ({ onLogout }) => {
     <div className="users">
       <Sidebar
         categories={[
+          { title: "Moja postaja", link: "/searchers" },
           { title: "Dodavanje tragača", link: "/addUsers" },
           { title: "Zahtjevi istraživača", link: "/requests" },
+          { title: "Moji podaci", link: "/userInfo" },
         ]}
         user="manager"
       />

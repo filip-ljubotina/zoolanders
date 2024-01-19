@@ -36,8 +36,6 @@ const Routing = ({ waypointsRef, profile }) => {
   const map = useMap();
 
   useEffect(() => {
-    console.log("TU SAM");
-    console.log(waypointsRef.current);
     routingControlRef.current = L.Routing.control({
       waypoints: waypointsRef.current,
       show: false,
@@ -261,7 +259,7 @@ function SeeMore({ searcher, task, onSubmit }) {
               <DialogContentText>
                 Unesite podatke životinje s novim uređajem za prećenje.
               </DialogContentText>
-              <div className="register-input-container1 name-photo">
+              <div className="register-input-container name-photo">
                 <div className="register-input">
                   <TextField
                     autoFocus

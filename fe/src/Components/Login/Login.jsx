@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import Password from "remixicon-react/Lock2FillIcon";
 import Email from "remixicon-react/MailFillIcon";
 import ApiService from "../../services/ApiService";
-import ProfileImageService from "../../services/ProfileImageService";
 import RoleService from "../../services/RoleService";
 import StationService from "../../services/StationService";
 import TokenService from "../../services/TokenService";
+import UserInfoService from "../../services/UserInfoService";
 import background_photo from "../Assets/login-bg.png";
 import "./Login.css";
 
@@ -34,7 +34,11 @@ const Login = ({ onLoginSuccess }) => {
       TokenService.setToken(response.data.token);
       RoleService.setRole(response.data.role);
       StationService.setStation(response.data.stationName);
-      ProfileImageService.setProfileImage(response.data.image);
+      UserInfoService.setFirstName(response.data.firstName);
+      UserInfoService.setLastName(response.data.lastName);
+      UserInfoService.setUserName(response.data.userName);
+      UserInfoService.setEmail(response.data.email);
+      UserInfoService.setImage(response.data.image);
       onLoginSuccess();
     } catch (error) {
       setError(

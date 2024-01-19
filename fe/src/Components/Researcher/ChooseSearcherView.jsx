@@ -234,7 +234,7 @@ const ChooseSearcherView = ({ cardData, onSubmit }) => {
                       }
                     />
                   }
-                  label={pastRoute.searcherId}
+                  label={pastRoute.userName}
                 />
               ))}
             </FormGroup>

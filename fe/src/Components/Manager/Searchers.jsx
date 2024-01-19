@@ -5,63 +5,27 @@ import * as React from "react";
 import ApiService from "../../services/ApiService";
 import Sidebar from "../General/Sidebar";
 import Topbar from "../General/Topbar";
-import Add from "./Add";
-import "./AddSearchers.css";
 
-//dodaje tragače postaji
-const AddSearchers = ({ onLogout }) => {
-  AddSearchers.propTypes = {
-    onLogout: PropTypes.func,
+const Searchers = ({ onLogout }) => {
+  Searchers.propTypes = {
+    onLogout: PropTypes.func.isRequired,
   };
   const [data, setData] = React.useState([]);
-  const [coordinates, setCoordinates] = React.useState({});
 
   const fetchData = async () => {
     try {
-      const responseData = await ApiService.get(
-        "/wildTrack/manager/getAvailableSearchers"
+      const response = await ApiService.get(
+        "/wildTrack/manager/getAllSearchersInStation"
       );
-      const responseJson = await ApiService.get(
-        "/wildTrack/manager/getCoordinatesJson"
-      );
-      setData(responseData.data);
-      setCoordinates(responseJson.data);
+      setData(response.data);
     } catch (error) {
-      console.error("Error fetching available searchers:", error);
-    }
-  };
-
-  const handleSave = async () => {
-    try {
-      fetchData();
-    } catch (error) {
-      console.error("Error adding searcher to station:", error);
+      console.error("Error fetching searchers table:", error);
     }
   };
 
   React.useEffect(() => {
     fetchData();
   }, []);
-
-  const addColumn = [
-    {
-      field: "add",
-      headerName: "Dodaj tragača",
-      minWidth: 100,
-      flex: 1,
-      renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            <Add
-              data={params.row}
-              coordinates={coordinates}
-              onSave={handleSave}
-            />
-          </div>
-        );
-      },
-    },
-  ];
 
   return (
     <div className="users">
@@ -75,7 +39,7 @@ const AddSearchers = ({ onLogout }) => {
         user="manager"
       />
       <div className="usersContainer">
-        <Topbar title="Dodavanje tragača postaji" onLogout={onLogout} />
+        <Topbar title="Pregled članova postaje" onLogout={onLogout} />
         <Box m="20px">
           <Box
             m="40px 0 0 0"
@@ -87,7 +51,7 @@ const AddSearchers = ({ onLogout }) => {
           >
             <DataGrid
               rows={data}
-              columns={columns.concat(addColumn)}
+              columns={columns}
               getRowId={(row) => {
                 return row.searcherId;
               }}
@@ -113,6 +77,24 @@ const columns = [
     minWidth: 150,
     flex: 1,
   },
+  {
+    field: "qualification",
+    headerName: "Osposobljenje",
+    minWidth: 150,
+    flex: 1,
+    renderCell: ({ row: { qualification } }) => {
+      return (
+        <div>
+          {qualification === "FOOT" && <a>Pješice</a>}
+          {qualification === "DRONE" && <a>Dron</a>}
+          {qualification === "CAR" && <a>Automobil</a>}
+          {qualification === "CROSS_MOTOR" && <a>Cross Motor</a>}
+          {qualification === "BOAT" && <a>Brod</a>}
+          {qualification === "HELICOPTER" && <a>Helikopter</a>}
+        </div>
+      );
+    },
+  },
 ];
 
-export default AddSearchers;
+export default Searchers;

@@ -41,7 +41,10 @@ const Actions = ({ onLogout }) => {
   return (
     <div className="users">
       <Sidebar
-        categories={[{ title: "Akcije", link: "/actions" }]}
+        categories={[
+          { title: "Akcije", link: "/actions" },
+          { title: "Moji podaci", link: "/userInfo" },
+        ]}
         user="researcher"
       />
       <div className="usersContainer">

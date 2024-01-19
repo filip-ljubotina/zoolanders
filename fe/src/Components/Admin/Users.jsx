@@ -11,7 +11,7 @@ import "./Users.css";
 
 const Users = ({ onLogout }) => {
   Users.propTypes = {
-    onLogout: PropTypes.func,
+    onLogout: PropTypes.func.isRequired,
   };
   const [data, setData] = React.useState([]);
 
@@ -58,6 +58,7 @@ const Users = ({ onLogout }) => {
         categories={[
           { title: "Korisnici", link: "/users" },
           { title: "Zahtjevi", link: "/requests" },
+          { title: "Moji podaci", link: "/userInfo" },
         ]}
         user="admin"
       />

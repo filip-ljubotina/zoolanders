@@ -1,30 +1,30 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
   baseURL: "https://wildtrack-be-m117.onrender.com",
-  credentials: 'include',
+  credentials: "include",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
 const addTokenToHeaders = () => {
-  const token = localStorage.getItem('jwtToken');
+  const token = localStorage.getItem("jwtToken");
   if (token) {
-    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   } else {
-    delete api.defaults.headers.common['Authorization'];
+    delete api.defaults.headers.common["Authorization"];
   }
 };
 
 export const ApiService = {
   get: async (url) => {
-    addTokenToHeaders()
+    addTokenToHeaders();
     return await api.get(url);
   },
 
   post: async (url, data) => {
-    addTokenToHeaders()
+    addTokenToHeaders();
     return await api.post(url, data);
   },
 
