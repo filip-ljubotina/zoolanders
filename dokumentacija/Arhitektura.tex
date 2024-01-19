@@ -1,31 +1,51 @@
 \chapter{Arhitektura i dizajn sustava}
 		
-	Arhitektura se moze podijeliti na tri podsustava:
+	Arhitektura našeg sustava sastoji se od odvojenih backend (Spring Boot) i frontend (React) dijelova. Backend je implementiran pomoću Spring Boot radnog okvira, dok je frontend razvijen korištenjem React biblioteke. 
+	\\
+	\textbf{Backend (Spring Boot):}
+	\\
+	\textit{Controller sloj:}
 	
-	\begin{itemize}
-		\item Web posluzitelj
-		\item Web aplikacija
-		\item Baza podataka
-	\end{itemize}
-
+	Kontroleri (Controllers) su odgovorni za obradu HTTP zahtjeva i interakciju s korisnicima preko API-ja.
+	Svaki kontroler ima metode koje definiraju ponašanje sustava u odgovoru na različite zahtjeve (npr., dohvat podataka, ažuriranje resursa).
+	\\
+	\textit{Service sloj:}
 	
-	\textit{Web preglednik} je alat koji omogućava korisnicima pregledavanje web stranica i njihovih povezanih multimedijalnih sadržaja. Svaki internetski preglednik djeluje kao prevoditelj, jer interpretira web stranice napisane u kodu kako bi ih prikazao korisnicima na razumljiv način. Korisnici putem web preglednika šalju zahtjeve web poslužitelju.
+	Servisi (Services) sadrže poslovnu logiku aplikacije.
+	Oni obrađuju zahtjeve primljene od kontrolera, vrše potrebne validacije, te komuniciraju s entitetima u bazi podataka.
+	Servisi su odvojeni kako bi omogućili ponovnu uporabu koda i jasnu strukturu.
+	\\
+	\textit{Entity sloj:}
 	
-	\textit{Web poslužitelj} je ključni element u radu web aplikacije. Njegova glavna uloga je olakšavanje komunikacije između klijenta i aplikacije putem HTTP protokola. Poslužitelj pokreće web aplikaciju i prenosi joj zahtjev.
+	Entiteti predstavljaju objekte koji se pohranjuju u bazi podataka.
+	Ovi entiteti često odražavaju strukturu podataka u aplikaciji i pomažu u mapiranju podataka iz baze.
+	\\
+	\textit{Database sloj:}
 	
-	\textit{Web aplikacija} služi korisniku za obradu željenih zahtjeva. Aplikacija obrađuje zahtjev, pristupa bazi podataka prema potrebi i putem poslužitelja vraća korisniku odgovor u obliku HTML dokumenta koji se prikazuje u web pregledniku.
+	Za povezivanje s bazom podataka, koristili smo PostgreSQL.
+	JPA (Java Persistence API) može se koristiti za mapiranje objektnih entiteta na relacijsku bazu podataka.
+	\\
+	\textbf{Frontend (React):}
+	\\
+	\textit{Components:}
 	
-	\textit{Baza podataka} ima svrhu pohranjivanja i upravljanja strukturiranim podacima koji se koriste u aplikaciji. Svaki put kad korisnik šalje zahtjev putem web preglednika, web aplikacija može pristupiti bazi podataka kako bi dohvatila ili ažurirala potrebne informacije. Baza podataka omogućava učinkovit pristup, pretraživanje i manipulaciju podacima, što je ključno za pravilan rad web aplikacije.
+	Komponente čine osnovnu građevnu jedinicu React aplikacije.
+	Svaka komponenta obavlja određeni dio funkcionalnosti i ima svoje stanje (state) i propertije (props).
+	\\
+	\textit{API pozivi:}
 	
-	Za izradu naše web aplikacije odabrali smo programski jezik Java zajedno s Springboot radnim okvirom, kao i programski jezik JavaScript. Razvojna okruženja koja koristimo su Visual Studio Code i IntelliJ. Arhitektura sustava temelji se na MVC (Model-View-Controller) konceptu, koji je podržan od strane Springboot radnog okvira i nudi gotove predloške koji olakšavaju razvoj web aplikacije. Kao poslužitelja baze podataka smo koristili PostgreSQL.
+	Komponente koje zahtijevaju podatke s backend-a koriste HTTP zahtjeve prema odgovarajućim API endpointima koristeći
+	paketa Axios.
+	\\
+	\textit{Routing:}
 	
-	MVC koncept donosi neovisnost u razvoju pojedinih dijelova aplikacije, što olakšava testiranje, kao i dodavanje novih svojstava u sustav. Sastoji se od:
+	React Router se koristi za omogućavanje rute u aplikaciji, što omogućava navigaciju između različitih dijelova aplikacije.
+	\\
+	\textit{Styling:}
 	
-	\begin{itemize}
-		\item \textbf{Model} - Središnja komponenta sustava koja predstavlja dinamičke strukture podataka neovisne o korisničkom sučelju. Upravlja podacima, logikom i pravilima aplikacije, te prima ulazne podatke od Controllera.
-		\item \textbf{View} - Ovdje se prikazuju podaci, primjerice u obliku grafova. Moguća su različita sučelja za prikaz informacija, poput grafičkog ili tabličnog prikaza podataka.
-		\item \textbf{Controller} - Prima ulaze i prilagođava ih za daljnju interakciju s Modelom ili Viewom. Upravlja korisničkim zahtjevima i temeljem njih izvodi daljnje interakcije s ostalim elementima sustava.
-	\end{itemize}
+	Za stilizaciju koristimo CSS i CSS-in-JS pristup, gdje stilovi mogu biti integrirani unutar JavaScript datoteka.
+	\\
+	Ova arhitektura omogućava jasnu odvojenost između frontend i backend dijelova, olakšava održavanje, i omogućuje timsku suradnju s obzirom na to da se razvoj obavlja na odvojenim tehnologijama i dijelovima sustava.
 		
 
 		
@@ -293,7 +313,7 @@
 				
 				\hline \SetCell[c=3]{c}{\textbf{Task}}	 \\ \hline[3pt]
 				\SetCell{LightGreen}taskId & BIGINT & id zadatka \\ \hline
-				taskComment	& VARCHAR &  komentar za zadatak od strane istra	\\ \hline 
+				taskComment	& VARCHAR &  komentar za zadatak od strane istraživača	\\ \hline 
 				taskToDo	& VARCHAR &  opis  što tragač mora napraviti 	\\ \hline 
 				completed & BOOLEAN & je li zadatak završen ili ne \\ \hline
 				routeWaypoints & JSON & koordinate rute koju tragač treba proći na zadatku\\ \hline
@@ -315,7 +335,7 @@
 		Dijagram razreda podijeljen je zbog bolje preglednosti na tri dijela: Controllers, Models i DTO. Prikazane su veze koje ostvaruju razredi unutar istog dijela dijagrama, a odnosi između razreda u različitim dijelovima mogu se zaključiti iz tipova atributa. Metode korištene u Controller razredima vraćaju \textit{ResponseEntity}, koji predstavlja HTTP odgovor, ili samo kod odgovora HTTP-a. U svom radu koriste objekte za prijenos podataka (DTO) i ostvaruju komunikaciju s klijentskom stranom.
 			
 			\begin{figure}[H]
-				\includegraphics[scale=0.5]{dijagrami/Controllers.png} 
+				\includegraphics[scale=0.3]{dijagrami/Controllers.png} 
 				\centering
 				\caption{Dijagram razreda - dio Controllers}
 				\label{fig:promjene}
@@ -341,10 +361,10 @@
 		\section{Dijagram stanja}
 			
 			
-			Dijagrami stanja prikazuju kako sustav prelazi iz jednog stanja u drugo kao odgovor na događaje. Prijavljenom korisniku, u ovom slučaju istraživaču, prikazuje se početna stranica s nekoliko opcija: pregled vlastitih akcija, stvaranje nove akcije i pregled osobnih podataka. Nakon odabira opcije stvaranja nove akcije, korisniku se nudi mogućnost slanja zahtjeva za tragačima za pripadajuću akciju. U slučaju da nema slobodnih tragača, sustav obavijesti korisnika i čeka na idući zahtjev. Ako se istraživaču dodijele tragači, može im dodijeliti zadatke. Zatim ima opciju unosa komentara na zadatak. Odabirom opcije ,,Moje akcije“ , istraživač može vidjeti sve svoje akcije i pregledati njihove članove te završiti neku od akcija.  Također, istraživač može odabrati prikaz karte i urediti je po želji. Nakon toga može ostaviti komentar na karti.
+			Dijagrami stanja prikazuju kako sustav prelazi iz jednog stanja u drugo kao odgovor na događaje. Prijavljenom korisniku, u ovom slučaju istraživaču, prikazuje se početna stranica s aktivnim akcijama i nekoliko opcija: stvaranje nove akcije, prikaz interaktivne karte i slanje zahtjeva za tragačima. Nakon odabira opcije stvaranja nove akcije, korisniku se prikazuje forma za unos podataka o akciji. Spremanjem akcije korisnik ponovno vidi početnu stranicu. Odabirom slanja zahtjeva za tragačima za neku od akcija, istraživaču se prikazuje forma za unos detalja o zahtjevu. U slučaju da nema slobodnih tragača, sustav obavijesti korisnika i čeka na idući zahtjev. Odabirom opcije ,,Više detalja“, istraživaču se prikaže interaktivna karta koju može uređivati po želji. Ako je odabran prikaz tragača na karti, korisnik može nekome od njih dodijeliti zadatak. Zatim ima opciju unosa komentara na zadatak. Također, istraživač može ostaviti komentar na samoj karti. Korisnik može pregledati svoje osobne podatke odabirom opcije ,,Moji podaci“.
 			
 			\begin{figure}[H]
-				\includegraphics[scale=0.3]{dijagrami/DijagramStanja.png} 
+				\includegraphics[scale=0.3]{dijagrami/DijStanja.png} 
 				\centering
 				\caption{Dijagram stanja}
 				\label{fig:promjene}
@@ -355,10 +375,10 @@
 		
 		\section{Dijagram aktivnosti}
 			
-			Dijagrami aktivnosti upotrebljavaju se za modeliranje dinamičkog ponašanja sustava. Izvođenje aktivnosti prikazano je kroz niz akcija koje čine upravljačke tokove i tokove objekata. Prikazan je proces stvaranja nove akcije. Aktivnost započinje prijavom istraživača u sustav. Nakon uspješne prijave, istraživaču se prikazuje početna stranica. Odabirom opcije za stvaranje nove akcije aplikacija prikazuje formu za unos podataka o akciji. Istraživač unosi podatke o akciji, a sustav ih pohranjuje u bazu podataka. Zatim istraživač šalje zahtjev za tragačima, a aplikacija prikazuje formu za unos detalja o zahtjevu. Aplikacija prosljeđuje zahtjev voditelju postaje koji dodjeljuje tragače akciji (pretpostavlja se da ima dostupnih tragača). Popis tragača se pohranjuje u bazu i prikazuje u aplikaciji. Na zahtjev za dodjeljivanje zadatka nekom od tragača prikazuje se forma za unos zadatka. Zadatak se sprema u bazu podataka, a istraživač može unijeti i komentar o zadatku. Nakon završetka unosa svih podataka o akciji aplikacija prikazuje poruku da su svi podaci spremljeni i aktivnost završava.
+			Dijagrami aktivnosti upotrebljavaju se za modeliranje dinamičkog ponašanja sustava. Izvođenje aktivnosti prikazano je kroz niz akcija koje čine upravljačke tokove i tokove objekata. Prikazan je proces stvaranja nove akcije. Aktivnost započinje prijavom istraživača u sustav. Nakon uspješne prijave istraživaču se prikazuje početna stranica. Odabirom opcije za stvaranje nove akcije, aplikacija prikazuje formu za unos podataka o akciji. Istraživač unosi podatke o akciji, a sustav ih pohranjuje u bazu podataka. Zatim istraživač šalje zahtjev za tragačima, a aplikacija prikazuje formu za unos detalja o zahtjevu. Aplikacija prosljeđuje zahtjev voditelju postaje koji dodjeljuje tragače akciji (pretpostavlja se da ima dostupnih tragača). Popis tragača se pohranjuje u bazu i prikazuje u aplikaciji. Na zahtjev za dodjeljivanje zadatka nekom od tragača, prikazuje se forma za unos zadatka. Zadatak se sprema u bazu podataka. Na zahtjev za pregledom zadataka dodijeljenih tragaču aplikacija prikazuje sve zadatke, a istraživač unosi komentar na odabrani zadatak. Nakon završetka unosa svih podataka o akciji aplikacija prikazuje poruku da su svi podaci spremljeni i aktivnost završava.
 			
 			\begin{figure}[H]
-				\includegraphics[scale=0.4]{dijagrami/DijagramAkt.png} 
+				\includegraphics[scale=0.4]{dijagrami/DijAktivnosti.png} 
 				\centering
 				\caption{Dijagram aktivnosti}
 				\label{fig:promjene}

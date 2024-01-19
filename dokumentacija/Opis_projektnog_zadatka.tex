@@ -41,7 +41,7 @@
 			\label{fig:promjene}
 		\end{figure}
 		
-		U slučaju odabira uloge voditelja postaje, korisnik dodatno mora unijeti podatke o postaji koju želi registrirati u sustav.
+		U slučaju odabira uloge voditelja postaje, korisnik odabire dostupne postaje.
 		Registracija korisnika potvrđuje se mailom, a u slučaju registracije za ulogu \textit{istraživača} ili \textit{voditelja postaje} potrebna je i dodatna potvrda od strane administratora.
 		Registrirani korisnik može pregledati svoje osobne podatke.
 		
@@ -60,10 +60,17 @@
 		
 		Još jedna bitna zadaća voditelja postaje je da alocira svoje tragače prema pristiglim zahtjevima od strane istražitelja. Voditelj šalje tragača na sudjelovanje u navedenoj akciju, a smije ga maknuti s akcije i ponovno učiniti raspoloživim isključivo ako je tragač završio sa svojim zadatkom u toj akciji.
 		
-		\begin{figure}[H]
-			\includegraphics[scale=0.5]{slike/pr_biranja_akcija.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+	\begin{figure}[H]
+			\includegraphics[scale=0.35]{slike/pr_biranje_akcije.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
 			\centering
-			\caption{Primjer stranice za prihvaćanja/odbijanja akcija}
+			\caption{Primjer biranja akcija}
+			\label{fig:promjene}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\includegraphics[scale=0.35]{slike/pr_prihvacanje_akcije.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Primjer prihvaćanja akcije}
 			\label{fig:promjene}
 		\end{figure}
 		
@@ -98,3 +105,46 @@
 		praćenim životinjama se zapisuju povijesni podaci gdje se nalazila, naziv vrste, slika i opis. Tragač može praćenoj životinji tijekom akcije ostaviti komentar. Također, tragač i istraživač mogu na karti ostaviti komentar za ostale sudionike u akciji.		
 		
 		\textbf{Administrator} sustava ima najveće ovlasti. On ima pregled svih poslanih zahtjeva za registraciju u ulozi istraživača ili voditelja postaje koje on mora potvrditi ili odbiti. Administrator ima pristup bazi s popisom svih registriranih korisnika i njihovih osobnih podataka te ih može mijenjati. On ujedno može i mijenjati ulogu dodijeljenu korisniku.
+\vspace{12pt}
+
+		Iako naša aplikacija ima mnogo specifičnih značajki usmjerenih praćenju životinja te ostalih korisnika, možemo pronaći slične značajke i u nekim drugim aplikacijama koje se bave praćenjem i kontekstu prirode i istraživanja. Primjeri uključuju aplikacije kao što su:
+		
+		\begin{packed_item}
+		
+			\item \textbf{Wildme}\linebreak
+			Wildme je organizacija koja razvija tehnologiju prepoznavanja uzoraka koja omogućuje automatsko prepoznavanje pojedinaca u divljini putem fotografija i drugih podataka. Ima seriju online platformi unutar \textbf{Wildbook} projekta usmjerena na analizu i praćenje životinja. Time omogućuje zoolozima i istraživačima praćenje lakše praćenje jedinki.
+\vspace{12pt}
+			
+			\item \textbf{iNaturalist}\linebreak
+			iNaturalist je stranica koja omogucuje korisnicima dijeljenje svojih opažanja divljih biljka i životinja. Koristi se za indetifikaciju vrsta te obilježavanje raznolikosti vrsta u prirodi.
+\vspace{12pt}
+			
+			\item \textbf{Movebank}\linebreak
+			Movebank je stranica za praćenje migracija životinja. Koristi se za pohranu i analiziranje podataka o kretanju životinja označene GPS uređajima
+\vspace{12pt}
+			
+			\item \textbf{Panthera}\linebreak
+			Pantera je organizacija posvećena očuvanju divljih mačaka. Njihovi projekti uključuju praćenje životinja te suradnje s lokalnim zajednicama.
+			
+		\end{packed_item}
+		
+        \begin{figure}[H]
+			\includegraphics[scale=0.25]{slike/karta_movebank.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Karta za praćenje životinja - Movebank}
+			\label{fig:promjene}
+		\end{figure}
+		
+		\begin{figure}[H]
+		    \includegraphics[scale=0.25]{slike/wildbook_ris.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Wildbook za Pirenejskog risa}
+			\label{fig:promjene}
+		\end{figure}
+		
+		\begin{figure}[H]
+			\includegraphics[scale=0.25]{slike/stranica_inaturalist.PNG} %veličina slike u odnosu na originalnu datoteku i pozicija slike
+			\centering
+			\caption{Stranica iNaturalist}
+			\label{fig:promjene}
+		\end{figure}
