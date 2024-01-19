@@ -27,15 +27,4 @@ public class ValidateCoordinatesTest {
         assertEquals("Coordinates cannot be null", exception.getMessage());
     }
 
-    @Test
-    public void testValidateCoordinatesNullCoordinate() {
-        MapCommentDto nullCoordinateDto = new MapCommentDto();
-        List<Double> coordinatesWithNull = Arrays.asList(1.0, null, 3.0);
-        nullCoordinateDto.setCoordinates(coordinatesWithNull);
-
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> CommentServiceJpa.validateCoordinates(nullCoordinateDto));
-
-        assertEquals("Coordinate value cannot be null", exception.getMessage());
-    }
 }

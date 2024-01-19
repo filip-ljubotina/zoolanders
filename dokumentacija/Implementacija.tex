@@ -226,26 +226,6 @@
 				}
 			\end{lstlisting}
 			
-			\textbf{testCheckAvailableSearcherDtoMissingCurrentPosition:}
-			\begin{itemize}
-				\item U funkciju se šalje objekt \textit{AvailableSearcherDto} s neispravnim podacima (nedostaje varijabla \textit{CurrentPosition}).
-				\item Očekuje se da će doći do bacanja iznimke.
-			\end{itemize}
-			\begin{lstlisting}
-				@Test
-				public void testCheckAvailableSearcherDtoMissingCurrentPosition() {
-					AvailableSearcherDto missingPositionDto = new AvailableSearcherDto();
-					missingPositionDto.setFirstName("John");
-					missingPositionDto.setLastName("Doe");
-					missingPositionDto.setQualification("Biologist");
-					
-					IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-					() -> stationManagerJpa.checkAvailableSearcherDto(missingPositionDto));
-					
-					assertEquals("Current position is missing", exception.getMessage());
-				}
-			\end{lstlisting}
-			
 			\begin{figure}[H]
 				\includegraphics[scale=1]{slike/checkAvailableSearchersDtoTest.png} 
 				\centering
@@ -884,22 +864,28 @@
 		
 		
 		\section{Dijagram razmještaja}
-			
-			\textbf{\textit{dio 2. revizije}}
-			
-			 \textit{Potrebno je umetnuti \textbf{specifikacijski} dijagram razmještaja i opisati ga. Moguće je umjesto specifikacijskog dijagrama razmještaja umetnuti dijagram razmještaja instanci, pod uvjetom da taj dijagram bolje opisuje neki važniji dio sustava.}
+		
+			 Specifikacijski dijagram razmještaja prikazuje pregled implementacije artefakata bez upućivanja na specifične slučajeve artefakata ili čvorova. Korisnici pristupaju aplikaciji, koja se nalazi na računalu poslžitelja, putem web preglednika. Komunikacija između računala korisnika (tragača, istraživača, administratora) i poslužitelja ostvaruje se putem HTTP veze.
+			 
+			 \begin{figure}[H]
+			 	\includegraphics[scale=0.8]{dijagrami/SpecDijRaz.png} 
+			 	\centering
+			 	\caption{Specifikacijski dijagram razmještaja}
+			 	\label{fig:Specifikacijski dijagram razmještaja}
+			 \end{figure}
 			
 			\eject 
 		
 		\section{Upute za puštanje u pogon}
 		
 			U ovom poglavlju prikazat ćemo kako se provodi pokretanje aplikacije na lokalnom računalu.
-			
-			\textbf{Instalacija posluzitelja baze podataka}
-			Potrebno je preuzeti PostgreSQL bazu podataka (za operacijski sustav Windows). Instalacij se može provesti pomoću ovoga linka https://www.postgresql.org/download/. Prilikom instalacije zapamtite koji ste vrata (engl. port) stavili za pristup bazi podataka pošto će nam trebati kasnije(predložena su vrata 5432). Nakon provedene instalacije na računalu će se nalaziti PostgreSQL baza podataka.
+			\textbf{Instalacija poslužitelja baze podataka}
+			Potrebno je preuzeti PostgreSQL bazu podataka za operacijski sustav Windows. Instalacija se može provesti pomoću sljedećeg linka: https://www.postgresql.org/download/. Prilikom instalacije, zapamtite koji ste port odabrali za pristup bazi podataka, pošto će nam to biti potrebno kasnije (preporučeni port je 5432). Nakon uspješno provedene instalacije, PostgreSQL baza podataka bit će dostupna na vašem računalu.
 			
 			\textbf{Konfiguracija baze podataka}
-			Za daljnju konfiguraciju i baze podataka i ostatak projekta koristiti ćemo Inetllij IDE. Prije svega s github repozitorija https://github.com/filip-ljubotina/zoolanders.git preuzet ćemo projekt, te u Intellij-u u gornjem lijevo kutu odabiremo File -> Open... te se pozicijoniramo u be direktorij projekta. Sljedeće kao što je prikazano na slici odabire izvor podataka (engl. Data Source).
+			Za daljnju konfiguraciju baze podataka i ostatak projekta koristit ćemo IntelliJ IDE. Prije svega, s GitHub repozitorija https://github.com/filip-ljubotina/zoolanders.git preuzet ćemo projekt. Zatim, u IntelliJ-u, u gornjem lijevom kutu odabiremo File -\textgreater Open... te se pozicioniramo u bazni direktorij projekta.
+			
+			Sljedeći korak, kako je prikazano na slici, je odabrati izvor podataka (engl. Data Source).
 			
 			\begin{figure}[H]
 				\includegraphics[scale=0.3]{slike/postgreSql.png} 
@@ -907,10 +893,10 @@
 				\caption{Odabir izvora podataka}
 				\label{fig:promjene}
 			\end{figure}
-			Nakon odabira PostgreSQL-a kao izvor podataka potrebno je unjeti podatke o bazi podataka gdje za user stavljamo postrges, a port i password su isti kao što smo ih postavili tokom instalacije.
+			Nakon odabira PostgreSQL-a kao izvora podataka, potrebno je unijeti podatke o bazi podataka. Za korisničko ime (user) koristimo "postgres", dok su port i lozinka (password) isti kao što smo ih postavili tijekom instalacije.
 			
 			\textbf{Punjenje baze podataka}
-			Nakon konfiguracije baze podataka potrebno je napuniti istu. To također radimo unutar Intellij-a tako što desnim klikom na postregs bazu odabiremo Run Sql Script kao što je prikazano na slici. Zatim odabiremo skriptu koja se nalazi u direktoriju projekta, te će se nakon pokretanja baza napuniti s pocetnim podacima.
+			Nakon konfiguracije baze podataka, potrebno je napuniti ju. Ovaj korak također obavljamo unutar IntelliJ-a tako što desnim klikom na postreg bazu odaberemo opciju "Run SQL Script", kao što je prikazano na slici. Zatim odaberemo skriptu koja se nalazi u direktoriju projekta. Nakon pokretanja, baza će biti napunjena početnim podacima.
 			
 			\begin{figure}[H]
 				\includegraphics[scale=0.3]{slike/runSqlScript.png} 
@@ -920,7 +906,9 @@
 			\end{figure}
 			
 			\textbf{Konfiguracija frontend-a i backend-a}
-			Nakon postavljene baze podataka sljedeće konfiguriramo backend. Potrebno je otici u application.yaml file u resources paketu, te postaviti password username i url od datasource-a da butu isti kao što su bili postavljeni pri konfiguraciji datasource-a. Za konfiguraciju frontend-a potrebno je otviri u fe direktorij te u services -> ApiService postaviti baseURL na "http://localhost:8080". Zatim u command prompt-u potrebno j pozicionirati se u fe direktorij te pokrenuti naredbu nmp install.
+			Nakon postavljanja baze podataka, slijedi konfiguracija backend-a. Potrebno je otvoriti "application.yaml" datoteku unutar "resources" paketa te postaviti korisničko ime, lozinku i URL podatkovnog izvora (datasource) tako da budu isti kao što su bili postavljeni tijekom konfiguracije datasourca.
+			
+			Za konfiguraciju frontend-a, potrebno je otvoriti "fe" direktorij, zatim unutar "services" -\textgreater "ApiService" postaviti "baseURL" na "http://localhost:8080". Nakon toga, u naredbenom retku (Command Prompt-u), potrebno se pozicionirati unutar "fe" direktorija i pokrenuti naredbu "npm install".
 			
 			\textbf{Pokretanje aplikacije}
 			Za pokretanje backenda u Intellij-eju je potrebno pokrenuti WildtrackApplication, a za frontend u terminalu je potrebnu pokrenuti naredbu npm start.
